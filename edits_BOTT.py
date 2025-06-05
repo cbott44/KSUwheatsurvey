@@ -27,6 +27,9 @@ producer_FILE_PATH = "/streamlit/producers_info.csv"
 #csv for field information
 field_FILE_PATH = "/streamlit/fields_info.csv"
 
+#folder to save soil test uploads
+soil_tests = "/streamlit/soiltest_uploads"
+
 #___________________________________________________________________________________________________________________________________________
 #___________________________________________________________________________________________________________________________________________
 
