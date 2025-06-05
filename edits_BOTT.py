@@ -605,7 +605,7 @@ if not st.session_state.form_submitted:
                 "<small style='color:gray;'>e.g. Stripe rust impacted 20% of field</small>",
                 unsafe_allow_html=True
                  )
-            new_data2['impacting_events'] = st.text_input("")
+            new_data2['impacting_events'] = st.text_input("", height = 68)
 
        #------------------------------------------------------------------------------------------------#
             st.markdown("<hr>", unsafe_allow_html=True)  #line
