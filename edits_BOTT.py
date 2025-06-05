@@ -170,36 +170,39 @@ new_data = {
     'statement1':"",
     'statement2':""
 }
+expected_columns = list(new_data.keys())
 
 #read csv, populate fields if starting empty
-
 # Helper: Read CSV from Dropbox
-def dropbox_file_exists_and_not_empty(path):
+def read_csv_from_dropbox_safely(path, columns):
     try:
-        metadata = dbx.files_get_metadata(path)
-        # Dropbox metadata has size in bytes
-        if metadata.size == 0:
-            return False
-        else:
-            return True
-    except dropbox.exceptions.ApiError:
-        # File doesn't exist
-        return False
-
-# Usage replacing local file checks:
-
-if not dropbox_file_exists_and_not_empty(producer_FILE_PATH):
-    df = pd.DataFrame(columns=new_data.keys())
-else:
-    try:
-        metadata, res = dbx.files_download(producer_FILE_PATH)
+        metadata, res = dbx.files_download(path)
         data = res.content.decode("utf-8")
-        if not data.strip():
-            df = pd.DataFrame(columns=new_data.keys())
-        else:
-            df = pd.read_csv(StringIO(data))
-    except dropbox.exceptions.ApiError:
-        df = pd.DataFrame(columns=new_data.keys())
+        
+        # Handle empty file content
+        if not data.strip():  
+            # File is empty, return empty DataFrame with columns
+            return pd.DataFrame(columns=columns)
+        
+        # Otherwise try reading the CSV
+        df = pd.read_csv(StringIO(data))
+        
+        # If CSV has no columns (e.g., blank file with whitespace), catch that too
+        if df.empty and len(df.columns) == 0:
+            return pd.DataFrame(columns=columns)
+        
+        return df
+    
+    except dropbox.exceptions.ApiError as e:
+        # File doesn't exist or access error, create empty DataFrame with columns
+        st.warning(f"Dropbox API error or file not found: {e}")
+        return pd.DataFrame(columns=columns)
+    
+    except pd.errors.EmptyDataError:
+        # CSV is empty, return empty DataFrame with columns
+        return pd.DataFrame(columns=columns)
+
+df = read_csv_from_dropbox_safely(producer_FILE_PATH, expected_columns)
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------
 options_form = st.form("options_form", clear_on_submit = False) #create form, clear fields when data is submitted
@@ -455,6 +458,7 @@ if clear_form:
 #     'irr4_fertigation':"",
 #     'irr_shared':""
 # }
+
 
 
 # #read csv, populate fields if starting empty
