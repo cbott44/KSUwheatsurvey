@@ -558,7 +558,7 @@ if not st.session_state.form_submitted:
             
                         # New filename format
                         new_filename = f"soiltest{number}_{producer_id}_field1{file_extension}"
-                        dropbox_path = f"{SOIL_TESTS_FOLDER}/{new_filename}"
+                        dropbox_path = f"{soil_tests}/{new_filename}"
             
                         # Upload file to Dropbox
                         dbx.files_upload(
@@ -1130,7 +1130,7 @@ if st.session_state.form2_visible:
                         new_filename = f"soiltest{number}_{producer_id2}_field{field_numbtemp}{file_extension}"
             
                         # Define Dropbox path
-                        dropbox_path = f"/streamlit/soiltests/{new_filename}"
+                        dropbox_path = f"/streamlit/soiltest_uploads/{new_filename}"
             
                         # Upload file to Dropbox
                         dbx.files_upload(
