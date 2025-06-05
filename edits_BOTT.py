@@ -24,11 +24,6 @@ dbx = dropbox.Dropbox(DROPBOX_ACCESS_TOKEN)
 #csv for producer data
 producer_FILE_PATH = "/streamlit/producers_info.csv"
 
-#csv for field information
-#field_FILE_PATH = r"C:\Users\cb44\OneDrive - Kansas State University/Documents/Kansas State/Irrigated Wheat/Streamlitsurvey/data_collection_fields.csv"
-
-#folder to save soil test uploads
-#soil_tests = r"OneDrive - Kansas State University/Documents/Kansas State/Irrigated Wheat/streamlit_soiltests"
 #___________________________________________________________________________________________________________________________________________
 #___________________________________________________________________________________________________________________________________________
 
@@ -177,31 +172,24 @@ expected_columns = list(new_data.keys())
 def read_csv_from_dropbox_safely(path, columns):
     try:
         metadata, res = dbx.files_download(path)
-        data = res.content.decode("utf-8")
+        data = res.content.decode("utf-8").strip()  # Strip whitespace and newlines
         
-        # Handle empty file content
-        if not data.strip():  
-            # File is empty, return empty DataFrame with columns
+        if not data:
             return pd.DataFrame(columns=columns)
-        
-        # Otherwise try reading the CSV
+
+        # Check that the first line contains headers
+        if ',' not in data.splitlines()[0]:
+            return pd.DataFrame(columns=columns)
+
         df = pd.read_csv(StringIO(data))
-        
-        # If CSV has no columns (e.g., blank file with whitespace), catch that too
-        if df.empty and len(df.columns) == 0:
-            return pd.DataFrame(columns=columns)
-        
         return df
     
     except dropbox.exceptions.ApiError as e:
-        # File doesn't exist or access error, create empty DataFrame with columns
         st.warning(f"Dropbox API error or file not found: {e}")
         return pd.DataFrame(columns=columns)
     
     except pd.errors.EmptyDataError:
-        # CSV is empty, return empty DataFrame with columns
         return pd.DataFrame(columns=columns)
-
 df = read_csv_from_dropbox_safely(producer_FILE_PATH, expected_columns)
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------
