@@ -859,7 +859,7 @@ if not st.session_state.form_submitted:
                      
             # Save updated DataFrame to Dropbox
             csv_buffer2 = StringIO()
-            df.to_csv(csv_buffer2, index=False)
+            df2.to_csv(csv_buffer2, index=False)
             dbx.files_upload(csv_buffer2.getvalue().encode(), field_FILE_PATH, mode=dropbox.files.WriteMode("overwrite"))
 
             placeholder.empty()  
@@ -907,7 +907,7 @@ if not st.session_state.form_submitted:
                     
             # Save updated DataFrame to Dropbox
             csv_buffer2 = StringIO()
-            df.to_csv(csv_buffer2, index=False)
+            df2.to_csv(csv_buffer2, index=False)
             dbx.files_upload(csv_buffer2.getvalue().encode(), field_FILE_PATH, mode=dropbox.files.WriteMode("overwrite"))
             
             st.write(df2)
