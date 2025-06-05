@@ -527,47 +527,47 @@ if not st.session_state.form_submitted:
         #------------------------------------------------------------------------------------------------#
             #soil testing
             with st.expander("**If Soil Testing Prior to Planting;** provide details here"):
-    st.markdown("Upload Files **OR** Add Data Manually")
-    st.markdown("")
-    
-    uploaded_files = st.file_uploader(
-        "Choose a file", accept_multiple_files=True
-    )
-
-    left, right = st.columns(2, vertical_alignment="bottom")
-    new_data2['K_soil'] = left.text_input("Potassium (K) ppm")
-    new_data2['P_soil'] = right.text_input("Phosphorus (P) ppm")
-
-    left, right = st.columns(2, vertical_alignment="bottom")
-    new_data2['N_soil'] = left.text_input("Nitrogen (Nitrate (NO3) ppm or N/acre)")
-    new_data2['N_soildepth'] = right.text_input("N measured at what depth?")
-
-# Uploading to Dropbox
-if uploaded_files:
-    number = 0
-    producer_id = st.session_state.get("producer_id", None)
-
-    if not producer_id:
-        st.warning("Producer ID is missing. Cannot save uploaded files.")
-    else:
-        for uploaded_file in uploaded_files:
-            number += 1
-
-            # Extract file extension
-            file_extension = os.path.splitext(uploaded_file.name)[1]
-
-            # New filename format
-            new_filename = f"soiltest{number}_{producer_id}_field1{file_extension}"
-            dropbox_path = f"{SOIL_TESTS_FOLDER}/{new_filename}"
-
-            # Upload file to Dropbox
-            dbx.files_upload(
-                uploaded_file.read(),
-                dropbox_path,
-                mode=dropbox.files.WriteMode("overwrite")
-            )
-        
-        st.success(f"Uploaded {number} soil test file(s)")
+                st.markdown("Upload Files **OR** Add Data Manually")
+                st.markdown("")
+                
+                uploaded_files = st.file_uploader(
+                    "Choose a file", accept_multiple_files=True
+                )
+            
+                left, right = st.columns(2, vertical_alignment="bottom")
+                new_data2['K_soil'] = left.text_input("Potassium (K) ppm")
+                new_data2['P_soil'] = right.text_input("Phosphorus (P) ppm")
+            
+                left, right = st.columns(2, vertical_alignment="bottom")
+                new_data2['N_soil'] = left.text_input("Nitrogen (Nitrate (NO3) ppm or N/acre)")
+                new_data2['N_soildepth'] = right.text_input("N measured at what depth?")
+            
+            # Uploading to Dropbox
+            if uploaded_files:
+                number = 0
+                producer_id = st.session_state.get("producer_id", None)
+            
+                if not producer_id:
+                    st.warning("Producer ID is missing. Cannot save uploaded files.")
+                else:
+                    for uploaded_file in uploaded_files:
+                        number += 1
+            
+                        # Extract file extension
+                        file_extension = os.path.splitext(uploaded_file.name)[1]
+            
+                        # New filename format
+                        new_filename = f"soiltest{number}_{producer_id}_field1{file_extension}"
+                        dropbox_path = f"{SOIL_TESTS_FOLDER}/{new_filename}"
+            
+                        # Upload file to Dropbox
+                        dbx.files_upload(
+                            uploaded_file.read(),
+                            dropbox_path,
+                            mode=dropbox.files.WriteMode("overwrite")
+                        )
+                    
+                    st.success(f"Uploaded {number} soil test file(s)")
 
         #------------------------------------------------------------------------------------------------#
             left, right = st.columns(2)
