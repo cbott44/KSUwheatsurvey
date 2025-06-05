@@ -1306,9 +1306,9 @@ if st.session_state.form2_visible:
              )
             st.markdown("")
             new_data3['irr_shared']= st.text_input("Is the reported water supply shared with another crop? (*ex: half pivot was corn*)", key = 'irrshare2')
-            new_data3['irr_decision'] = st.text_area("What drives your decision to trigger an irrigation event? (*ex: visual appearance of soil, moisture sensor*)", height = 4, key = 'irrdescision2')
+            new_data3['irr_decision'] = st.text_area("What drives your decision to trigger an irrigation event? (*ex: visual appearance of soil, moisture sensor*)", height = 68, key = 'irrdescision2')
             new_data3['irr_type'] = st.text_input("Irrigation Method (*i.e. center pivot, flood*)", key = 'irrtype2') 
-            new_data3['system_config'] = st.text_area("Briefly describe the sprinkler configuration: spacing, height...", height = 4, key = 'system2')
+            new_data3['system_config'] = st.text_area("Briefly describe the sprinkler configuration: spacing, height...", height = 68, key = 'system2')
             
             left, right = st.columns(2, vertical_alignment = "bottom")
             new_data3['system_capacity'] = left.text_input("System Capacity (*gal/min*)", key = 'systemcapac2')
