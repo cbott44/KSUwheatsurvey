@@ -267,7 +267,7 @@ with options_form:
         unsafe_allow_html=True
     )
 
-    new_data['limits'] = options_form.text_area("", height = 4)
+    new_data['limits'] = options_form.text_area("", height = 70)
 
     #agreement with the statements
     options_form.markdown("Rate the following two statements:")
