@@ -174,18 +174,32 @@ new_data = {
 #read csv, populate fields if starting empty
 
 # Helper: Read CSV from Dropbox
-def read_csv_from_dropbox(path, columns):
+def dropbox_file_exists_and_not_empty(path):
     try:
-        metadata, res = dbx.files_download(path)
-        data = res.content.decode("utf-8")
-        if not data.strip():  # check if file content is empty
-            return pd.DataFrame(columns=columns)
-        return pd.read_csv(StringIO(data))
+        metadata = dbx.files_get_metadata(path)
+        # Dropbox metadata has size in bytes
+        if metadata.size == 0:
+            return False
+        else:
+            return True
     except dropbox.exceptions.ApiError:
-        # If file does not exist, return empty DataFrame
-        return pd.DataFrame(columns=columns)
-# Read producer data
-df = read_csv_from_dropbox(producer_FILE_PATH, new_data.keys())
+        # File doesn't exist
+        return False
+
+# Usage replacing local file checks:
+
+if not dropbox_file_exists_and_not_empty(producer_FILE_PATH):
+    df = pd.DataFrame(columns=new_data.keys())
+else:
+    try:
+        metadata, res = dbx.files_download(producer_FILE_PATH)
+        data = res.content.decode("utf-8")
+        if not data.strip():
+            df = pd.DataFrame(columns=new_data.keys())
+        else:
+            df = pd.read_csv(StringIO(data))
+    except dropbox.exceptions.ApiError:
+        df = pd.DataFrame(columns=new_data.keys())
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------
 options_form = st.form("options_form", clear_on_submit = False) #create form, clear fields when data is submitted
