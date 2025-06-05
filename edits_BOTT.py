@@ -850,7 +850,8 @@ if not st.session_state.form_submitted:
     
             #add to csv
                         
-            df2 = pd.read_csv(field_FILE_PATH)
+            df2 = read_csv_from_dropbox_safely(field_FILE_PATH, columns)
+        
             df2 = df2.loc[:, ~df2.columns.str.contains('^Unnamed')]  #to correct problems with unnamed columns
         
             new_df2 = pd.DataFrame([new_data2]) #dictionary to data frame
@@ -898,7 +899,7 @@ if not st.session_state.form_submitted:
             new_data2['crop_purpose'] = purpose_temp
     
             #add to csv  
-            df2 = pd.read_csv(field_FILE_PATH)
+            df2 = read_csv_from_dropbox_safely(field_FILE_PATH, columns)
             df2 = df2.loc[:, ~df2.columns.str.contains('^Unnamed')]
         
             new_df2 = pd.DataFrame([new_data2]) #dictionary to data frame
