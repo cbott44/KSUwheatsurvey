@@ -178,11 +178,12 @@ def read_csv_from_dropbox(path, columns):
     try:
         metadata, res = dbx.files_download(path)
         data = res.content.decode("utf-8")
+        if not data.strip():  # check if file content is empty
+            return pd.DataFrame(columns=columns)
         return pd.read_csv(StringIO(data))
     except dropbox.exceptions.ApiError:
         # If file does not exist, return empty DataFrame
         return pd.DataFrame(columns=columns)
-
 # Read producer data
 df = read_csv_from_dropbox(producer_FILE_PATH, new_data.keys())
 
