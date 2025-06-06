@@ -14,32 +14,32 @@ import dropbox
 from io import StringIO
 import requests
 
-# # Load your secrets
-# app_key = st.secrets["dropbox"]["app_key"]
-# app_secret = st.secrets["dropbox"]["app_secret"]
-# refresh_token = st.secrets["dropbox"]["refresh_token"]
+# Load your secrets
+app_key = st.secrets["dropbox"]["app_key"]
+app_secret = st.secrets["dropbox"]["app_secret"]
+refresh_token = st.secrets["dropbox"]["refresh_token"]
 
-# def get_new_access_token(app_key, app_secret, refresh_token):
-#     token_url = "https://api.dropboxapi.com/oauth2/token"
-#     data = {
-#         "grant_type": "refresh_token",
-#         "refresh_token": refresh_token,
-#     }
-#     auth = (app_key, app_secret)
+def get_new_access_token(app_key, app_secret, refresh_token):
+    token_url = "https://api.dropboxapi.com/oauth2/token"
+    data = {
+        "grant_type": "refresh_token",
+        "refresh_token": refresh_token,
+    }
+    auth = (app_key, app_secret)
 
-#     response = requests.post(token_url, data=data, auth=auth)
-#     response.raise_for_status()
-#     tokens = response.json()
-#     return tokens["access_token"]
+    response = requests.post(token_url, data=data, auth=auth)
+    response.raise_for_status()
+    tokens = response.json()
+    return tokens["access_token"]
 
-# # Get fresh access token
-# access_token = get_new_access_token(app_key, app_secret, refresh_token)
+# Get fresh access token
+access_token = get_new_access_token(app_key, app_secret, refresh_token)
 
-# # Initialize Dropbox client with refreshed token
-# dbx = dropbox.Dropbox(access_token)
+# Initialize Dropbox client with refreshed token
+dbx = dropbox.Dropbox(access_token)
 
-# # Now you can use `dbx` as usual, e.g. list files:
-# files = dbx.files_list_folder('').entries
+# Now you can use `dbx` as usual, e.g. list files:
+files = dbx.files_list_folder('').entries
 
 #___________________________________________________________________________________________________________________________________________
 #___________________________________________________________________________________________________________________________________________
