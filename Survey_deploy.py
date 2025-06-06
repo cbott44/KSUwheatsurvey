@@ -14,11 +14,6 @@ import dropbox
 from io import StringIO
 import requests
 
-# Load your secrets
-app_key = st.secrets["dropbox"]["app_key"]
-app_secret = st.secrets["dropbox"]["app_secret"]
-refresh_token = st.secrets["dropbox"]["refresh_token"]
-
 def get_new_access_token(app_key, app_secret, refresh_token):
     token_url = "https://api.dropboxapi.com/oauth2/token"
     data = {
@@ -32,13 +27,11 @@ def get_new_access_token(app_key, app_secret, refresh_token):
     tokens = response.json()
     return tokens["access_token"]
 
-# Get fresh access token
+# Initialize Dropbox client
 access_token = get_new_access_token(app_key, app_secret, refresh_token)
-
-# Initialize Dropbox client with refreshed token
 dbx = dropbox.Dropbox(access_token)
 
-# Now you can use `dbx` as usual, e.g. list files:
+# Use dbx here
 files = dbx.files_list_folder('').entries
 
 #___________________________________________________________________________________________________________________________________________
