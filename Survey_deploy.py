@@ -14,6 +14,10 @@ import dropbox
 from io import StringIO
 import requests
 
+app_key = st.secrets["dropbox"]["app_key"]
+app_secret = st.secrets["dropbox"]["app_secret"]
+refresh_token = st.secrets["dropbox"]["refresh_token"]
+
 def get_new_access_token(app_key, app_secret, refresh_token):
     token_url = "https://api.dropboxapi.com/oauth2/token"
     data = {
