@@ -105,30 +105,47 @@ st.markdown(
 #Define the color of form backgrounds
 css = """
 <style>
-html, body, .stApp {
-    background-color: white !important;
-    color: black !important;
-}
-    [data-testid="stForm"] {
-        background: rgb(170,194,206); 
+    /* Force global text and background color regardless of system dark mode */
+    html, body, .stApp {
+        background-color: white !important;
+        color: black !important;
     }
-input, textarea, select {
-    background-color: white !important;
-    color: black !important;
-    border: 1px solid #ccc !important;
-}
-div[data-baseweb="input"] input {
-    background-color: white !important;
-    color: black !important;
-}
-textarea {
-    background-color: white !important;
-    color: black !important;
-}
-.info-box {
-    color: black !important;
-    background-color: #f0f2f6 !important;
-}
+
+    /* Style the form containers */
+    [data-testid="stForm"] {
+        background: rgb(170,194,206) !important;
+        color: black !important;
+    }
+
+    .stForm > div {
+        margin-bottom: 0px;
+    }
+
+    .stMarkdown p {
+        margin-bottom: 0px;
+    }
+
+    /* Expander header */
+    div[data-testid="stExpander"] > details > summary {
+        background-color: #e6e6e6 !important;
+        color: black !important;
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+    }
+
+    /* Expander content */
+    div[data-testid="stExpander"] > details > div {
+        background-color: #e6e6e6 !important;
+        color: black !important;
+        padding: 1rem;
+        border-radius: 0 0 0.5rem 0.5rem;
+    }
+
+    /* Optional: fix sidebar if in use */
+    section[data-testid="stSidebar"] {
+        background-color: white !important;
+        color: black !important;
+    }
 </style>
 """
 
