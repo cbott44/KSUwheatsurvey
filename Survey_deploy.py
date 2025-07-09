@@ -75,7 +75,7 @@ st.markdown("""
 st.markdown("""
     <div class="info-box">
         <u>Instructions:</u> <br>
-        1. NOOOO Submit the first form with your personal information before proceeding to the second section.<br>
+        1. Submit the first form with your personal information before proceeding to the second section.<br>
         2. In the second section you will be asked to provide field-specific information. Add as many fields as you would like; <strong> Prioritize adding data from 2023, 2024, and 2025 Harvests</strong>.<br>
         3. If you do not know the answer to a question or it does not pertain to you, leave it blank.<br><br>
         <strong>Funded by the Kansas Wheat Commission and Kansas Crop Improvement Association</strong><br>
@@ -102,34 +102,20 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-#Define the color of form backgrounds + dark mode override
-css = """
+#Define the color of form backgrounds
+css="""
 <style>
-    /* Global override to force light mode */
-    html, body, .stApp {
-        background-color: white !important;
-        color: black !important;
-    }
-
-    /* Info box override */
-    .info-box {
-        background-color: #f0f2f6 !important;
-        color: black !important;
-    }
-
-    /* Form container */
     [data-testid="stForm"] {
-        background: rgb(170,194,206) !important;
-        color: black !important;
+        background: rgb(170,194,206); 
     }
-
     .stForm > div {
-        margin-bottom: 0px;
+        margin-bottom: 0px;  /* Remove bottom margin between form elements */
     }
 
     .stMarkdown p {
-        margin-bottom: 0px;
+        margin-bottom: 0px;  /* Remove extra space for paragraphs */
     }
+
 
     /* Expander header */
     div[data-testid="stExpander"] > details > summary {
@@ -142,40 +128,10 @@ css = """
     /* Expander content */
     div[data-testid="stExpander"] > details > div {
         background-color: #e6e6e6 !important;
-        color: black !important;
         padding: 1rem;
         border-radius: 0 0 0.5rem 0.5rem;
     }
 
-    /* Sidebar (optional) */
-    section[data-testid="stSidebar"] {
-        background-color: white !important;
-        color: black !important;
-    }
-
-    /* Force input elements to appear light mode */
-    input, textarea, select {
-        background-color: white !important;
-        color: black !important;
-        border: 1px solid #ccc !important;
-    }
-
-    /* Fix text inputs and text areas inside Streamlit's widget container */
-    div[data-baseweb="input"] input {
-        background-color: white !important;
-        color: black !important;
-    }
-
-    textarea {
-        background-color: white !important;
-        color: black !important;
-    }
-
-    /* Optional: remove Streamlit default focus ring */
-    input:focus, textarea:focus, select:focus {
-        outline: none !important;
-        border: 1px solid #555 !important;
-    }
 </style>
 
 """
