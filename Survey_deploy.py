@@ -109,6 +109,10 @@ html, body, .stApp {
     background-color: white !important;
     color: black !important;
 }
+[data-testid="stForm"] {
+    background-color: rgb(170,194,206) !important;
+    color: black !important;
+}
 input, textarea, select {
     background-color: white !important;
     color: black !important;
