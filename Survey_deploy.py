@@ -61,7 +61,8 @@ st.title('Survey of Kansas Irrigated Wheat')
 st.markdown("""
     <style>
     .info-box { 
-        background-color: #f0f2f6;
+        background-color: #f0f2f6 !important;
+        color: black !important;
         padding: 20px;
         border-radius: 10px;
         border: 1px solid #d3d3d3;
@@ -83,38 +84,46 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-
 #Add Background Image
 st.markdown(
     """
     <style>
     .stApp {
         background-image: url("https://www.visitgck.com/wp-content/uploads/2020/06/kansas-wheat-harvest.jpg");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        padding: 2rem;
+        background-size: cover !important;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
+        padding: 2rem !important;
+        background-color: white !important;
+        color: black !important;
     }
-
     </style>
     """,
     unsafe_allow_html=True
 )
 
-#Define the color of form backgrounds
-css="""
+#Define the color of form backgrounds + dark mode override
+css = """
 <style>
-    [data-testid="stForm"] {
-        background: rgb(170,194,206); 
+    /* Force global text and background color regardless of system dark mode */
+    html, body, .stApp {
+        background-color: white !important;
+        color: black !important;
     }
+
+    /* Style the form containers */
+    [data-testid="stForm"] {
+        background: rgb(170,194,206) !important;
+        color: black !important;
+    }
+
     .stForm > div {
-        margin-bottom: 0px;  /* Remove bottom margin between form elements */
+        margin-bottom: 0px;
     }
 
     .stMarkdown p {
-        margin-bottom: 0px;  /* Remove extra space for paragraphs */
+        margin-bottom: 0px;
     }
-
 
     /* Expander header */
     div[data-testid="stExpander"] > details > summary {
@@ -127,10 +136,16 @@ css="""
     /* Expander content */
     div[data-testid="stExpander"] > details > div {
         background-color: #e6e6e6 !important;
+        color: black !important;
         padding: 1rem;
         border-radius: 0 0 0.5rem 0.5rem;
     }
 
+    /* Optional: fix sidebar if in use */
+    section[data-testid="stSidebar"] {
+        background-color: white !important;
+        color: black !important;
+    }
 </style>
 
 """
