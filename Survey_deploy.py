@@ -105,13 +105,19 @@ st.markdown(
 #Define the color of form backgrounds + dark mode override
 css = """
 <style>
-    /* Force global text and background color regardless of system dark mode */
+    /* Global override to force light mode */
     html, body, .stApp {
         background-color: white !important;
         color: black !important;
     }
 
-    /* Style the form containers */
+    /* Info box override */
+    .info-box {
+        background-color: #f0f2f6 !important;
+        color: black !important;
+    }
+
+    /* Form container */
     [data-testid="stForm"] {
         background: rgb(170,194,206) !important;
         color: black !important;
@@ -141,10 +147,34 @@ css = """
         border-radius: 0 0 0.5rem 0.5rem;
     }
 
-    /* Optional: fix sidebar if in use */
+    /* Sidebar (optional) */
     section[data-testid="stSidebar"] {
         background-color: white !important;
         color: black !important;
+    }
+
+    /* Force input elements to appear light mode */
+    input, textarea, select {
+        background-color: white !important;
+        color: black !important;
+        border: 1px solid #ccc !important;
+    }
+
+    /* Fix text inputs and text areas inside Streamlit's widget container */
+    div[data-baseweb="input"] input {
+        background-color: white !important;
+        color: black !important;
+    }
+
+    textarea {
+        background-color: white !important;
+        color: black !important;
+    }
+
+    /* Optional: remove Streamlit default focus ring */
+    input:focus, textarea:focus, select:focus {
+        outline: none !important;
+        border: 1px solid #555 !important;
     }
 </style>
 
