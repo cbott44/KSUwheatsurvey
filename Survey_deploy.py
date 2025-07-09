@@ -103,37 +103,32 @@ st.markdown(
 )
 
 #Define the color of form backgrounds
-css="""
+css = """
 <style>
-    [data-testid="stForm"] {
-        background: rgb(170,194,206); 
-    }
-    .stForm > div {
-        margin-bottom: 0px;  /* Remove bottom margin between form elements */
-    }
-
-    .stMarkdown p {
-        margin-bottom: 0px;  /* Remove extra space for paragraphs */
-    }
-
-
-    /* Expander header */
-    div[data-testid="stExpander"] > details > summary {
-        background-color: #e6e6e6 !important;
-        color: black !important;
-        border-radius: 0.5rem;
-        padding: 0.5rem;
-    }
-
-    /* Expander content */
-    div[data-testid="stExpander"] > details > div {
-        background-color: #e6e6e6 !important;
-        padding: 1rem;
-        border-radius: 0 0 0.5rem 0.5rem;
-    }
-
+html, body, .stApp {
+    background-color: white !important;
+    color: black !important;
+}
+input, textarea, select {
+    background-color: white !important;
+    color: black !important;
+    border: 1px solid #ccc !important;
+}
+div[data-baseweb="input"] input {
+    background-color: white !important;
+    color: black !important;
+}
+textarea {
+    background-color: white !important;
+    color: black !important;
+}
+.info-box {
+    color: black !important;
+    background-color: #f0f2f6 !important;
+}
 </style>
 """
+
 #allows rendering HTML
 #html is language for structuring webpages, css controls the look of html
 st.write(css, unsafe_allow_html=True)
