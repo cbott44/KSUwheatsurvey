@@ -55,7 +55,7 @@ soil_tests = "/streamlit/soiltest_uploads"
 #___________________________________________________________________________________________________________________________________________
 
 #Initialize Streamlit app
-st.title('Survey of Kansas Irrigated Wheat - change')
+st.title('Survey of Kansas Irrigated Wheat')
 
 #define the look of info.box
 st.markdown("""
@@ -75,7 +75,7 @@ st.markdown("""
 st.markdown("""
     <div class="info-box">
         <u>Instructions:</u> <br>
-        1. Submit the first form with your personal information before proceeding to the second section.<br>
+        1. NOOOO Submit the first form with your personal information before proceeding to the second section.<br>
         2. In the second section you will be asked to provide field-specific information. Add as many fields as you would like; <strong> Prioritize adding data from 2023, 2024, and 2025 Harvests</strong>.<br>
         3. If you do not know the answer to a question or it does not pertain to you, leave it blank.<br><br>
         <strong>Funded by the Kansas Wheat Commission and Kansas Crop Improvement Association</strong><br>
