@@ -133,7 +133,6 @@ css="""
     }
 
 </style>
-
 """
 #allows rendering HTML
 #html is language for structuring webpages, css controls the look of html
