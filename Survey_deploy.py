@@ -105,23 +105,19 @@ st.markdown(
 #Define the color of form backgrounds
 css = """
 <style>
-    /* Global overrides to prevent dark mode */
+    /* Force light mode everywhere */
     html, body, .stApp {
         background-color: white !important;
         color: black !important;
     }
 
-    /* Form container */
+    /* Form background */
     [data-testid="stForm"] {
         background: rgb(170,194,206) !important;
         color: black !important;
     }
 
-    .stForm > div {
-        margin-bottom: 0px;
-    }
-
-    .stMarkdown p {
+    .stForm > div, .stMarkdown p {
         margin-bottom: 0px;
     }
 
@@ -140,39 +136,37 @@ css = """
         border-radius: 0 0 0.5rem 0.5rem;
     }
 
-    /* Input fields */
+    /* Text inputs and number inputs */
     input[type="text"],
     input[type="email"],
     input[type="number"],
     input[type="password"],
-    textarea,
-    select {
+    textarea {
         background-color: white !important;
         color: black !important;
         border: 1px solid #ccc !important;
     }
 
-    /* Streamlit specific input wrappers */
     .stTextInput input,
-    .stTextArea textarea,
-    .stNumberInput input {
+    .stNumberInput input,
+    .stTextArea textarea {
         background-color: white !important;
         color: black !important;
         border: 1px solid #ccc !important;
     }
 
-    /* Dropdowns and select boxes */
-    .stSelectbox div[data-baseweb="select"] {
+    /* Selectboxes and multiselects */
+    div[data-baseweb="select"] {
         background-color: white !important;
+        color: black !important;
+        border: 1px solid #ccc !important;
+    }
+
+    div[data-baseweb="select"] * {
         color: black !important;
     }
 
-    .stMultiSelect div[data-baseweb="select"] {
-        background-color: white !important;
-        color: black !important;
-    }
-
-    /* Checkbox and radio buttons */
+    /* Checkbox and radio label text */
     label[data-testid="stCheckbox"] {
         color: black !important;
     }
@@ -181,17 +175,26 @@ css = """
         color: black !important;
     }
 
+    /* Checkbox and radio box borders */
+    div[data-baseweb="checkbox"] > div,
+    div[data-baseweb="radio"] > div {
+        background-color: white !important;
+        border: 1px solid #999 !important;
+    }
+
     /* Secondary buttons */
-    button[kind="secondary"] {
+    button[kind="secondary"],
+    .stButton > button {
         background-color: white !important;
         color: black !important;
         border: 1px solid #ccc !important;
     }
 
-    /* Optional: override general button hover in dark mode */
-    button[kind="secondary"]:hover {
+    button[kind="secondary"]:hover,
+    .stButton > button:hover {
         background-color: #f0f0f0 !important;
     }
+
 </style>
 """
 
