@@ -141,10 +141,25 @@ css = """
         border-radius: 0 0 0.5rem 0.5rem;
     }
 
-    /* Optional: fix sidebar if in use */
-    section[data-testid="stSidebar"] {
+    /* Force text input, text area, and select box styles */
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    input[type="password"],
+    textarea,
+    select {
         background-color: white !important;
         color: black !important;
+        border: 1px solid #ccc !important;
+    }
+
+    /* Also target streamlit-specific input wrappers */
+    .stTextInput input,
+    .stTextArea textarea,
+    .stNumberInput input {
+        background-color: white !important;
+        color: black !important;
+        border: 1px solid #ccc !important;
     }
 </style>
 """
