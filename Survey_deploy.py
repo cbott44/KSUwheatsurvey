@@ -128,7 +128,7 @@ div[data-testid="stExpander"] > details > summary {
 
 /* Expander content */
 div[data-testid="stExpander"] > details > div {
-    background-color: #e6e6e6 !important;
+    background-color: #d3d3d3 !important;
     color: black !important;
     padding: 1rem;
     border-radius: 0 0 0.5rem 0.5rem;
