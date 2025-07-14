@@ -105,19 +105,36 @@ st.markdown(
 #Define the color of form backgrounds
 css = """
 <style>
-/* Force global light mode styles */
+/* ========== FORCE GLOBAL LIGHT MODE ========== */
 html, body, .stApp {
     background-color: white !important;
     color: black !important;
 }
 
-/* Form background */
+/* ========== FORM ========== */
 [data-testid="stForm"] {
     background: rgb(170,194,206) !important;
     color: black !important;
 }
 
-/* Inputs */
+/* ========== EXPANDERS ========== */
+/* Expander header */
+div[data-testid="stExpander"] > details > summary {
+    background-color: #e6e6e6 !important;
+    color: black !important;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+}
+
+/* Expander content */
+div[data-testid="stExpander"] > details > div {
+    background-color: #e6e6e6 !important;
+    color: black !important;
+    padding: 1rem;
+    border-radius: 0 0 0.5rem 0.5rem;
+}
+
+/* ========== INPUTS (TEXT/NUMERIC/AREA) ========== */
 input[type="text"],
 input[type="email"],
 input[type="number"],
@@ -136,7 +153,7 @@ textarea {
     border: 1px solid #ccc !important;
 }
 
-/* Selectbox (closed) and its dropdown */
+/* ========== SELECTBOX & MULTISELECT ========== */
 div[data-baseweb="select"] {
     background-color: white !important;
     color: black !important;
@@ -151,53 +168,52 @@ div[role="option"] {
     color: black !important;
 }
 
-/* Checkbox box */
-div[data-baseweb="checkbox"] div[role="checkbox"] {
+/* ========== CHECKBOXES ========== */
+div[data-baseweb="checkbox"] > div:first-child {
     background-color: white !important;
-    border: 1px solid #444 !important;
+    border: 1px solid #555 !important;
+}
+div[data-baseweb="checkbox"][aria-checked="true"] > div:first-child {
+    background-color: #ccc !important;
+}
+label[data-testid="stCheckbox"] {
+    color: black !important;
 }
 
-/* Checked checkbox */
-div[data-baseweb="checkbox"] div[role="checkbox"][aria-checked="true"] {
-    background-color: #cccccc !important;
-}
-
-/* Radio button circle */
+/* ========== RADIOS ========== */
 div[data-baseweb="radio"] div[role="radio"] {
     background-color: white !important;
     border: 2px solid #444 !important;
     border-radius: 50% !important;
 }
-
-/* Checked radio */
 div[data-baseweb="radio"] div[role="radio"][aria-checked="true"] {
-    background-color: #cccccc !important;
+    background-color: #ccc !important;
 }
-
-/* Checkbox/Radio label text */
-label[data-testid="stCheckbox"],
 div[data-testid="stRadio"] label {
     color: black !important;
 }
 
+/* ========== BUTTONS ========== */
+/* Primary button */
+button[kind="primary"],
+.stButton button[data-testid="baseButton-primary"] {
+    background-color: #247ba0 !important;
+    color: white !important;
+    border: none !important;
+}
+.stButton button[data-testid="baseButton-primary"]:hover {
+    background-color: #1a5c7a !important;
+}
+
 /* Secondary button */
-button[kind="secondary"] {
+button[kind="secondary"],
+.stButton button[data-testid="baseButton-secondary"] {
     background-color: white !important;
     color: black !important;
     border: 1px solid #888 !important;
 }
-button[kind="secondary"]:hover {
+.stButton button[data-testid="baseButton-secondary"]:hover {
     background-color: #f0f0f0 !important;
-}
-
-/* Primary button */
-button[kind="primary"] {
-    background-color: #247ba0 !important; /* adjust as needed */
-    color: white !important;
-    border: none !important;
-}
-button[kind="primary"]:hover {
-    background-color: #1a5c7a !important;
 }
 </style>
 """
