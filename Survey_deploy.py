@@ -118,12 +118,15 @@ html, body, .stApp {
 }
 
 /* ========== EXPANDERS ========== */
+/* Expander header */
 div[data-testid="stExpander"] > details > summary {
     background-color: #e6e6e6 !important;
     color: black !important;
     border-radius: 0.5rem;
     padding: 0.5rem;
 }
+
+/* Expander content */
 div[data-testid="stExpander"] > details > div {
     background-color: #e6e6e6 !important;
     color: black !important;
@@ -131,46 +134,44 @@ div[data-testid="stExpander"] > details > div {
     border-radius: 0 0 0.5rem 0.5rem;
 }
 
-/* ========== ALL INPUTS: TEXT/NUMERIC/AREA/SELECT ========== */
+/* ========== INPUTS (TEXT/NUMERIC/AREA) ========== */
 input[type="text"],
 input[type="email"],
 input[type="number"],
 input[type="password"],
-textarea,
+textarea {
+    background-color: white !important;
+    color: black !important;
+    border: 1px solid #ccc !important;
+}
+
 .stTextInput input,
 .stNumberInput input,
-.stTextArea textarea,
-div[data-baseweb="select"],
-div[data-baseweb="select"] *,
+.stTextArea textarea {
+    background-color: white !important;
+    color: black !important;
+    border: 1px solid #ccc !important;
+}
+
+/* ========== SELECTBOX & MULTISELECT ========== */
+div[data-baseweb="select"] {
+    background-color: white !important;
+    color: black !important;
+    border: 1px solid #ccc !important;
+}
+div[data-baseweb="select"] * {
+    background-color: white !important;
+    color: black !important;
+}
 div[role="option"] {
     background-color: white !important;
     color: black !important;
-    border: 1px solid #e6e6e6 !important;
-    box-shadow: none !important;
-    outline: none !important;
-    transition: border 0.2s ease-in-out;
-}
-
-/* ========== FORCE LIGHT BORDER ON HOVER/FOCUS (ALL INPUT TYPES) ========== */
-input[type="text"]:hover, input[type="text"]:focus,
-input[type="email"]:hover, input[type="email"]:focus,
-input[type="number"]:hover, input[type="number"]:focus,
-input[type="password"]:hover, input[type="password"]:focus,
-textarea:hover, textarea:focus,
-.stTextInput input:hover, .stTextInput input:focus,
-.stNumberInput input:hover, .stNumberInput input:focus,
-.stTextArea textarea:hover, .stTextArea textarea:focus,
-div[data-baseweb="select"]:hover, div[data-baseweb="select"]:focus-within,
-div[role="option"]:hover {
-    border: 1px solid #e6e6e6 !important;
-    box-shadow: none !important;
-    outline: none !important;
 }
 
 /* ========== CHECKBOXES ========== */
 div[data-baseweb="checkbox"] > div:first-child {
     background-color: white !important;
-    border: 1px solid #e6e6e6 !important;
+    border: 1px solid #555 !important;
 }
 div[data-baseweb="checkbox"][aria-checked="true"] > div:first-child {
     background-color: #ccc !important;
@@ -182,7 +183,7 @@ label[data-testid="stCheckbox"] {
 /* ========== RADIOS ========== */
 div[data-baseweb="radio"] div[role="radio"] {
     background-color: white !important;
-    border: 2px solid #e6e6e6 !important;
+    border: 2px solid #444 !important;
     border-radius: 50% !important;
 }
 div[data-baseweb="radio"] div[role="radio"][aria-checked="true"] {
@@ -209,14 +210,13 @@ button[kind="secondary"],
 .stButton button[data-testid="baseButton-secondary"] {
     background-color: white !important;
     color: black !important;
-    border: 1px solid #e6e6e6 !important;
+    border: 1px solid #888 !important;
 }
 .stButton button[data-testid="baseButton-secondary"]:hover {
     background-color: #f0f0f0 !important;
 }
 </style>
-"""
-
+""" 
 
 #allows rendering HTML
 #html is language for structuring webpages, css controls the look of html
