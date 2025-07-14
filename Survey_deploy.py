@@ -105,13 +105,13 @@ st.markdown(
 #Define the color of form backgrounds
 css = """
 <style>
-    /* Force global text and background color regardless of system dark mode */
+    /* Global overrides to prevent dark mode */
     html, body, .stApp {
         background-color: white !important;
         color: black !important;
     }
 
-    /* Style the form containers */
+    /* Form container */
     [data-testid="stForm"] {
         background: rgb(170,194,206) !important;
         color: black !important;
@@ -125,7 +125,7 @@ css = """
         margin-bottom: 0px;
     }
 
-    /* Expander header */
+    /* Expander styling */
     div[data-testid="stExpander"] > details > summary {
         background-color: #e6e6e6 !important;
         color: black !important;
@@ -133,7 +133,6 @@ css = """
         padding: 0.5rem;
     }
 
-    /* Expander content */
     div[data-testid="stExpander"] > details > div {
         background-color: #e6e6e6 !important;
         color: black !important;
@@ -141,7 +140,7 @@ css = """
         border-radius: 0 0 0.5rem 0.5rem;
     }
 
-    /* Force text input, text area, and select box styles */
+    /* Input fields */
     input[type="text"],
     input[type="email"],
     input[type="number"],
@@ -153,13 +152,45 @@ css = """
         border: 1px solid #ccc !important;
     }
 
-    /* Also target streamlit-specific input wrappers */
+    /* Streamlit specific input wrappers */
     .stTextInput input,
     .stTextArea textarea,
     .stNumberInput input {
         background-color: white !important;
         color: black !important;
         border: 1px solid #ccc !important;
+    }
+
+    /* Dropdowns and select boxes */
+    .stSelectbox div[data-baseweb="select"] {
+        background-color: white !important;
+        color: black !important;
+    }
+
+    .stMultiSelect div[data-baseweb="select"] {
+        background-color: white !important;
+        color: black !important;
+    }
+
+    /* Checkbox and radio buttons */
+    label[data-testid="stCheckbox"] {
+        color: black !important;
+    }
+
+    div[data-testid="stRadio"] label {
+        color: black !important;
+    }
+
+    /* Secondary buttons */
+    button[kind="secondary"] {
+        background-color: white !important;
+        color: black !important;
+        border: 1px solid #ccc !important;
+    }
+
+    /* Optional: override general button hover in dark mode */
+    button[kind="secondary"]:hover {
+        background-color: #f0f0f0 !important;
     }
 </style>
 """
