@@ -105,98 +105,99 @@ st.markdown(
 #Define the color of form backgrounds
 css = """
 <style>
-    /* Force light mode everywhere */
-    html, body, .stApp {
-        background-color: white !important;
-        color: black !important;
-    }
+/* Force light mode globally */
+html, body, .stApp {
+    background-color: white !important;
+    color: black !important;
+}
 
-    /* Form background */
-    [data-testid="stForm"] {
-        background: rgb(170,194,206) !important;
-        color: black !important;
-    }
+/* Form background */
+[data-testid="stForm"] {
+    background: rgb(170,194,206) !important;
+    color: black !important;
+}
 
-    .stForm > div, .stMarkdown p {
-        margin-bottom: 0px;
-    }
+/* Text input + text area */
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="password"],
+textarea {
+    background-color: white !important;
+    color: black !important;
+    border: 1px solid #ccc !important;
+}
 
-    /* Expander styling */
-    div[data-testid="stExpander"] > details > summary {
-        background-color: #e6e6e6 !important;
-        color: black !important;
-        border-radius: 0.5rem;
-        padding: 0.5rem;
-    }
+/* Streamlit-specific wrappers */
+.stTextInput input,
+.stNumberInput input,
+.stTextArea textarea {
+    background-color: white !important;
+    color: black !important;
+    border: 1px solid #ccc !important;
+}
 
-    div[data-testid="stExpander"] > details > div {
-        background-color: #e6e6e6 !important;
-        color: black !important;
-        padding: 1rem;
-        border-radius: 0 0 0.5rem 0.5rem;
-    }
+/* Selectbox dropdown menu & options */
+div[data-baseweb="select"] {
+    background-color: white !important;
+    color: black !important;
+    border: 1px solid #ccc !important;
+}
+div[data-baseweb="select"] div {
+    background-color: white !important;
+    color: black !important;
+}
 
-    /* Text inputs and number inputs */
-    input[type="text"],
-    input[type="email"],
-    input[type="number"],
-    input[type="password"],
-    textarea {
-        background-color: white !important;
-        color: black !important;
-        border: 1px solid #ccc !important;
-    }
+/* Force dropdown options to have white background */
+div[role="option"] {
+    background-color: white !important;
+    color: black !important;
+}
 
-    .stTextInput input,
-    .stNumberInput input,
-    .stTextArea textarea {
-        background-color: white !important;
-        color: black !important;
-        border: 1px solid #ccc !important;
-    }
+/* Checkbox box */
+div[data-baseweb="checkbox"] > div:first-child {
+    background-color: white !important;
+    border: 1px solid #444 !important;
+}
 
-    /* Selectboxes and multiselects */
-    div[data-baseweb="select"] {
-        background-color: white !important;
-        color: black !important;
-        border: 1px solid #ccc !important;
-    }
+/* Checked checkbox */
+div[data-baseweb="checkbox"] > div:first-child[aria-checked="true"] {
+    background-color: #ccc !important;
+}
 
-    div[data-baseweb="select"] * {
-        color: black !important;
-    }
+/* Radio button circle */
+div[data-baseweb="radio"] > div:first-child {
+    background-color: white !important;
+    border: 2px solid #444 !important;
+    border-radius: 50% !important;
+}
 
-    /* Checkbox and radio label text */
-    label[data-testid="stCheckbox"] {
-        color: black !important;
-    }
+/* Checked radio */
+div[data-baseweb="radio"] > div:first-child[aria-checked="true"] {
+    background-color: #ccc !important;
+}
 
-    div[data-testid="stRadio"] label {
-        color: black !important;
-    }
+/* Checkbox/Radio label */
+label[data-testid="stCheckbox"],
+div[data-testid="stRadio"] label {
+    color: black !important;
+}
 
-    /* Checkbox and radio box borders */
-    div[data-baseweb="checkbox"] > div,
-    div[data-baseweb="radio"] > div {
-        background-color: white !important;
-        border: 1px solid #999 !important;
-    }
+/* Secondary button */
+button[kind="secondary"],
+.stButton > button {
+    background-color: white !important;
+    color: black !important;
+    border: 1px solid #ccc !important;
+}
 
-    /* Secondary buttons */
-    button[kind="secondary"],
-    .stButton > button {
-        background-color: white !important;
-        color: black !important;
-        border: 1px solid #ccc !important;
-    }
-
-    button[kind="secondary"]:hover,
-    .stButton > button:hover {
-        background-color: #f0f0f0 !important;
-    }
-
+button[kind="secondary"]:hover,
+.stButton > button:hover {
+    background-color: #f0f0f0 !important;
+}
 </style>
 """
+
 
 #allows rendering HTML
 #html is language for structuring webpages, css controls the look of html
