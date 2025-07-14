@@ -105,7 +105,7 @@ st.markdown(
 #Define the color of form backgrounds
 css = """
 <style>
-/* Force light mode globally */
+/* Force global light mode styles */
 html, body, .stApp {
     background-color: white !important;
     color: black !important;
@@ -117,7 +117,7 @@ html, body, .stApp {
     color: black !important;
 }
 
-/* Text input + text area */
+/* Inputs */
 input[type="text"],
 input[type="email"],
 input[type="number"],
@@ -128,7 +128,6 @@ textarea {
     border: 1px solid #ccc !important;
 }
 
-/* Streamlit-specific wrappers */
 .stTextInput input,
 .stNumberInput input,
 .stTextArea textarea {
@@ -137,63 +136,68 @@ textarea {
     border: 1px solid #ccc !important;
 }
 
-/* Selectbox dropdown menu & options */
+/* Selectbox (closed) and its dropdown */
 div[data-baseweb="select"] {
     background-color: white !important;
     color: black !important;
     border: 1px solid #ccc !important;
 }
-div[data-baseweb="select"] div {
+div[data-baseweb="select"] * {
     background-color: white !important;
     color: black !important;
 }
-
-/* Force dropdown options to have white background */
 div[role="option"] {
     background-color: white !important;
     color: black !important;
 }
 
 /* Checkbox box */
-div[data-baseweb="checkbox"] > div:first-child {
+div[data-baseweb="checkbox"] div[role="checkbox"] {
     background-color: white !important;
     border: 1px solid #444 !important;
 }
 
 /* Checked checkbox */
-div[data-baseweb="checkbox"] > div:first-child[aria-checked="true"] {
-    background-color: #ccc !important;
+div[data-baseweb="checkbox"] div[role="checkbox"][aria-checked="true"] {
+    background-color: #cccccc !important;
 }
 
 /* Radio button circle */
-div[data-baseweb="radio"] > div:first-child {
+div[data-baseweb="radio"] div[role="radio"] {
     background-color: white !important;
     border: 2px solid #444 !important;
     border-radius: 50% !important;
 }
 
 /* Checked radio */
-div[data-baseweb="radio"] > div:first-child[aria-checked="true"] {
-    background-color: #ccc !important;
+div[data-baseweb="radio"] div[role="radio"][aria-checked="true"] {
+    background-color: #cccccc !important;
 }
 
-/* Checkbox/Radio label */
+/* Checkbox/Radio label text */
 label[data-testid="stCheckbox"],
 div[data-testid="stRadio"] label {
     color: black !important;
 }
 
 /* Secondary button */
-button[kind="secondary"],
-.stButton > button {
+button[kind="secondary"] {
     background-color: white !important;
     color: black !important;
-    border: 1px solid #ccc !important;
+    border: 1px solid #888 !important;
+}
+button[kind="secondary"]:hover {
+    background-color: #f0f0f0 !important;
 }
 
-button[kind="secondary"]:hover,
-.stButton > button:hover {
-    background-color: #f0f0f0 !important;
+/* Primary button */
+button[kind="primary"] {
+    background-color: #247ba0 !important; /* adjust as needed */
+    color: white !important;
+    border: none !important;
+}
+button[kind="primary"]:hover {
+    background-color: #1a5c7a !important;
 }
 </style>
 """
