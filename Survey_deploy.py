@@ -131,42 +131,40 @@ div[data-testid="stExpander"] > details > div {
     border-radius: 0 0 0.5rem 0.5rem;
 }
 
-/* ========== INPUTS (TEXT/NUMERIC/AREA) ========== */
+/* ========== ALL INPUTS: TEXT/NUMERIC/AREA/SELECT ========== */
 input[type="text"],
 input[type="email"],
 input[type="number"],
 input[type="password"],
-textarea {
-    background-color: white !important;
-    color: black !important;
-    border: 1px solid #e6e6e6 !important;
-    box-shadow: none !important;
-    outline: none !important;
-}
-
+textarea,
 .stTextInput input,
 .stNumberInput input,
-.stTextArea textarea {
-    background-color: white !important;
-    color: black !important;
-    border: 1px solid #e6e6e6 !important;
-    box-shadow: none !important;
-    outline: none !important;
-}
-
-/* ========== SELECTBOX & MULTISELECT ========== */
-div[data-baseweb="select"] {
-    background-color: white !important;
-    color: black !important;
-    border: 1px solid #e6e6e6 !important;
-}
-div[data-baseweb="select"] * {
-    background-color: white !important;
-    color: black !important;
-}
+.stTextArea textarea,
+div[data-baseweb="select"],
+div[data-baseweb="select"] *,
 div[role="option"] {
     background-color: white !important;
     color: black !important;
+    border: 1px solid #e6e6e6 !important;
+    box-shadow: none !important;
+    outline: none !important;
+    transition: border 0.2s ease-in-out;
+}
+
+/* ========== FORCE LIGHT BORDER ON HOVER/FOCUS (ALL INPUT TYPES) ========== */
+input[type="text"]:hover, input[type="text"]:focus,
+input[type="email"]:hover, input[type="email"]:focus,
+input[type="number"]:hover, input[type="number"]:focus,
+input[type="password"]:hover, input[type="password"]:focus,
+textarea:hover, textarea:focus,
+.stTextInput input:hover, .stTextInput input:focus,
+.stNumberInput input:hover, .stNumberInput input:focus,
+.stTextArea textarea:hover, .stTextArea textarea:focus,
+div[data-baseweb="select"]:hover, div[data-baseweb="select"]:focus-within,
+div[role="option"]:hover {
+    border: 1px solid #e6e6e6 !important;
+    box-shadow: none !important;
+    outline: none !important;
 }
 
 /* ========== CHECKBOXES ========== */
