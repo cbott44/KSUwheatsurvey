@@ -118,15 +118,12 @@ html, body, .stApp {
 }
 
 /* ========== EXPANDERS ========== */
-/* Expander header */
 div[data-testid="stExpander"] > details > summary {
     background-color: #e6e6e6 !important;
     color: black !important;
     border-radius: 0.5rem;
     padding: 0.5rem;
 }
-
-/* Expander content */
 div[data-testid="stExpander"] > details > div {
     background-color: #e6e6e6 !important;
     color: black !important;
@@ -142,7 +139,9 @@ input[type="password"],
 textarea {
     background-color: white !important;
     color: black !important;
-    border: 1px solid #ccc !important;
+    border: 1px solid #e6e6e6 !important;
+    box-shadow: none !important;
+    outline: none !important;
 }
 
 .stTextInput input,
@@ -150,14 +149,16 @@ textarea {
 .stTextArea textarea {
     background-color: white !important;
     color: black !important;
-    border: 1px solid #ccc !important;
+    border: 1px solid #e6e6e6 !important;
+    box-shadow: none !important;
+    outline: none !important;
 }
 
 /* ========== SELECTBOX & MULTISELECT ========== */
 div[data-baseweb="select"] {
     background-color: white !important;
     color: black !important;
-    border: 1px solid #ccc !important;
+    border: 1px solid #e6e6e6 !important;
 }
 div[data-baseweb="select"] * {
     background-color: white !important;
@@ -171,7 +172,7 @@ div[role="option"] {
 /* ========== CHECKBOXES ========== */
 div[data-baseweb="checkbox"] > div:first-child {
     background-color: white !important;
-    border: 1px solid #555 !important;
+    border: 1px solid #e6e6e6 !important;
 }
 div[data-baseweb="checkbox"][aria-checked="true"] > div:first-child {
     background-color: #ccc !important;
@@ -183,7 +184,7 @@ label[data-testid="stCheckbox"] {
 /* ========== RADIOS ========== */
 div[data-baseweb="radio"] div[role="radio"] {
     background-color: white !important;
-    border: 2px solid #444 !important;
+    border: 2px solid #e6e6e6 !important;
     border-radius: 50% !important;
 }
 div[data-baseweb="radio"] div[role="radio"][aria-checked="true"] {
@@ -210,7 +211,7 @@ button[kind="secondary"],
 .stButton button[data-testid="baseButton-secondary"] {
     background-color: white !important;
     color: black !important;
-    border: 1px solid #888 !important;
+    border: 1px solid #e6e6e6 !important;
 }
 .stButton button[data-testid="baseButton-secondary"]:hover {
     background-color: #f0f0f0 !important;
