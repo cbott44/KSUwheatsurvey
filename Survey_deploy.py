@@ -360,7 +360,7 @@ with options_form:
     options_form.markdown(
         """
         <div style='margin-bottom: -1000px;'>
-            <small style='color:gray;'>e.g. government 5 year flex plan, seasonally dry wells, etc.</small>
+            <span style='color:#444; font-size:0.95rem'>e.g. government 5 year flex plan, seasonally dry wells, etc.
         </div>
         """, 
         unsafe_allow_html=True
@@ -753,7 +753,7 @@ if not st.session_state.form_submitted:
              )
         
             left, middle, right = st.columns(3, vertical_alignment = "bottom")
-            new_data2['lime_time'] = left.text_input("time of applications (*early sept*)")
+            new_data2['lime_time'] = left.text_input("Time of Applications (*early sept*)")
             new_data2['lime_rate'] = middle.text_input("Rate (*ex:5000 lb/ac*)")
             new_data2['lime_product'] = right.text_input("Product (*ex:ECC*)")
 
@@ -764,7 +764,7 @@ if not st.session_state.form_submitted:
              )
         
             left, middle, right = st.columns(3, vertical_alignment = "bottom")
-            new_data2['P_time'] = left.text_input("time of applications (*planting*)")
+            new_data2['P_time'] = left.text_input("Time of Applications (*planting*)")
             new_data2['P_rate'] = middle.text_input("Rate (*ex:*)")
             new_data2['P_product'] = right.text_input("Product (*ex:*)")
 
@@ -775,7 +775,7 @@ if not st.session_state.form_submitted:
              )
         
             left, middle, right = st.columns(3, vertical_alignment = "bottom")
-            new_data2['K_time'] = left.text_input("time of applications (*fill*)")
+            new_data2['K_time'] = left.text_input("Time of Applications (*fill*)")
             new_data2['K_rate'] = middle.text_input("Rate (*fill*)")
             new_data2['K_product'] = right.text_input("Product (*fill*)")
 
@@ -786,7 +786,7 @@ if not st.session_state.form_submitted:
              )
         
             left, middle, right = st.columns(3, vertical_alignment = "bottom")
-            new_data2['N_time'] = left.text_input("time of applications (*top dress at greenup*)")
+            new_data2['N_time'] = left.text_input("Time of Applications (*top dress at greenup*)")
             new_data2['N_rate'] = middle.text_input("Rate (*ex:60 lb/ac*)")
             new_data2['N_product'] = right.text_input("Product (*ex: UAN*)")
 
@@ -797,7 +797,7 @@ if not st.session_state.form_submitted:
              )
         
             left, middle, right = st.columns(3, vertical_alignment = "bottom")
-            new_data2['micro_time'] = left.text_input("time of applications")
+            new_data2['micro_time'] = left.text_input("Time of Applications")
             new_data2['micro_rate'] = middle.text_input("Rate")
             new_data2['micro_product'] = right.text_input("Product")
         
@@ -1286,7 +1286,7 @@ if st.session_state.form2_visible:
 
             st.markdown("Describe any events that may have significantly impacted yield")
             st.markdown(
-                "<small style='color:gray;'>e.g. Stripe rust impacted 20% of field</small>",
+               "<span style='color: #444; font-size: 0.95rem;'>e.g. Stripe rust impacted 20% of field</span>",
                 unsafe_allow_html=True
                  )
             new_data3['impacting_events'] = st.text_input("", key = 'impacting2')
