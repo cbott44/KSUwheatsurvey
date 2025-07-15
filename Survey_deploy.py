@@ -836,7 +836,7 @@ if not st.session_state.form_submitted:
             st.markdown("<hr>", unsafe_allow_html=True) 
             st.markdown("**Irrigation Management**")
             st.markdown(
-            "<small style='color:gray;'>Complete the following questions if this field recieved irrigation</small>",
+            "<span style='color:#444;font-size:0.95rem;'>Complete the following questions if this field recieved irrigation",
             unsafe_allow_html=True
              )
             st.markdown("")
