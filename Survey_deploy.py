@@ -716,7 +716,7 @@ if not st.session_state.form_submitted:
 
             st.markdown("Describe any events that may have significantly impacted yield")
             st.markdown(
-                "<span, style='color:#444:gray;font-size:0.95rem'>e.g. Stripe rust impacted 20% of field",
+                "<span, style='color:#444;font-size:0.95rem'>e.g. Stripe rust impacted 20% of field",
                 unsafe_allow_html=True
                  )
             new_data2['impacting_events'] = st.text_area("", height = 68)
