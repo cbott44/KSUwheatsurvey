@@ -447,7 +447,7 @@ if add_data:
     dbx.files_upload(csv_buffer.getvalue().encode(), producer_FILE_PATH, mode=dropbox.files.WriteMode("overwrite"))
 
     #Display updated file
-    st.write(df) 
+    #st.write(df) 
 
 
 #clear form instead of submitting
@@ -980,7 +980,7 @@ if not st.session_state.form_submitted:
             placeholder.empty()  
             st.rerun() 
             #Display updated file
-            st.write(df2) 
+           # st.write(df2) 
 
 #finish       
     if finish:
@@ -1025,7 +1025,7 @@ if not st.session_state.form_submitted:
             df2.to_csv(csv_buffer2, index=False)
             dbx.files_upload(csv_buffer2.getvalue().encode(), field_FILE_PATH, mode=dropbox.files.WriteMode("overwrite"))
             
-            st.write(df2)
+            #st.write(df2)
 
 
 #=====================================================================================================================================================
@@ -1542,7 +1542,7 @@ if st.session_state.form2_visible:
             placeholder.empty()  
             st.rerun() 
             #Display updated file
-            st.write(df2) 
+            #st.write(df2) 
 
 #finish       
     if finish2:
@@ -1592,7 +1592,7 @@ if st.session_state.form2_visible:
             #st.rerun() 
         
             #Display updated file
-            st.write(df2) 
+            #st.write(df2) 
 
 
 
