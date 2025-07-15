@@ -398,7 +398,7 @@ with options_form:
     
     #submit buttons
     add_data = options_form.form_submit_button("Submit", type = "primary") #type controls the look
-    clear_form = options_form.form_submit_button("Clear form", type = "secondary")
+   # clear_form = options_form.form_submit_button("Clear form", type = "secondary")
     
     #Keep message within form bounds
     #CSS for formatting
@@ -451,8 +451,8 @@ if add_data:
 
 
 #clear form instead of submitting
-if clear_form:
-    st.rerun()  # Reruns the script and resets everything
+#if clear_form:
+#   st.rerun()  # Reruns the script and resets everything
 
 #============================================================================================================================================
 #Form 2 - Field 1 Information
