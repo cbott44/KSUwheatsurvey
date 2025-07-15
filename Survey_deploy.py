@@ -818,7 +818,7 @@ if not st.session_state.form_submitted:
         
             left, right = st.columns(2, vertical_alignment = "bottom")
             new_data2['insecticide_freq'] = right.text_input("Number of Applications ")
-            new_data2['insecticide_time'] = left.text_input("Time of Applications")
+            new_data2['insecticide_time'] = left.text_input("Time of Applications ")
 
             st.markdown(
             "<small style='color:black;'>Herbicide Use? (if yes...)</small>",
