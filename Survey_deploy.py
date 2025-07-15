@@ -103,124 +103,124 @@ st.markdown(
 )
 
 #Define the color of form backgrounds
-css = """
-<style>
-/* ========== FORCE GLOBAL LIGHT MODE ========== */
-html, body, .stApp {
-    background-color: white !important;
-    color: black !important;
-}
+# css = """
+# <style>
+# /* ========== FORCE GLOBAL LIGHT MODE ========== */
+# html, body, .stApp {
+#     background-color: white !important;
+#     color: black !important;
+# }
 
-/* ========== FORM ========== */
-[data-testid="stForm"] {
-    background: rgb(170,194,206) !important;
-    color: black !important;
-}
+# /* ========== FORM ========== */
+# [data-testid="stForm"] {
+#     background: rgb(170,194,206) !important;
+#     color: black !important;
+# }
 
-/* ========== EXPANDERS ========== */
-/* Expander header */
-div[data-testid="stExpander"] > details > summary {
-    background-color: #e6e6e6 !important;
-    color: black !important;
-    border-radius: 0.5rem;
-    padding: 0.5rem;
-}
+# /* ========== EXPANDERS ========== */
+# /* Expander header */
+# div[data-testid="stExpander"] > details > summary {
+#     background-color: #e6e6e6 !important;
+#     color: black !important;
+#     border-radius: 0.5rem;
+#     padding: 0.5rem;
+# }
 
-/* Expander content */
-div[data-testid="stExpander"] > details > div {
-    background-color: #e6e6e6 !important;
-    color: black !important;
-    padding: 1rem;
-    border-radius: 0 0 0.5rem 0.5rem;
-}
+# /* Expander content */
+# div[data-testid="stExpander"] > details > div {
+#     background-color: #e6e6e6 !important;
+#     color: black !important;
+#     padding: 1rem;
+#     border-radius: 0 0 0.5rem 0.5rem;
+# }
 
-/* ========== INPUTS (TEXT/NUMERIC/AREA) ========== */
-input[type="text"],
-input[type="email"],
-input[type="number"],
-input[type="password"],
-textarea {
-    background-color: white !important;
-    color: black !important;
-    border: 1px solid #ccc !important;
-}
+# /* ========== INPUTS (TEXT/NUMERIC/AREA) ========== */
+# input[type="text"],
+# input[type="email"],
+# input[type="number"],
+# input[type="password"],
+# textarea {
+#     background-color: white !important;
+#     color: black !important;
+#     border: 1px solid #ccc !important;
+# }
 
-.stTextInput input,
-.stNumberInput input,
-.stTextArea textarea {
-    background-color: white !important;
-    color: black !important;
-    border: 1px solid #ccc !important;
-}
+# .stTextInput input,
+# .stNumberInput input,
+# .stTextArea textarea {
+#     background-color: white !important;
+#     color: black !important;
+#     border: 1px solid #ccc !important;
+# }
 
-/* ========== SELECTBOX & MULTISELECT ========== */
-div[data-baseweb="select"] {
-    background-color: white !important;
-    color: black !important;
-    border: 1px solid #ccc !important;
-}
-div[data-baseweb="select"] * {
-    background-color: white !important;
-    color: black !important;
-}
-div[role="option"] {
-    background-color: white !important;
-    color: black !important;
-}
+# /* ========== SELECTBOX & MULTISELECT ========== */
+# div[data-baseweb="select"] {
+#     background-color: white !important;
+#     color: black !important;
+#     border: 1px solid #ccc !important;
+# }
+# div[data-baseweb="select"] * {
+#     background-color: white !important;
+#     color: black !important;
+# }
+# div[role="option"] {
+#     background-color: white !important;
+#     color: black !important;
+# }
 
-/* ========== CHECKBOXES ========== */
-div[data-baseweb="checkbox"] > div:first-child {
-    background-color: white !important;
-    border: 1px solid #555 !important;
-}
-div[data-baseweb="checkbox"][aria-checked="true"] > div:first-child {
-    background-color: #ccc !important;
-}
-label[data-testid="stCheckbox"] {
-    color: black !important;
-}
+# /* ========== CHECKBOXES ========== */
+# div[data-baseweb="checkbox"] > div:first-child {
+#     background-color: white !important;
+#     border: 1px solid #555 !important;
+# }
+# div[data-baseweb="checkbox"][aria-checked="true"] > div:first-child {
+#     background-color: #ccc !important;
+# }
+# label[data-testid="stCheckbox"] {
+#     color: black !important;
+# }
 
-/* ========== RADIOS ========== */
-div[data-baseweb="radio"] div[role="radio"] {
-    background-color: white !important;
-    border: 2px solid #444 !important;
-    border-radius: 50% !important;
-}
-div[data-baseweb="radio"] div[role="radio"][aria-checked="true"] {
-    background-color: #ccc !important;
-}
-div[data-testid="stRadio"] label {
-    color: black !important;
-}
+# /* ========== RADIOS ========== */
+# div[data-baseweb="radio"] div[role="radio"] {
+#     background-color: white !important;
+#     border: 2px solid #444 !important;
+#     border-radius: 50% !important;
+# }
+# div[data-baseweb="radio"] div[role="radio"][aria-checked="true"] {
+#     background-color: #ccc !important;
+# }
+# div[data-testid="stRadio"] label {
+#     color: black !important;
+# }
 
-/* ========== BUTTONS ========== */
-/* Primary button */
-button[kind="primary"],
-.stButton button[data-testid="baseButton-primary"] {
-    background-color: #247ba0 !important;
-    color: white !important;
-    border: none !important;
-}
-.stButton button[data-testid="baseButton-primary"]:hover {
-    background-color: #1a5c7a !important;
-}
+# /* ========== BUTTONS ========== */
+# /* Primary button */
+# button[kind="primary"],
+# .stButton button[data-testid="baseButton-primary"] {
+#     background-color: #247ba0 !important;
+#     color: white !important;
+#     border: none !important;
+# }
+# .stButton button[data-testid="baseButton-primary"]:hover {
+#     background-color: #1a5c7a !important;
+# }
 
-/* Secondary button */
-button[kind="secondary"],
-.stButton button[data-testid="baseButton-secondary"] {
-    background-color: white !important;
-    color: black !important;
-    border: 1px solid #888 !important;
-}
-.stButton button[data-testid="baseButton-secondary"]:hover {
-    background-color: #f0f0f0 !important;
-}
-</style>
-""" 
+# /* Secondary button */
+# button[kind="secondary"],
+# .stButton button[data-testid="baseButton-secondary"] {
+#     background-color: white !important;
+#     color: black !important;
+#     border: 1px solid #888 !important;
+# }
+# .stButton button[data-testid="baseButton-secondary"]:hover {
+#     background-color: #f0f0f0 !important;
+# }
+# </style>
+# """ 
 
-#allows rendering HTML
-#html is language for structuring webpages, css controls the look of html
-st.write(css, unsafe_allow_html=True)
+# #allows rendering HTML
+# #html is language for structuring webpages, css controls the look of html
+# st.write(css, unsafe_allow_html=True)
 
 #============================================================================================================================================
 #Form 1 - Producer Information
