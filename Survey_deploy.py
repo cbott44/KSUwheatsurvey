@@ -587,8 +587,8 @@ if not st.session_state.form_submitted:
                 st.link_button("Go to google maps", "https://www.google.com/maps/@39.1876134,-96.567296,2926m/data=!3m1!1e3?entry=ttu&g_ep=EgoyMDI1MDQyMS4wIKXMDSoASAFQAw%3D%3D")
 
                 left, right = st.columns(2, vertical_alignment = "bottom")
-                new_data2['lat'] = left.text_input("Latitude (*5+ decimal places*)")
-                new_data2['long'] = right.text_input("Longitude")
+                new_data2['lat'] = left.text_input("Latitude (* ex: 39.19303*)")
+                new_data2['long'] = right.text_input("Longitude (* ex: -96.58548*)")
            
             with st.expander("County and Rd Intersections"):
                 st.markdown("")
