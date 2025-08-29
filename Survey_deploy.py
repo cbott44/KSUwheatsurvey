@@ -430,6 +430,9 @@ new_data2 = {
     'manure_rate':"",
     'preplant':"",
     'fall':"",
+    'greenup':"",
+    'late_season':"",
+    'post_harvest':"",
     # 'lime_time':"",
     # 'lime_rate':"",
     # 'lime_product':"",
@@ -732,14 +735,29 @@ if not st.session_state.form_submitted:
             # Pre-Plant / At Seeding
             with st.expander("Pre-Plant / At Seeding"):
                 st.markdown("list the **Product; Rate; Time of Application** for each input")
-                new_data2['preplant'] = st.text_input("example1")
+                new_data2['preplant'] = st.text_input("ex: 18-46-00 DAP; 50lb/ac; in-furrow")
             
             # Fall (after planting - pre-dormancy)
             with st.expander("Fall (after planting - pre-dormancy)"):
                 st.markdown("list the **Product; Rate; Time of Application** for each input")
-                new_data2['fall'] = st.text_input("example2")
+                new_data2['fall'] = st.text_input("ex: 2,4-D Amine; 0.5 pt/acre; late November")
+            
+            # Green up
+            with st.expander("Green-up/Top Dress"):
+                st.markdown("list the **Product; Rate; Time of Application** for each input")
+                new_data2['greenup'] = st.text_input("ex: UAN; 40 lb N/acre; late March")
+            
+            # Late Season
+            with st.expander("Flag leaf - Heading"):
+                st.markdown("list the **Product; Rate; Time of Application** for each input")
+                new_data2['late_season'] = st.text_input("ex: Folicur (tebuconazole); 6 fl oz/acre; late April")
 
+            # Post-harvest
+            with st.expander("Post Harvest"):
+                st.markdown("list the **Product; Rate; Time of Application** for each input")
+                new_data2['post_harvest'] = st.text_input("ex: Glyphosate; 1 qt/acre; 3 days after harvest")
 
+        
             # st.markdown(
             # "<small style='color:black;'>Fungicide Use? (if yes...)</small>",
             # unsafe_allow_html=True
