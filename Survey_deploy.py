@@ -429,6 +429,7 @@ new_data2 = {
     'manure_freq':"",
     'manure_rate':"",
     'preplant':"",
+    'fall':"",
     # 'lime_time':"",
     # 'lime_rate':"",
     # 'lime_product':"",
@@ -725,13 +726,19 @@ if not st.session_state.form_submitted:
             # new_data2['micro_rate'] = middle.text_input("Rate")
             # new_data2['micro_product'] = right.text_input("Product")
         
-            st.markdown("**List ALL inputs applied in each phase of the season** *(Fertilizers, Fungicides, Herbicides, Pesticides etc)*")
-            
+            st.markdown("**List all inputs applied in each phase of the season** *(Fertilizers, Fungicides, Herbicides, Pesticides etc)*")
             st.markdown("<small style='color:black;'>Pre-Plant/At Seeding</small>", unsafe_allow_html=True)
-            
-            new_data2["preplant"] = st.text_area("Include product, rate, and time of application for each input")
+
+        #preplant/at seeding
+            with st.expander("Pre-Plant/at Seeding"):
+                new_data2['preplant'] =st.text_input("list product;rate;time of application for each input")
+
+        #fall
+            with st.expander("Fall (after planting-pre-dormancy"):
+                new_data2['fall'] =st.text_input("list product;rate;time of application for each input")
 
 
+        
             # st.markdown(
             # "<small style='color:black;'>Fungicide Use? (if yes...)</small>",
             # unsafe_allow_html=True
