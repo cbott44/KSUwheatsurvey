@@ -729,13 +729,16 @@ if not st.session_state.form_submitted:
             st.markdown("**List all inputs applied in each phase of the season** *(Fertilizers, Fungicides, Herbicides, Pesticides etc)*")
             st.markdown("<small style='color:black;'>Pre-Plant/At Seeding</small>", unsafe_allow_html=True)
 
-        #preplant/at seeding
-            with st.expander("Pre-Plant/at Seeding"):
-                new_data2['preplant'] =st.text_input("list product;rate;time of application for each input")
+            # Pre-Plant / At Seeding
+            with st.expander("Pre-Plant / At Seeding"):
+                st.markdown("list **Product; Rate; Time of Application** for each input")
+                new_data2['preplant'] = st.text_input("")
+            
+            # Fall (after planting - pre-dormancy)
+            with st.expander("Fall (after planting - pre-dormancy)"):
+                st.markdown("list **Product; Rate; Time of Application** for each input")
+                new_data2['fall'] = st.text_input("")
 
-        #fall
-            with st.expander("Fall (after planting-pre-dormancy"):
-                new_data2['fall'] =st.text_input("list product;rate;time of application for each input")
 
 
         
