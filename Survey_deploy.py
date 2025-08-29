@@ -428,27 +428,28 @@ new_data2 = {
     'furrow_fert_rate':"",
     'manure_freq':"",
     'manure_rate':"",
-    'lime_time':"",
-    'lime_rate':"",
-    'lime_product':"",
-    'P_time':"",
-    'P_rate':"",
-    'P_product':"",
-    'K_time':"",
-    'K_rate':"",
-    'K_product':"",
-    'N_time':"",
-    'N_rate':"",
-    'N_product':"",
-    'micro_time':"",
-    'micro_rate':"",
-    'micro_product':"",
-    'fungicide_freq':"",
-    'fungicide_time':"",
-    'insecticide_freq':"",
-    'insecticide_time':"",
-    'herbicide_freq':"",
-    'herbicide_time':"",
+    'preplant':"",
+    # 'lime_time':"",
+    # 'lime_rate':"",
+    # 'lime_product':"",
+    # 'P_time':"",
+    # 'P_rate':"",
+    # 'P_product':"",
+    # 'K_time':"",
+    # 'K_rate':"",
+    # 'K_product':"",
+    # 'N_time':"",
+    # 'N_rate':"",
+    # 'N_product':"",
+    # 'micro_time':"",
+    # 'micro_rate':"",
+    # 'micro_product':"",
+    # 'fungicide_freq':"",
+    # 'fungicide_time':"",
+    # 'insecticide_freq':"",
+    # 'insecticide_time':"",
+    # 'herbicide_freq':"",
+    # 'herbicide_time':"",
     'irr_decision':"",
     'irr_type':"",
     'system_config':"",
@@ -646,18 +647,8 @@ if not st.session_state.form_submitted:
        #------------------------------------------------------------------------------------------------#
             st.markdown("<hr>", unsafe_allow_html=True)  #line
             st.markdown("**Inputs**")
-            
             #Inputs
-            #furrow fertilizer
-            st.markdown(
-            "<small style='color:black;'>In-Furrow Fertilizer? (if yes...)</small>",
-            unsafe_allow_html=True
-             )
-        
-            left, right = st.columns(2, vertical_alignment = "bottom")
-            new_data2['furrow_fert_product'] = right.text_input("Product (*ex:18-46-00 DAP*)")
-            new_data2['furrow_fert_rate'] = left.text_input("Rate (*ex: 30 lbs/ac*)")
-            
+
             #manure
             st.markdown(
             "<small style='color:black;'>Manure Use? (if yes...)</small>",
@@ -668,88 +659,108 @@ if not st.session_state.form_submitted:
             new_data2['manure_freq'] = right.text_input("Frequency (*every other year*)")
             new_data2['manure_rate'] = left.text_input("Rate (*ex:30t/ac*)")
 
-            #lime
-            st.markdown(
-            "<small style='color:black;'>Lime? (if yes...)</small>",
-            unsafe_allow_html=True
-             )
         
-            left, middle, right = st.columns(3, vertical_alignment = "bottom")
-            new_data2['lime_time'] = left.text_input("Time of Applications (*early sept*)")
-            new_data2['lime_rate'] = middle.text_input("Rate (*ex:5000 lb/ac*)")
-            new_data2['lime_product'] = right.text_input("Product (*ex:ECC*)")
+            # #furrow fertilizer
+            # st.markdown(
+            # "<small style='color:black;'>In-Furrow Fertilizer? (if yes...)</small>",
+            # unsafe_allow_html=True
+            #  )
+        
+            # left, right = st.columns(2, vertical_alignment = "bottom")
+            # new_data2['furrow_fert_product'] = right.text_input("Product (*ex:18-46-00 DAP*)")
+            # new_data2['furrow_fert_rate'] = left.text_input("Rate (*ex: 30 lbs/ac*)")
+            
+            # #lime
+            # st.markdown(
+            # "<small style='color:black;'>Lime? (if yes...)</small>",
+            # unsafe_allow_html=True
+            #  )
+        
+            # left, middle, right = st.columns(3, vertical_alignment = "bottom")
+            # new_data2['lime_time'] = left.text_input("Time of Applications (*early sept*)")
+            # new_data2['lime_rate'] = middle.text_input("Rate (*ex:5000 lb/ac*)")
+            # new_data2['lime_product'] = right.text_input("Product (*ex:ECC*)")
 
-            #Phosphorus
-            st.markdown(
-            "<small style='color:black;'>Phosphorus (P)? (if yes...)</small>",
-            unsafe_allow_html=True
-             )
+            # #Phosphorus
+            # st.markdown(
+            # "<small style='color:black;'>Phosphorus (P)? (if yes...)</small>",
+            # unsafe_allow_html=True
+            #  )
         
-            left, middle, right = st.columns(3, vertical_alignment = "bottom")
-            new_data2['P_time'] = left.text_input("Time of Applications (*planting*)")
-            new_data2['P_rate'] = middle.text_input("Rate (*ex:*)")
-            new_data2['P_product'] = right.text_input("Product (*ex:*)")
+            # left, middle, right = st.columns(3, vertical_alignment = "bottom")
+            # new_data2['P_time'] = left.text_input("Time of Applications (*planting*)")
+            # new_data2['P_rate'] = middle.text_input("Rate (*ex:*)")
+            # new_data2['P_product'] = right.text_input("Product (*ex:*)")
 
-            #Potassium
-            st.markdown(
-            "<small style='color:black;'>Potassium (K)? (if yes...)</small>",
-            unsafe_allow_html=True
-             )
+            # #Potassium
+            # st.markdown(
+            # "<small style='color:black;'>Potassium (K)? (if yes...)</small>",
+            # unsafe_allow_html=True
+            #  )
         
-            left, middle, right = st.columns(3, vertical_alignment = "bottom")
-            new_data2['K_time'] = left.text_input("Time of Applications (*fill*)")
-            new_data2['K_rate'] = middle.text_input("Rate (*fill*)")
-            new_data2['K_product'] = right.text_input("Product (*fill*)")
+            # left, middle, right = st.columns(3, vertical_alignment = "bottom")
+            # new_data2['K_time'] = left.text_input("Time of Applications (*fill*)")
+            # new_data2['K_rate'] = middle.text_input("Rate (*fill*)")
+            # new_data2['K_product'] = right.text_input("Product (*fill*)")
 
-            #Nitrogen
-            st.markdown(
-            "<small style='color:black;'>Nitrogen (N)? (if yes...)</small>",
-            unsafe_allow_html=True
-             )
+            # #Nitrogen
+            # st.markdown(
+            # "<small style='color:black;'>Nitrogen (N)? (if yes...)</small>",
+            # unsafe_allow_html=True
+            #  )
         
-            left, middle, right = st.columns(3, vertical_alignment = "bottom")
-            new_data2['N_time'] = left.text_input("Time of Applications (*top dress at greenup*)")
-            new_data2['N_rate'] = middle.text_input("Rate (*ex:60 lb/ac*)")
-            new_data2['N_product'] = right.text_input("Product (*ex: UAN*)")
+            # left, middle, right = st.columns(3, vertical_alignment = "bottom")
+            # new_data2['N_time'] = left.text_input("Time of Applications (*top dress at greenup*)")
+            # new_data2['N_rate'] = middle.text_input("Rate (*ex:60 lb/ac*)")
+            # new_data2['N_product'] = right.text_input("Product (*ex: UAN*)")
 
-            #Micronutrients
+            # #Micronutrients
+            # st.markdown(
+            # "<small style='color:black;'>Micronutrients? (if yes...)</small>",
+            # unsafe_allow_html=True
+            #  )
+        
+            # left, middle, right = st.columns(3, vertical_alignment = "bottom")
+            # new_data2['micro_time'] = left.text_input("Time of Applications")
+            # new_data2['micro_rate'] = middle.text_input("Rate")
+            # new_data2['micro_product'] = right.text_input("Product")
+        
+            st.markdown("**List ALL inputs applied in each phase of the season** *(Fertilizers, Fungicides, Herbicides, Pesticides etc)*")
+            
             st.markdown(
-            "<small style='color:black;'>Micronutrients? (if yes...)</small>",
+            "<small style='color:black;'Pre-Plant/At Seeding'</small>",
             unsafe_allow_html=True
              )
-        
-            left, middle, right = st.columns(3, vertical_alignment = "bottom")
-            new_data2['micro_time'] = left.text_input("Time of Applications")
-            new_data2['micro_rate'] = middle.text_input("Rate")
-            new_data2['micro_product'] = right.text_input("Product")
-        
 
-            st.markdown(
-            "<small style='color:black;'>Fungicide Use? (if yes...)</small>",
-            unsafe_allow_html=True
-             )
-        
-            left, right = st.columns(2, vertical_alignment = "bottom")
-            new_data2['fungicide_freq'] = right.text_input("Number of Applications")
-            new_data2['fungicide_time'] = left.text_input("Time of Applications (*ex: boot stage*)")
+            new_data2["preplant"]= text.input("Include product, rate, and time of application for each input")        
 
-            st.markdown(
-            "<small style='color:black;'>Insecticide Use? (if yes...)</small>",
-            unsafe_allow_html=True
-             )
+            # st.markdown(
+            # "<small style='color:black;'>Fungicide Use? (if yes...)</small>",
+            # unsafe_allow_html=True
+            #  )
         
-            left, right = st.columns(2, vertical_alignment = "bottom")
-            new_data2['insecticide_freq'] = right.text_input("Number of Applications ")
-            new_data2['insecticide_time'] = left.text_input("Time of Applications ")
+            # left, right = st.columns(2, vertical_alignment = "bottom")
+            # new_data2['fungicide_freq'] = right.text_input("Number of Applications")
+            # new_data2['fungicide_time'] = left.text_input("Time of Applications (*ex: boot stage*)")
 
-            st.markdown(
-            "<small style='color:black;'>Herbicide Use? (if yes...)</small>",
-            unsafe_allow_html=True
-             )
+            # st.markdown(
+            # "<small style='color:black;'>Insecticide Use? (if yes...)</small>",
+            # unsafe_allow_html=True
+            #  )
         
-            left, right = st.columns(2, vertical_alignment = "bottom")
-            new_data2['herbicide_freq'] = right.text_input("Number of Applications  ")
-            new_data2['herbicide_time'] = left.text_input("Time of Applications (*ex: pre-harvest*)")
+            # left, right = st.columns(2, vertical_alignment = "bottom")
+            # new_data2['insecticide_freq'] = right.text_input("Number of Applications ")
+            # new_data2['insecticide_time'] = left.text_input("Time of Applications ")
+
+            # st.markdown(
+            # "<small style='color:black;'>Herbicide Use? (if yes...)</small>",
+            # unsafe_allow_html=True
+            #  )
+        
+            # left, right = st.columns(2, vertical_alignment = "bottom")
+            # new_data2['herbicide_freq'] = right.text_input("Number of Applications  ")
+            # new_data2['herbicide_time'] = left.text_input("Time of Applications (*ex: pre-harvest*)")
+        
 
                 #------------------------------------------------------------------------------------------------#
             #Irrigation    
