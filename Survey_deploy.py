@@ -640,17 +640,17 @@ if not st.session_state.form_submitted:
 
             # Manure
             st.markdown(
-                "<p style='font-size:14px; margin-bottom:4px;'>Manure Use? (if yes...)</p>",
+                "<p style='font-size:16px; margin-bottom:4px;'>Manure Use? (if yes...)</p>",
                 unsafe_allow_html=True
             )
             
             # Columns
             left, right = st.columns(2)
             new_data2['manure_rate'] = left.text_input("Rate (*ex: 30t/ac*)")
-            new_data2['manure_freq'] = right.text_input("Frequency (*every other year*)")
+            new_data2['manure_freq'] = right.text_input("Frequency (*ex: every other year*)")
             st.markdown("")
         
-            st.markdown("**List all inputs used in each part of the season** *(Fertilizers, Fungicides, Herbicides, Pesticides etc)*")
+            st.markdown("List inputs used in each part of the season *(Fertilizers, Fungicides, Herbicides, Pesticides etc)*")
             
             # Pre-Plant / At Seeding
             with st.expander("Pre-Plant / At Seeding"):
