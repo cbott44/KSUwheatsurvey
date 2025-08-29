@@ -654,7 +654,7 @@ if not st.session_state.form_submitted:
             
             # Pre-Plant / At Seeding
             with st.expander("Pre-Plant / At Seeding"):
-                st.markdown("list **Product; Rate; Time of Application** for each input, list mulitple inputs if relevant")
+                st.markdown("**Product; Rate; Time of Application**, list mulitple inputs when applicable")
                 new_data2['preplant'] = st.text_input("ex: 18-46-00 DAP; 50lb/ac; in-furrow")
             
             # Fall (after planting - pre-dormancy)
