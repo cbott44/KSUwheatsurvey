@@ -433,21 +433,6 @@ new_data2 = {
     'greenup':"",
     'late_season':"",
     'post_harvest':"",
-    # 'lime_time':"",
-    # 'lime_rate':"",
-    # 'lime_product':"",
-    # 'P_time':"",
-    # 'P_rate':"",
-    # 'P_product':"",
-    # 'K_time':"",
-    # 'K_rate':"",
-    # 'K_product':"",
-    # 'N_time':"",
-    # 'N_rate':"",
-    # 'N_product':"",
-    # 'micro_time':"",
-    # 'micro_rate':"",
-    # 'micro_product':"",
     # 'fungicide_freq':"",
     # 'fungicide_time':"",
     # 'insecticide_freq':"",
@@ -653,85 +638,20 @@ if not st.session_state.form_submitted:
             st.markdown("**Inputs**")
             #Inputs
 
-            #manure
+            # Manure
             st.markdown(
-            "<small style='color:black;'>Manure Use? (if yes...)</small>",
-            unsafe_allow_html=True
-             )
-        
-            left, right = st.columns(2, vertical_alignment = "bottom")
-            new_data2['manure_freq'] = right.text_input("Frequency (*every other year*)")
-            new_data2['manure_rate'] = left.text_input("Rate (*ex:30t/ac*)")
-
-        
-            # #furrow fertilizer
-            # st.markdown(
-            # "<small style='color:black;'>In-Furrow Fertilizer? (if yes...)</small>",
-            # unsafe_allow_html=True
-            #  )
-        
-            # left, right = st.columns(2, vertical_alignment = "bottom")
-            # new_data2['furrow_fert_product'] = right.text_input("Product (*ex:18-46-00 DAP*)")
-            # new_data2['furrow_fert_rate'] = left.text_input("Rate (*ex: 30 lbs/ac*)")
+                "<p style='font-size:14px; margin-bottom:4px;'>Manure Use? (if yes...)</p>",
+                unsafe_allow_html=True
+            )
             
-            # #lime
-            # st.markdown(
-            # "<small style='color:black;'>Lime? (if yes...)</small>",
-            # unsafe_allow_html=True
-            #  )
+            # Columns
+            left, right = st.columns(2)
+            new_data2['manure_rate'] = left.text_input("Rate (*ex: 30t/ac*)")
+            new_data2['manure_freq'] = right.text_input("Frequency (*every other year*)")
+            st.markdown("")
         
-            # left, middle, right = st.columns(3, vertical_alignment = "bottom")
-            # new_data2['lime_time'] = left.text_input("Time of Applications (*early sept*)")
-            # new_data2['lime_rate'] = middle.text_input("Rate (*ex:5000 lb/ac*)")
-            # new_data2['lime_product'] = right.text_input("Product (*ex:ECC*)")
-
-            # #Phosphorus
-            # st.markdown(
-            # "<small style='color:black;'>Phosphorus (P)? (if yes...)</small>",
-            # unsafe_allow_html=True
-            #  )
-        
-            # left, middle, right = st.columns(3, vertical_alignment = "bottom")
-            # new_data2['P_time'] = left.text_input("Time of Applications (*planting*)")
-            # new_data2['P_rate'] = middle.text_input("Rate (*ex:*)")
-            # new_data2['P_product'] = right.text_input("Product (*ex:*)")
-
-            # #Potassium
-            # st.markdown(
-            # "<small style='color:black;'>Potassium (K)? (if yes...)</small>",
-            # unsafe_allow_html=True
-            #  )
-        
-            # left, middle, right = st.columns(3, vertical_alignment = "bottom")
-            # new_data2['K_time'] = left.text_input("Time of Applications (*fill*)")
-            # new_data2['K_rate'] = middle.text_input("Rate (*fill*)")
-            # new_data2['K_product'] = right.text_input("Product (*fill*)")
-
-            # #Nitrogen
-            # st.markdown(
-            # "<small style='color:black;'>Nitrogen (N)? (if yes...)</small>",
-            # unsafe_allow_html=True
-            #  )
-        
-            # left, middle, right = st.columns(3, vertical_alignment = "bottom")
-            # new_data2['N_time'] = left.text_input("Time of Applications (*top dress at greenup*)")
-            # new_data2['N_rate'] = middle.text_input("Rate (*ex:60 lb/ac*)")
-            # new_data2['N_product'] = right.text_input("Product (*ex: UAN*)")
-
-            # #Micronutrients
-            # st.markdown(
-            # "<small style='color:black;'>Micronutrients? (if yes...)</small>",
-            # unsafe_allow_html=True
-            #  )
-        
-            # left, middle, right = st.columns(3, vertical_alignment = "bottom")
-            # new_data2['micro_time'] = left.text_input("Time of Applications")
-            # new_data2['micro_rate'] = middle.text_input("Rate")
-            # new_data2['micro_product'] = right.text_input("Product")
-        
-            st.markdown("**List all inputs** *(Fertilizers, Fungicides, Herbicides, Pesticides etc)*")
-            st.markdown("<small style='color:black;'>Pre-Plant/At Seeding</small>", unsafe_allow_html=True)
-
+            st.markdown("**List all inputs used in each part of the season** *(Fertilizers, Fungicides, Herbicides, Pesticides etc)*")
+            
             # Pre-Plant / At Seeding
             with st.expander("Pre-Plant / At Seeding"):
                 st.markdown("list the **Product; Rate; Time of Application** for each input")
@@ -750,7 +670,7 @@ if not st.session_state.form_submitted:
             # Late Season
             with st.expander("Flag leaf - Heading"):
                 st.markdown("list the **Product; Rate; Time of Application** for each input")
-                new_data2['late_season'] = st.text_input("ex: Folicur (tebuconazole); 6 fl oz/acre; late April")
+                new_data2['late_season'] = st.text_input("ex: Folicur (tebuconazole); 6 fl oz/acre; boot stage")
 
             # Post-harvest
             with st.expander("Post Harvest"):
