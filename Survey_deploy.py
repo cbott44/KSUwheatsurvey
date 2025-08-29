@@ -659,22 +659,22 @@ if not st.session_state.form_submitted:
             
             # Fall (after planting - pre-dormancy)
             with st.expander("Fall (after planting - pre-dormancy)"):
-                st.markdown("list **Product; Rate; Time of Application** for each input, list mulitple inputs if relevant")
+                st.markdown("**Product; Rate; Time of Application**, list mulitple inputs when applicable")
                 new_data2['fall'] = st.text_input("ex: 2,4-D Amine; 0.5 pt/acre; late November")
             
             # Green up
             with st.expander("Green-up/Top Dress"):
-                st.markdown("list **Product; Rate; Time of Application** for each input, list mulitple inputs if relevant")
+                st.markdown("**Product; Rate; Time of Application**, list mulitple inputs when applicable")
                 new_data2['greenup'] = st.text_input("ex: UAN; 40 lb N/acre; late March")
             
             # Late Season
             with st.expander("Flag leaf - Heading"):
-                st.markdown("list **Product; Rate; Time of Application** for each input, list mulitple inputs if relevant")
+                st.markdown("**Product; Rate; Time of Application**, list mulitple inputs when applicable")
                 new_data2['late_season'] = st.text_input("ex: Folicur (tebuconazole); 6 fl oz/acre; boot stage")
 
             # Post-harvest
             with st.expander("Post Harvest"):
-                st.markdown("list the **Product; Rate; Time of Application** for each input, list mulitple inputs if relevant")
+                st.markdown("**Product; Rate; Time of Application**, list mulitple inputs when applicable")
                 new_data2['post_harvest'] = st.text_input("ex: Glyphosate; 1 qt/acre; 3 days after harvest")
 
         
