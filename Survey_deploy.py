@@ -58,7 +58,7 @@ soil_tests = "/streamlit/soiltest_uploads"
 #___________________________________________________________________________________________________________________________________________
 
 #Initialize Streamlit app
-st.title('Survey of Kansas Irrigated Wheat')
+st.title('Survey of Kansas Irrigated Wheat - test upload')
 
 #define the look of info.box
 st.markdown("""
