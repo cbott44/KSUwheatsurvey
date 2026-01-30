@@ -425,15 +425,27 @@ new_data2 = {
     'row_space':"",
     'seeding_rate':"",
     'seeding_rate_unit':"",
+    'tillage': "",
     'furrow_fert_product':"",
     'furrow_fert_rate':"",
     'manure_freq':"",
     'manure_rate':"",
-    'preplant':"",
-    'fall':"",
-    'greenup':"",
-    'late_season':"",
-    'post_harvest':"",
+    "1_product": "",
+    "1_rate": "",
+    "1_time": "",
+    "1_date": "",
+    "1_month": "",
+    "1_nutrient_a": "",
+    "1_nutrient_a_amnt": "",
+    "1_nutrient_b": "",
+    "1_nutrient_b_amnt": "",
+    "1_nutrient_c": "",
+    "1_nutrient_c_amnt": ""
+    # 'preplant':"",
+    # 'fall':"",
+    # 'greenup':"",
+    # 'late_season':"",
+    # 'post_harvest':"",
     'fungicide_freq':"",
     'fungicide_time':"",
     'insecticide_freq':"",
@@ -478,7 +490,25 @@ new_data2 = {
     'irr4_fertigation':"",
     'irr_shared':""
 }
-
+#for adding nutrient keys and using loop later
+N_PRODUCTS = 5
+PRODUCT_FIELDS = [
+    "product",
+    "rate",
+    "time",
+    "date",
+    "month",
+    "nutrient_a",
+    "nutrient_a_amnt",
+    "nutrient_b",
+    "nutrient_b_amnt",
+    "nutrient_c",
+    "nutrient_c_amnt"
+]
+for i in range(1, N_PRODUCTS + 1):
+    for field in PRODUCT_FIELDS:
+        new_data2[f"{i}_{field}"] = ""
+        
 
 #read csv, populate fields if starting empty
 columns = list(new_data2.keys())
@@ -614,7 +644,7 @@ if not st.session_state.form_submitted:
             new_data2['seed_cleaned'] = right.selectbox("If saved seed, was it cleaned?", options = ("--","yes","no"))
 
             new_data2['seed_treat'] = st.selectbox("Seed Treatment?", options = ("--","None","Insecticide only","Fungicide only","Both"))
-
+            new_data2['tillage'] = st.selectbox("Tillage", options = ("No-till","Minimal","Full"))
             new_data2['profile_h20'] = st.text_input("Estimated profile water at planting (ft)")
 
         
@@ -644,6 +674,7 @@ if not st.session_state.form_submitted:
             new_data2['impacting_events'] = st.text_area("", height = 68)
 
        #------------------------------------------------------------------------------------------------#
+           
             st.markdown("<hr>", unsafe_allow_html=True)  #line
             st.markdown("**Inputs**")
             #Inputs
@@ -659,34 +690,84 @@ if not st.session_state.form_submitted:
             new_data2['manure_rate'] = left.text_input("Rate (*ex: 30t/ac*)")
             new_data2['manure_freq'] = right.text_input("Frequency (*ex: every other year*)")
             st.markdown("")
-        
-            st.markdown("List ALL inputs used in each part of the season *(Fertilizers, Fungicides, Herbicides, Pesticides etc)*")
-            
+
+
+
+######
+            st.markdown("List ALL nutrients applied")
+
             # Pre-Plant / At Seeding
-            with st.expander("Pre-Plant / At Seeding"):
-                st.markdown("**Product; Rate; Time of Application**, list mulitple inputs when applicable")
-                new_data2['preplant'] = st.text_input("ex: 18-46-00 DAP; 50lb/ac; in-furrow")
+            for i in range(1, N_PRODUCTS + 1):
+                with st.expander(f"Product {i}"):
+                    left, right = st.columns(2, vertical_alignment="bottom")
+                    new_data2[f"{i}_product"] = left.text_input(
+                        "Product Name", key=f"{i}_product"
+                    )
+                    new_data2[f"{i}_rate"] = right.text_input(
+                        "Rate of application (lb/ac)", key=f"{i}_rate"
+                    )
             
-            # Fall (after planting - pre-dormancy)
-            with st.expander("Fall (after planting - pre-dormancy)"):
-                st.markdown("**Product; Rate; Time of Application**, list mulitple inputs when applicable")
-                new_data2['fall'] = st.text_input("ex: 2,4-D Amine; 0.5 pt/acre; late November")
+                    left, middle, right = st.columns(3, vertical_alignment="bottom")
+                    new_data2[f"{i}_time"] = left.selectbox(
+                        "Time of Application",
+                        options=(
+                            "pre-plant/at-drilling",
+                            "Fall",
+                            "Green-up",
+                            "Late season",
+                            "Post Harvest",
+                        ),
+                        key=f"{i}_time"
+                    )
+                    new_data2[f"{i}_date"] = middle.date_input(
+                        "Date of application",
+                        datetime.date(2022, 9, 1),
+                        key=f"{i}_date"
+                    )
+                    new_data2[f"{i}_month"] = right.text_input(
+                        "Month of application",
+                        key=f"{i}_month"
+                    )
             
-            # Green up
-            with st.expander("Green-up/Top Dress"):
-                st.markdown("**Product; Rate; Time of Application**, list mulitple inputs when applicable")
-                new_data2['greenup'] = st.text_input("ex: UAN; 40 lb N/acre; late March")
+                    left, right = st.columns(2, vertical_alignment="bottom")
+                    new_data2[f"{i}_nutrient_a"] = left.selectbox(
+                        "Specific Nutrient",
+                        options=("N", "P", "K", "S", "Lime", "Micro"),
+                        key=f"{i}_nutrient_a"
+                    )
+                    new_data2[f"{i}_nutrient_a_amnt"] = right.text_input(
+                        "Amount (lb/ac)",
+                        key=f"{i}_nutrient_a_amnt"
+                    )
             
-            # Late Season
-            with st.expander("Late Season (Flag leaf - Heading)"):
-                st.markdown("**Product; Rate; Time of Application**, list mulitple inputs when applicable")
-                new_data2['late_season'] = st.text_input("ex: Folicur (tebuconazole); 6 fl oz/acre; boot stage")
+                    left, right = st.columns(2, vertical_alignment="bottom")
+                    new_data2[f"{i}_nutrient_b"] = left.selectbox(
+                        "Specific Nutrient",
+                        options=("N", "P", "K", "S", "Lime", "Micro"),
+                        key=f"{i}_nutrient_b"
+                    )
+                    new_data2[f"{i}_nutrient_b_amnt"] = right.text_input(
+                        "Amount (lb/ac)",
+                        key=f"{i}_nutrient_b_amnt"
+                    )
+            
+                    left, right = st.columns(2, vertical_alignment="bottom")
+                    new_data2[f"{i}_nutrient_c"] = left.selectbox(
+                        "Specific Nutrient",
+                        options=("N", "P", "K", "S", "Lime", "Micro"),
+                        key=f"{i}_nutrient_c"
+                    )
+                    new_data2[f"{i}_nutrient_c_amnt"] = right.text_input(
+                        "Amount (lb/ac)",
+                        key=f"{i}_nutrient_c_amnt"
+                    )
+                    
+            
+           
 
-            # Post-harvest
-            with st.expander("Post Harvest"):
-                st.markdown("**Product; Rate; Time of Application**, list mulitple inputs when applicable")
-                new_data2['post_harvest'] = st.text_input("ex: Glyphosate; 1 qt/acre; 3 days after harvest")
+######
 
+        
         #Fungicide/Herbicide/Insecticide
             st.markdown(
             "<small style='color:black;'>Fungicide Use? (if yes...)</small>",
