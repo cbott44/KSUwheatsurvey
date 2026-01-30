@@ -708,7 +708,7 @@ if not st.session_state.form_submitted:
         
             left, middle, right = st.columns(3, vertical_alignment = "bottom")
             new_data2['insecticide_freq'] = right.text_input("Rate")
-            new_data2['insecticide_time'] = middle.text_input("Time of Applications ")
+            new_data2['insecticide_time'] = middle.text_input("Time of Applications")
             new_data2['insect_prod'] = left.text_input("Product")
 
 
@@ -748,7 +748,7 @@ if not st.session_state.form_submitted:
             
             left, right = st.columns(2, vertical_alignment = "bottom")
             new_data2['system_capacity'] = left.text_input("System Capacity (*gal/min*)")
-            new_data2['water_source'] = right.selectbox("Water source",options = ("Ground","Surface")
+            new_data2['water_source'] = right.selectbox("Water source",options = ("Ground","Surface"))
         
             new_data2['capacity_flux'] = st.text_input("Does system capacity fluctuate throughout the season (*if yes, breifly explain*)")
             new_data2['pre_plant_water'] = st.radio("Pre-plant water applied?", options = ("Select","yes","no"), horizontal=True)
