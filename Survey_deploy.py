@@ -695,9 +695,9 @@ if not st.session_state.form_submitted:
             new_data2['fung'] = st.radio("Was Fungicide Used?", options=("Select","yes", "no"), horizontal=True)
         
             left, middle, right = st.columns(3, vertical_alignment = "bottom")
-            new_data2['fungicide_freq'] = right.text_input("Rate")
-            new_data2['fungicide_time'] = middle.text_input("Time of Applications")
-            new_data2['fungicide_prod'] = left.text_input("Product")
+            new_data2['fungicide_freq'] = right.text_input("Rate", key="fung_freq")
+            new_data2['fungicide_time'] = middle.text_input("Time of Applications", key="fung_time")
+            new_data2['fungicide_prod'] = left.text_input("Product", key="fung_prod")
 
             st.markdown(
             "<small style='color:black;'>Insecticide Use? (if yes...)</small>",
@@ -707,9 +707,9 @@ if not st.session_state.form_submitted:
 
         
             left, middle, right = st.columns(3, vertical_alignment = "bottom")
-            new_data2['insecticide_freq'] = right.text_input("Rate")
-            new_data2['insecticide_time'] = middle.text_input("Time of Applications")
-            new_data2['insect_prod'] = left.text_input("Product")
+            new_data2['insecticide_freq'] = right.text_input("Rate", key="insecticide_freq")
+            new_data2['insecticide_time'] = middle.text_input("Time of Applications", key="insecticide_time")
+            new_data2['insect_prod'] = left.text_input("Product", key="insect_prod")
 
 
             st.markdown(
@@ -720,9 +720,9 @@ if not st.session_state.form_submitted:
 
         
             left, middle, right = st.columns(3, vertical_alignment = "bottom")
-            new_data2['herbicide_freq'] = right.text_input("Rate")
-            new_data2['herbicide_time'] = middle.text_input("Time of Applications (*ex: pre-harvest*)")
-            new_data2['herb_prod'] = left.text_input("Product")
+            new_data2['herbicide_freq'] = right.text_input("Rate", key="herbicide_freq")
+            new_data2['herbicide_time'] = middle.text_input("Time of Applications (*ex: pre-harvest*)", key="herbicide_time")
+            new_data2['herb_prod'] = left.text_input("Product", key="herb_prod")
 
 
                 #------------------------------------------------------------------------------------------------#
