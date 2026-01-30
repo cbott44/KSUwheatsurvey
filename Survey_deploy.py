@@ -291,31 +291,31 @@ with options_form:
     new_data['limits'] = options_form.text_area("", height = 68)
 
     #agreement with the statements
-    options_form.markdown("Rate the following two statements:")
+    # options_form.markdown("Rate the following two statements:")
     
-    new_data['statement1'] = options_form.radio(
-    "Managing water sustainably is essential for ensuring that agriculture remains viable in our region for future generations.",
-    options=[
-        "Select",
-        "1 - Strongly Disagree",
-        "2 - Disagree",
-        "3 - Neutral",
-        "4 - Agree",
-        "5 - Strongly Agree"
-            ]
-        )
+    # new_data['statement1'] = options_form.radio(
+    # "Managing water sustainably is essential for ensuring that agriculture remains viable in our region for future generations.",
+    # options=[
+    #     "Select",
+    #     "1 - Strongly Disagree",
+    #     "2 - Disagree",
+    #     "3 - Neutral",
+    #     "4 - Agree",
+    #     "5 - Strongly Agree"
+    #         ]
+    #     )
 
-    new_data['statement2'] = options_form.radio(
-    "Concerns about water availability significantly influence the crops I choose to plant and how I manage my fields.",
-    options=[
-        "Select",
-        "1 - Strongly Disagree",
-        "2 - Disagree",
-        "3 - Neutral",
-        "4 - Agree",
-        "5 - Strongly Agree"
-            ]
-        )
+    # new_data['statement2'] = options_form.radio(
+    # "Concerns about water availability significantly influence the crops I choose to plant and how I manage my fields.",
+    # options=[
+    #     "Select",
+    #     "1 - Strongly Disagree",
+    #     "2 - Disagree",
+    #     "3 - Neutral",
+    #     "4 - Agree",
+    #     "5 - Strongly Agree"
+    #         ]
+    #     )
 
     
     #submit buttons
@@ -404,6 +404,7 @@ new_data2 = {
     "crop_purpose": "",
     "prev_crop": "",
     "prev_crop_year": "",
+    "prev_crop_purpose": "",
     "prev_crop_irr": "",
     "field_size": "",
     "field_size_unit": "",
@@ -433,15 +434,23 @@ new_data2 = {
     'greenup':"",
     'late_season':"",
     'post_harvest':"",
-    # 'fungicide_freq':"",
-    # 'fungicide_time':"",
-    # 'insecticide_freq':"",
-    # 'insecticide_time':"",
-    # 'herbicide_freq':"",
-    # 'herbicide_time':"",
+    'fungicide_freq':"",
+    'fungicide_time':"",
+    'insecticide_freq':"",
+    'insecticide_time':"",
+    'herbicide_freq':"",
+    'herbicide_time':"",
+    'fungicide_prod' : "",
+    'fung': "",
+    'herb_prod' : "",
+    'herb': "",
+    'insect_prod' : "",
+    'insect': "",
     'irr_decision':"",
     'irr_type':"",
     'system_config':"",
+    'system_height' :"",
+    'system_details' : "",
     'system_capacity':"",
     'water_source':"",
     'capacity_flux':"",
@@ -537,7 +546,8 @@ if not st.session_state.form_submitted:
             left, right = st.columns(2, vertical_alignment = "bottom")
             new_data2['prev_crop'] = left.text_input("Previous Crop (ex: wheat)")
             new_data2['prev_crop_year'] = right.text_input("Harvest Year (ex: 2021)")
-
+            
+            new_data2['prev_crop_purpose'] = right.selectbox("Previous Crop Purpose", options = ("Grain","Seed","Forage","Silage", "Other"))
             new_data2['prev_crop_irr'] = st.radio("Did the previous crop receive irrigation?", options=("Select","yes", "no"), horizontal=True)
                         
 
@@ -600,7 +610,7 @@ if not st.session_state.form_submitted:
             new_data2['cultivar'] = st.text_input("Cultivar Name (brand and number)")
 
             left,right = st.columns([2,1], vertical_alignment = "bottom")
-            new_data2['seed_source'] = left.selectbox("Seed Source", options = ("--","Saved","Certified"))
+            new_data2['seed_source'] = left.selectbox("Seed Source", options = ("--","Saved","Certified", "Registered"))
             new_data2['seed_cleaned'] = right.selectbox("If saved seed, was it cleaned?", options = ("--","yes","no"))
 
             new_data2['seed_treat'] = st.selectbox("Seed Treatment?", options = ("--","None","Insecticide only","Fungicide only","Both"))
@@ -677,34 +687,43 @@ if not st.session_state.form_submitted:
                 st.markdown("**Product; Rate; Time of Application**, list mulitple inputs when applicable")
                 new_data2['post_harvest'] = st.text_input("ex: Glyphosate; 1 qt/acre; 3 days after harvest")
 
+        #Fungicide/Herbicide/Insecticide
+            st.markdown(
+            "<small style='color:black;'>Fungicide Use? (if yes...)</small>",
+            unsafe_allow_html=True
+             )
+            new_data2['fung'] = st.radio("Was Fungicide Used?", options=("Select","yes", "no"), horizontal=True)
         
-            # st.markdown(
-            # "<small style='color:black;'>Fungicide Use? (if yes...)</small>",
-            # unsafe_allow_html=True
-            #  )
-        
-            # left, right = st.columns(2, vertical_alignment = "bottom")
-            # new_data2['fungicide_freq'] = right.text_input("Number of Applications")
-            # new_data2['fungicide_time'] = left.text_input("Time of Applications (*ex: boot stage*)")
+            left, middle, right = st.columns(3, vertical_alignment = "bottom")
+            new_data2['fungicide_freq'] = right.text_input("Rate")
+            new_data2['fungicide_time'] = middle.text_input("Time of Applications")
+            new_data2['fungicide_prod'] = left.text_input("Product")
 
-            # st.markdown(
-            # "<small style='color:black;'>Insecticide Use? (if yes...)</small>",
-            # unsafe_allow_html=True
-            #  )
-        
-            # left, right = st.columns(2, vertical_alignment = "bottom")
-            # new_data2['insecticide_freq'] = right.text_input("Number of Applications ")
-            # new_data2['insecticide_time'] = left.text_input("Time of Applications ")
+            st.markdown(
+            "<small style='color:black;'>Insecticide Use? (if yes...)</small>",
+            unsafe_allow_html=True
+             )
+            new_data2['insect'] = st.radio("Was insecticide Used?", options=("Select","yes", "no"), horizontal=True)
 
-            # st.markdown(
-            # "<small style='color:black;'>Herbicide Use? (if yes...)</small>",
-            # unsafe_allow_html=True
-            #  )
         
-            # left, right = st.columns(2, vertical_alignment = "bottom")
-            # new_data2['herbicide_freq'] = right.text_input("Number of Applications  ")
-            # new_data2['herbicide_time'] = left.text_input("Time of Applications (*ex: pre-harvest*)")
+            left, middle, right = st.columns(3, vertical_alignment = "bottom")
+            new_data2['insecticide_freq'] = right.text_input("Rate")
+            new_data2['insecticide_time'] = middle.text_input("Time of Applications ")
+            new_data2['insect_prod'] = left.text_input("Product")
+
+
+            st.markdown(
+            "<small style='color:black;'>Herbicide Use? (if yes...)</small>",
+            unsafe_allow_html=True
+             )
+            new_data2['herb'] = st.radio("Was herbicide Used?", options=("Select","yes", "no"), horizontal=True)
+
         
+            left, middle, right = st.columns(3, vertical_alignment = "bottom")
+            new_data2['herbicide_freq'] = right.text_input("Rate")
+            new_data2['herbicide_time'] = middle.text_input("Time of Applications (*ex: pre-harvest*)")
+            new_data2['herb_prod'] = left.text_input("Product")
+
 
                 #------------------------------------------------------------------------------------------------#
             #Irrigation    
@@ -718,17 +737,22 @@ if not st.session_state.form_submitted:
              )
             st.markdown("")
             new_data2['irr_shared']= st.text_input("Is the reported water supply shared with another crop? (*ex: half pivot was corn*)")
-            new_data2['irr_decision'] = st.text_area("What drives your decision to trigger an irrigation event? (*ex: visual appearance of soil, moisture sensor*)", height = 68)
-            new_data2['irr_type'] = st.text_input("Irrigation Method (*i.e. center pivot, flood*)") 
-            new_data2['system_config'] = st.text_area("Briefly describe the sprinkler configuration: spacing, height...", height = 68)
+            new_data2['irr_decision'] = st.selectbox("What drives your decision to trigger an irrigation event?", options = ("crop consultant", "moisture probes", "visual assessment", "consistent scheduled dates")
+            new_data2['irr_type'] = st.selectbox("Irrigation Method", options = ("center pivot","drip","flood", "other") 
+
+            left, right = st.columns(2, vertical_alignment = "bottom")
+            new_data2['system_config'] = left.text_input("Sprinkler Spacing")
+            new_data2['system_height'] = right.text_input("Sprinkler height above ground")
+            
+            new_data2['system_details'] = st.text_input("Additional details (*ex: raised drop hoses mid-season*)")
             
             left, right = st.columns(2, vertical_alignment = "bottom")
             new_data2['system_capacity'] = left.text_input("System Capacity (*gal/min*)")
-            new_data2['water_source'] = right.text_input("Water source (*i.e. ground, surface*)")
+            new_data2['water_source'] = right.selectbox("Water source",options = ("Ground","Surface")
         
             new_data2['capacity_flux'] = st.text_input("Does system capacity fluctuate throughout the season (*if yes, breifly explain*)")
             new_data2['pre_plant_water'] = st.radio("Pre-plant water applied?", options = ("Select","yes","no"), horizontal=True)
-            new_data2['irr_number'] = st.text_input("Number of irrigation events throughout the season (*including pre-plant*)")
+            #new_data2['irr_number'] = st.text_input("Number of irrigation events throughout the season (*including pre-plant*)")
 
         #irrigation event 1
             st.markdown("") 
@@ -906,7 +930,7 @@ if not st.session_state.form_submitted:
 
 
 #=====================================================================================================================================================
-#Form 3 - Additional fields
+#Form 3 - Additional fields - Copy from form 2
 #=====================================================================================================================================================
 
         
