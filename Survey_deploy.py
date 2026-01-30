@@ -737,7 +737,7 @@ if not st.session_state.form_submitted:
              )
             st.markdown("")
             new_data2['irr_shared']= st.text_input("Is the reported water supply shared with another crop? (*ex: half pivot was corn*)")
-            new_data2['irr_decision'] = st.selectbox("What drives your decision to trigger an irrigation event?", options = ("crop consultant", "moisture probes", "visual assessment", "consistent scheduled dates")
+            new_data2['irr_decision'] = st.selectbox("What drives your decision to trigger an irrigation event?", options = ("crop consultant", "moisture probes", "visual assessment", "consistent scheduled dates"))
             new_data2['irr_type'] = st.selectbox("Irrigation Method", options = ("center pivot","drip","flood", "other") 
 
             left, right = st.columns(2, vertical_alignment = "bottom")
