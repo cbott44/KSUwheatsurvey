@@ -252,7 +252,7 @@ with options_form:
 
     left, right = options_form.columns([2,3], vertical_alignment = "bottom")
     new_data['age'] = left.text_input("Age")
-    new_data['ed_level'] = right.selectbox("Highest Level of Completed Education",options = ("--","less than highschool",
+    new_data['ed_level'] = right.selectbox("Highest Level of Completed Education",options = ("--","below highschool",
                                 "highschool","some college","associates degree","trade/vocational program","bachelors degree","postgraduate degree"))
 
     #education source
