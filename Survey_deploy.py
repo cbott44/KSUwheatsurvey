@@ -440,7 +440,7 @@ new_data2 = {
     "1_nutrient_b": "",
     "1_nutrient_b_amnt": "",
     "1_nutrient_c": "",
-    "1_nutrient_c_amnt": ""
+    "1_nutrient_c_amnt": "",
     # 'preplant':"",
     # 'fall':"",
     # 'greenup':"",
