@@ -58,7 +58,7 @@ soil_tests = "/streamlit/soiltest_uploads"
 #___________________________________________________________________________________________________________________________________________
 
 #Initialize Streamlit app
-st.title('Survey of Kansas Irrigated Wheat - test upload')
+st.title('Survey of Kansas Irrigated Wheat')
 
 #define the look of info.box
 st.markdown("""
@@ -252,7 +252,7 @@ with options_form:
 
     left, right = options_form.columns([2,3], vertical_alignment = "bottom")
     new_data['age'] = left.text_input("Age")
-    new_data['ed_level'] = right.selectbox("Highest Level of Completed Education",options = ("--","less than highschool",
+    new_data['ed_level'] = right.selectbox("Highest Level of Completed Education",options = ("--","below highschool",
                                 "highschool","some college","associates degree","trade/vocational program","bachelors degree","postgraduate degree"))
 
     #education source
@@ -291,31 +291,10 @@ with options_form:
     new_data['limits'] = options_form.text_area("", height = 68)
 
     #agreement with the statements
-    options_form.markdown("Rate the following two statements:")
+    # options_form.markdown("Rate the following two statements:")
     
-    new_data['statement1'] = options_form.radio(
-    "Managing water sustainably is essential for ensuring that agriculture remains viable in our region for future generations.",
-    options=[
-        "Select",
-        "1 - Strongly Disagree",
-        "2 - Disagree",
-        "3 - Neutral",
-        "4 - Agree",
-        "5 - Strongly Agree"
-            ]
-        )
-
-    new_data['statement2'] = options_form.radio(
-    "Concerns about water availability significantly influence the crops I choose to plant and how I manage my fields.",
-    options=[
-        "Select",
-        "1 - Strongly Disagree",
-        "2 - Disagree",
-        "3 - Neutral",
-        "4 - Agree",
-        "5 - Strongly Agree"
-            ]
-        )
+    # new_data['statement1'] = options_form.radio(
+    # "Managing water sustainably is essential for ensuring that agriculture remains viable in our region for future generations.",
     # options=[
     #     "Select",
     #     "1 - Strongly Disagree",
@@ -323,6 +302,19 @@ with options_form:
     #     "3 - Neutral",
     #     "4 - Agree",
     #     "5 - Strongly Agree"
+    #         ]
+    #     )
+
+    # new_data['statement2'] = options_form.radio(
+    # "Concerns about water availability significantly influence the crops I choose to plant and how I manage my fields.",
+    # options=[
+    #     "Select",
+    #     "1 - Strongly Disagree",
+    #     "2 - Disagree",
+    #     "3 - Neutral",
+    #     "4 - Agree",
+    #     "5 - Strongly Agree"
+    #         ]
     #     )
 
     
@@ -412,6 +404,7 @@ new_data2 = {
     "crop_purpose": "",
     "prev_crop": "",
     "prev_crop_year": "",
+    "prev_crop_purpose": "",
     "prev_crop_irr": "",
     "field_size": "",
     "field_size_unit": "",
@@ -432,21 +425,22 @@ new_data2 = {
     'row_space':"",
     'seeding_rate':"",
     'seeding_rate_unit':"",
+    'tillage': "",
     'furrow_fert_product':"",
     'furrow_fert_rate':"",
     'manure_freq':"",
     'manure_rate':"",
-    'late_season':"",
-    # 'insecticide_freq':"",
-    # 'insecticide_time':"",
     "1_product": "",
     "1_rate": "",
     "1_time": "",
     "1_date": "",
     "1_month": "",
+    "1_nutrient_a": "",
+    "1_nutrient_a_amnt": "",
+    "1_nutrient_b": "",
     "1_nutrient_b_amnt": "",
     "1_nutrient_c": "",
-    "1_nutrient_c_amnt": ""
+    "1_nutrient_c_amnt": "",
     # 'preplant':"",
     # 'fall':"",
     # 'greenup':"",
@@ -460,6 +454,7 @@ new_data2 = {
     'herbicide_time':"",
     'fungicide_prod' : "",
     'fung': "",
+    'herb_prod' : "",
     'herb': "",
     'insect_prod' : "",
     'insect': "",
@@ -467,6 +462,7 @@ new_data2 = {
     'irr_type':"",
     'system_config':"",
     'system_height' :"",
+    'system_details' : "",
     'system_capacity':"",
     'water_source':"",
     'capacity_flux':"",
@@ -499,6 +495,7 @@ N_PRODUCTS = 5
 PRODUCT_FIELDS = [
     "product",
     "rate",
+    "time",
     "date",
     "month",
     "nutrient_a",
@@ -506,7 +503,12 @@ PRODUCT_FIELDS = [
     "nutrient_b",
     "nutrient_b_amnt",
     "nutrient_c",
+    "nutrient_c_amnt"
+]
+for i in range(1, N_PRODUCTS + 1):
     for field in PRODUCT_FIELDS:
+        new_data2[f"{i}_{field}"] = ""
+        
 
 #read csv, populate fields if starting empty
 columns = list(new_data2.keys())
@@ -574,7 +576,8 @@ if not st.session_state.form_submitted:
             left, right = st.columns(2, vertical_alignment = "bottom")
             new_data2['prev_crop'] = left.text_input("Previous Crop (ex: wheat)")
             new_data2['prev_crop_year'] = right.text_input("Harvest Year (ex: 2021)")
-
+            
+            new_data2['prev_crop_purpose'] = right.selectbox("Previous Crop Purpose", options = ("Grain","Seed","Forage","Silage", "Other"))
             new_data2['prev_crop_irr'] = st.radio("Did the previous crop receive irrigation?", options=("Select","yes", "no"), horizontal=True)
                         
 
@@ -637,12 +640,11 @@ if not st.session_state.form_submitted:
             new_data2['cultivar'] = st.text_input("Cultivar Name (brand and number)")
 
             left,right = st.columns([2,1], vertical_alignment = "bottom")
-            new_data2['seed_source'] = left.selectbox("Seed Source", options = ("--","Saved","Certified"))
             new_data2['seed_source'] = left.selectbox("Seed Source", options = ("--","Saved","Certified", "Registered"))
             new_data2['seed_cleaned'] = right.selectbox("If saved seed, was it cleaned?", options = ("--","yes","no"))
 
             new_data2['seed_treat'] = st.selectbox("Seed Treatment?", options = ("--","None","Insecticide only","Fungicide only","Both"))
-
+            new_data2['tillage'] = st.selectbox("Tillage", options = ("No-till","Minimal","Full"))
             new_data2['profile_h20'] = st.text_input("Estimated profile water at planting (ft)")
 
         
@@ -672,6 +674,7 @@ if not st.session_state.form_submitted:
             new_data2['impacting_events'] = st.text_area("", height = 68)
 
        #------------------------------------------------------------------------------------------------#
+           
             st.markdown("<hr>", unsafe_allow_html=True)  #line
             st.markdown("**Inputs**")
             #Inputs
@@ -687,16 +690,13 @@ if not st.session_state.form_submitted:
             new_data2['manure_rate'] = left.text_input("Rate (*ex: 30t/ac*)")
             new_data2['manure_freq'] = right.text_input("Frequency (*ex: every other year*)")
             st.markdown("")
-        
-            st.markdown("List ALL inputs used in each part of the season *(Fertilizers, Fungicides, Herbicides, Pesticides etc)*")
-            
 
 
 
+######
+            st.markdown("List ALL nutrients applied")
 
             # Pre-Plant / At Seeding
-                st.markdown("**Product; Rate; Time of Application**, list mulitple inputs when applicable")
-                new_data2['preplant'] = st.text_input("ex: 18-46-00 DAP; 50lb/ac; in-furrow")
             for i in range(1, N_PRODUCTS + 1):
                 with st.expander(f"Product {i}"):
                     left, right = st.columns(2, vertical_alignment="bottom")
@@ -704,6 +704,8 @@ if not st.session_state.form_submitted:
                         "Product Name", key=f"{i}_product"
                     )
                     new_data2[f"{i}_rate"] = right.text_input(
+                        "Rate of application (lb/ac)", key=f"{i}_rate"
+                    )
             
                     left, middle, right = st.columns(3, vertical_alignment="bottom")
                     new_data2[f"{i}_time"] = left.selectbox(
