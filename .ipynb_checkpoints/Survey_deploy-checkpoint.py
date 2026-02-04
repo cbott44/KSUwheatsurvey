@@ -567,18 +567,15 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
         )
     else:
         new_data["yield_unit"] = yu
-
     new_data["impacting_events"] = st.text_area(
         "Yield-impacting events", key=f"impact_{field_idx}"
     )
-     st.markdown(
-        "<p style='font-size:16px; margin-bottom:4px;'>Manure Use? (if yes...)</p>",
-        unsafe_allow_html=True
-    )
-
     st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown("### Inputs")
-
+    
+    st.markdown("<p style='font-size:16px; margin-bottom:4px;'>Manure Use? (if yes...)</p>",
+        unsafe_allow_html=True
+    )
     left, right = st.columns(2)
     new_data["manure_rate"] = left.text_input(
         "Rate (ex: 30 t/ac)", key=f"manure_rate_{field_idx}"
