@@ -381,1312 +381,225 @@ if add_data:
 #nutrient inputs need examples
 #============================================================================================================================================
 
-#Make field1 disappear if adding another field
-placeholder = st.empty()
-if "form_submitted" not in st.session_state:
-    st.session_state.form_submitted = False #start with field1 not submitted
-if "form2_visible" not in st.session_state:
-    st.session_state.form2_visible = False  #start with field2 not visible
+if "field_index" not in st.session_state:
+    st.session_state.field_index = 1
 
-#dictionary
-new_data2 = {
-    "producer_id":"",
-    "yield": "",
-    "yield_unit": "",
-    "field_number": "",
-    "lat": "",
-    "long": "",
-    "county_ident": "",
-    "section": "",
-    "township": "",
-    "range": "",
-    "irrigated": "",
-    "crop_purpose": "",
-    "prev_crop": "",
-    "prev_crop_year": "",
-    "prev_crop_purpose": "",
-    "prev_crop_irr": "",
-    "field_size": "",
-    "field_size_unit": "",
-    "planting_date": "",
-    "harvest_date": "",
-    "forage_yield": "",
-    "forage_unit": "",
-    "impacting_events": "",
-    "cultivar": "",
-    "seed_treat": "",
-    "seed_source": "",
-    "seed_cleaned": "",
-    "profile_h20":"",
-    'K_soil':"",
-    'P_soil':"",
-    'N_soil':"",
-    'N_soildepth':"",
-    'row_space':"",
-    'seeding_rate':"",
-    'seeding_rate_unit':"",
-    'tillage': "",
-    'furrow_fert_product':"",
-    'furrow_fert_rate':"",
-    'manure_freq':"",
-    'manure_rate':"",
-    "1_product": "",
-    "1_rate": "",
-    "1_time": "",
-    "1_date": "",
-    "1_month": "",
-    "1_nutrient_a": "",
-    "1_nutrient_a_amnt": "",
-    "1_nutrient_b": "",
-    "1_nutrient_b_amnt": "",
-    "1_nutrient_c": "",
-    "1_nutrient_c_amnt": "",
-    # 'preplant':"",
-    # 'fall':"",
-    # 'greenup':"",
-    # 'late_season':"",
-    # 'post_harvest':"",
-    'fungicide_freq':"",
-    'fungicide_time':"",
-    'insecticide_freq':"",
-    'insecticide_time':"",
-    'herbicide_freq':"",
-    'herbicide_time':"",
-    'fungicide_prod' : "",
-    'fung': "",
-    'herb_prod' : "",
-    'herb': "",
-    'insect_prod' : "",
-    'insect': "",
-    'irr_decision':"",
-    'irr_type':"",
-    'system_config':"",
-    'system_height' :"",
-    'system_details' : "",
-    'system_capacity':"",
-    'water_source':"",
-    'capacity_flux':"",
-    'pre_plant_water':"",
-    'irr_number':"",
-    'irr1_date':"",
-    'irr1_month': "",
-    'irr1_timing':"",
-    'irr1_stage':"",
-    'irr1_amount':"",
-    'irr1_rate':"",
-    'irr1_fertigation':"",
-    'irr2_date':"",
-    'irr2_month': "",
-    'irr2_timing':"",
-    'irr2_stage':"",
-    'irr2_amount':"",
-    'irr2_rate':"",
-    'irr2_fertigation':"",
-    'irr3_date':"",
-    'irr3_month': "",
-    'irr3_timing':"",
-    'irr3_stage':"",
-    'irr3_amount':"",
-    'irr3_rate':"",
-    'irr3_fertigation':"",
-    'irr4_date':"",
-    'irr4_month': "",
-    'irr4_timing':"",
-    'irr4_stage':"",
-    'irr4_amount':"",
-    'irr4_rate':"",
-    'irr4_fertigation':"",
-    'irr_shared':"",
-    'irr5_date':"",
-    'irr5_month': "",
-    'irr5_timing':"",
-    'irr5_stage':"",
-    'irr5_amount':"",
-    'irr5_rate':"",
-    'irr5_fertigation':"",
-    'irr6_date':"",
-    'irr6_month': "",
-    'irr6_timing':"",
-    'irr6_stage':"",
-    'irr6_amount':"",
-    'irr6_rate':"",
-    'irr6_fertigation':"",
-    'irr7_date':"",
-    'irr7_month': "",
-    'irr7_timing':"",
-    'irr7_stage':"",
-    'irr7_amount':"",
-    'irr7_rate':"",
-    'irr7_fertigation':"",
-    'irr8_date':"",
-    'irr8_month': "",
-    'irr8_timing':"",
-    'irr8_stage':"",
-    'irr8_amount':"",
-    'irr8_rate':"",
-    'irr8_fertigation':""
-}
-#for adding nutrient keys and using loop later
-N_PRODUCTS = 6
-PRODUCT_FIELDS = [
-    "product",
-    "rate",
-    "time",
-    "date",
-    "month",
-    "plus",
-    "nutrient_a",
-    "nutrient_a_amnt",
-    "nutrient_b",
-    "nutrient_b_amnt",
-    "nutrient_c",
-    "nutrient_c_amnt"
-]
-for i in range(1, N_PRODUCTS + 1):
-    for field in PRODUCT_FIELDS:
-        new_data2[f"{i}_{field}"] = ""
-        
+field_idx = st.session_state.field_index
 
-#read csv, populate fields if starting empty
-columns = list(new_data2.keys())
+# ---------------------------------------------------------------------
+# Base dictionary template
+def empty_field_dict():
+    d = {
+        "producer_id": "",
+        "field_number": "",
+        "yield": "",
+        "yield_unit": "",
+        "forage_yield": "",
+        "forage_unit": "",
+        "lat": "",
+        "long": "",
+        "county_ident": "",
+        "section": "",
+        "township": "",
+        "range": "",
+        "field_size": "",
+        "field_size_unit": "",
+        "crop_purpose": "",
+        "prev_crop": "",
+        "prev_crop_year": "",
+        "prev_crop_purpose": "",
+        "prev_crop_irr": "",
+        "planting_date": "",
+        "harvest_date": "",
+        "cultivar": "",
+        "seed_source": "",
+        "seed_cleaned": "",
+        "seed_treat": "",
+        "tillage": "",
+        "profile_h20": "",
+        "row_space": "",
+        "seeding_rate": "",
+        "seeding_rate_unit": "",
+        "impacting_events": "",
+        "K_soil": "",
+        "P_soil": "",
+        "N_soil": "",
+        "N_soildepth": "",
+        "manure_rate": "",
+        "manure_freq": "",
+        "fung": "",
+        "fungicide_freq": "",
+        "fungicide_time": "",
+        "fungicide_prod": "",
+        "herb": "",
+        "herbicide_freq": "",
+        "herbicide_time": "",
+        "herb_prod": "",
+        "insect": "",
+        "insecticide_freq": "",
+        "insecticide_time": "",
+        "insect_prod": "",
+        "irrigated": "",
+        "irr_shared": "",
+        "irr_decision": "",
+        "irr_type": "",
+        "system_config": "",
+        "system_height": "",
+        "system_details": "",
+        "system_capacity": "",
+        "water_source": "",
+        "capacity_flux": "",
+        "pre_plant_water": ""
+    }
 
-df2 = read_csv_from_dropbox_safely(field_FILE_PATH, columns)
-#-------------------------------------------------------------------------------------------------------------------------------------------------------
-# show the form if field 1 hasn't been submitted    
-if not st.session_state.form_submitted:
-    with placeholder.form("field1 Form",clear_on_submit = False):
-            st.markdown("### Field Specific Information")
-            st.markdown("")
-        
-        #field location
-            st.markdown("**Field Location:** *Provide ONE of the following 3 options*")
-            
-            st.markdown(
-                "<span style='color:#444;font-size:0.95rem, '>Identify the specific field. Please be as precise as possible",
-                unsafe_allow_html=True
-                 )
+    # nutrient products
+    for i in range(1, 7):
+        for f in [
+            "product","rate","time","date","month","plus",
+            "nutrient_a","nutrient_a_amnt",
+            "nutrient_b","nutrient_b_amnt",
+            "nutrient_c","nutrient_c_amnt"
+        ]:
+            d[f"{i}_{f}"] = ""
 
-            with st.expander("Coordinates"):
-                st.markdown("")
-                st.markdown(
-                    "<small style='color:black;'>If necessary, use Google Maps to locate the field and enter the coordinates here. </small>",
-                    unsafe_allow_html=True
-                     )
-                st.link_button("Go to google maps", "https://www.google.com/maps/@39.1876134,-96.567296,2926m/data=!3m1!1e3?entry=ttu&g_ep=EgoyMDI1MDQyMS4wIKXMDSoASAFQAw%3D%3D")
+    # irrigation events
+    for i in range(1, 9):
+        for f in ["date","month","timing","amount","rate","fertigation"]:
+            d[f"irr{i}_{f}"] = ""
 
-                left, right = st.columns(2, vertical_alignment = "bottom")
-                new_data2['lat'] = left.text_input("Latitude (* ex: 39.19303*)")
-                new_data2['long'] = right.text_input("Longitude (* ex: -96.58548*)")
-           
-            with st.expander("County and Rd Intersections"):
-                st.markdown("")
-            
-                st.markdown(
-                        "<small style='color:gray;'>ex: Riley CO, SW of Rd 11 & Sheridan</small>",
-                        unsafe_allow_html=True
-                         )
-                new_data2['county_ident'] = st.text_input("County and Rd")
-                
-            
-            with st.expander("Section/Township/Range"):
-                st.markdown("")
-    
-                left, middle, right = st.columns(3, vertical_alignment = "bottom")
-                new_data2['section'] = left.text_input("Section")
-                new_data2['township'] = middle.text_input("Township")
-                new_data2['range'] = right.text_input("Range")
-        
-            st.markdown("<hr>", unsafe_allow_html=True) 
-
-        #------------------------------------------------------------------------------------------------#
-            
-            left, right = st.columns(2, vertical_alignment = "bottom")
-            new_data2['field_size'] = left.text_input("Field Size")
-            new_data2['field_size_unit'] = right.selectbox("Unit", options = ("Acres","Hectares"))
-        
-            #crop purpose, allow other
-            crop_purpose = st.empty()
-            placeholder_3 = st.empty() #input for other crop purpose
-
-            #previous crop
-            st.markdown("Previous Crop")
-            left, right = st.columns(2, vertical_alignment = "bottom")
-            new_data2['prev_crop'] = left.text_input("Previous Crop (ex: wheat)")
-            new_data2['prev_crop_year'] = right.text_input("Harvest Year (ex: 2021)")
-            
-            new_data2['prev_crop_purpose'] = right.selectbox("Previous Crop Purpose", options = ("Grain","Seed","Forage","Silage", "Other"))
-            new_data2['prev_crop_irr'] = st.radio("Did the previous crop receive irrigation?", options=("Select","yes", "no"), horizontal=True)
-                        
-
-        #------------------------------------------------------------------------------------------------#
-            #soil testing
-            with st.expander("**If Soil Testing Prior to Planting;** provide details here"):
-                st.markdown("Upload Files **OR** Add Data Manually")
-                st.markdown("")
-                
-                uploaded_files = st.file_uploader(
-                    "Choose a file", accept_multiple_files=True
-                )
-            
-                left, right = st.columns(2, vertical_alignment="bottom")
-                new_data2['K_soil'] = left.text_input("Potassium (K) ppm")
-                new_data2['P_soil'] = right.text_input("Phosphorus (P) ppm")
-            
-                left, right = st.columns(2, vertical_alignment="bottom")
-                new_data2['N_soil'] = left.text_input("Nitrogen (Nitrate (NO3) ppm or N/acre)")
-                new_data2['N_soildepth'] = right.text_input("N measured at what depth?")
-            
-            # Uploading to Dropbox
-            if uploaded_files:
-                number = 0
-                producer_id = st.session_state.get("producer_id", None)
-            
-                if not producer_id:
-                    st.warning("Producer ID is missing. Cannot save uploaded files.")
-                else:
-                    for uploaded_file in uploaded_files:
-                        number += 1
-            
-                        # Extract file extension
-                        file_extension = os.path.splitext(uploaded_file.name)[1]
-            
-                        # New filename format
-                        new_filename = f"soiltest{number}_{producer_id}_field1{file_extension}"
-                        dropbox_path = f"{soil_tests}/{new_filename}"
-            
-                        # Upload file to Dropbox
-                        dbx.files_upload(
-                            uploaded_file.read(),
-                            dropbox_path,
-                            mode=dropbox.files.WriteMode("overwrite")
-                        )
-                    
-                    st.success(f"Uploaded {number} soil test file(s)")
-
-        #------------------------------------------------------------------------------------------------#
-            left, right = st.columns(2)
-            new_data2['planting_date'] = left.date_input(
-                "Planting Date",
-                min_value=datetime.date(2000, 1, 1), #set farthest back date as 2000
-                max_value=datetime.date.today())
-            new_data2['harvest_date'] = right.date_input(
-                "Harvest Date",
-                min_value=datetime.date(2000, 1, 1),
-                max_value=datetime.date.today())
-           
-            new_data2['cultivar'] = st.text_input("Cultivar Name (brand and number)")
-
-            left,right = st.columns([2,1], vertical_alignment = "bottom")
-            new_data2['seed_source'] = left.selectbox("Seed Source", options = ("--","Saved","Certified", "Registered"))
-            new_data2['seed_cleaned'] = right.selectbox("If saved seed, was it cleaned?", options = ("--","yes","no"))
-
-            new_data2['seed_treat'] = st.selectbox("Seed Treatment?", options = ("--","None","Insecticide only","Fungicide only","Both"))
-            new_data2['tillage'] = st.selectbox("Tillage", options = ("No-till","Minimal","Full"))
-            new_data2['profile_h20'] = st.text_input("Estimated profile water at planting (ft)")
-
-        
-            new_data2['row_space'] = st.text_input("Row Spacing (inches)")
-            
-            left, right = st.columns(2, vertical_alignment = "bottom")
-            new_data2['seeding_rate'] = left.text_input("Seeding Rate")
-            new_data2['seeding_rate_unit'] = right.selectbox("Seeding Rate Units", options = ("lbs/ac","seeds/ac"))
-            
-
-            st.markdown("<hr>", unsafe_allow_html=True)
-            #side by side yield and units
-            left,right = st.columns([2,1], vertical_alignment = "bottom")
-            new_data2['yield'] = left.text_input("Grain Yield")
-            yield_unit = right.empty()
-            placeholder_text = st.empty() #input options for other units
-  
-            left,right = st.columns([2,1], vertical_alignment = "bottom")
-            new_data2['forage_yield'] = left.text_input("Forage Yield if Applicable")
-            new_data2['forage_unit'] = right.text_input("Yield Unit")
-
-            st.markdown("Describe any events that may have significantly impacted yield")
-            st.markdown(
-                "<span style='color:#444;font-size:0.95rem'>e.g. Stripe rust impacted 20% of field",
-                unsafe_allow_html=True
-                 )
-            new_data2['impacting_events'] = st.text_area("", height = 68)
-
-       #------------------------------------------------------------------------------------------------#
-           
-            st.markdown("<hr>", unsafe_allow_html=True)  #line
-            st.markdown("**Inputs**")
-            #Inputs
-
-            # Manure
-            st.markdown(
-                "<p style='font-size:16px; margin-bottom:4px;'>Manure Use? (if yes...)</p>",
-                unsafe_allow_html=True
-            )
-            
-            # Columns
-            left, right = st.columns(2)
-            new_data2['manure_rate'] = left.text_input("Rate (*ex: 30t/ac*)")
-            new_data2['manure_freq'] = right.text_input("Frequency (*ex: every other year*)")
-            st.markdown("")
+    return d
 
 
+new_data = empty_field_dict()
 
+# ---------------------------------------------------------------------
+# FORM
+with st.form(f"field_form_{field_idx}", clear_on_submit=True):
 
-            st.markdown("List ALL nutrients applied")
+    st.markdown(f"## Field {field_idx} Information")
 
-            # 5 inputs with drop-down expanders
-            for i in range(1, N_PRODUCTS + 1):
-                with st.expander(f"Product {i}"):
-                    left, right = st.columns(2, vertical_alignment="bottom")
-                    new_data2[f"{i}_product"] = left.text_input(
-                        "Product Name", key=f"{i}_product"
-                    )
-                    new_data2[f"{i}_rate"] = right.text_input(
-                        "Rate of application (lb/ac)", key=f"{i}_rate"
-                    )
-            
-                    left, middle, right = st.columns(3, vertical_alignment="bottom")
-                    new_data2[f"{i}_time"] = left.selectbox(
-                        "Time of Application",
-                        options=(
-                            "pre-plant/at-drilling",
-                            "Fall",
-                            "Green-up",
-                            "Late season",
-                            "Post Harvest",
-                        ),
-                        key=f"{i}_time"
-                    )
-                    new_data2[f"{i}_date"] = middle.date_input(
-                        "Date of application",
-                        datetime.date(2022, 9, 1),
-                        key=f"{i}_date"
-                    )
-                    new_data2[f"{i}_month"] = right.text_input(
-                        "Month of application",
-                        key=f"{i}_month"
-                    )
-                    new_data2[f"{i}_plus"] = st.radio("Nutrient applied with:?", 
-                                                      options=("None","Herbicide", "Fertigation", "Fungicide"), horizontal=True,
-                                                     key=f"{i}_plus")
-                    left, right = st.columns(2, vertical_alignment="bottom")
-                    new_data2[f"{i}_nutrient_a"] = left.selectbox(
-                        "Specific Nutrient",
-                        options=("N", "P", "K", "S", "Lime", "Micro"),
-                        key=f"{i}_nutrient_a"
-                    )
-                    new_data2[f"{i}_nutrient_a_amnt"] = right.text_input(
-                        "Amount (lb/ac)",
-                        key=f"{i}_nutrient_a_amnt"
-                    )
-            
-                    left, right = st.columns(2, vertical_alignment="bottom")
-                    new_data2[f"{i}_nutrient_b"] = left.selectbox(
-                        "Specific Nutrient",
-                        options=("N", "P", "K", "S", "Lime", "Micro"),
-                        key=f"{i}_nutrient_b"
-                    )
-                    new_data2[f"{i}_nutrient_b_amnt"] = right.text_input(
-                        "Amount (lb/ac)",
-                        key=f"{i}_nutrient_b_amnt"
-                    )
-            
-                    left, right = st.columns(2, vertical_alignment="bottom")
-                    new_data2[f"{i}_nutrient_c"] = left.selectbox(
-                        "Specific Nutrient",
-                        options=("N", "P", "K", "S", "Lime", "Micro"),
-                        key=f"{i}_nutrient_c"
-                    )
-                    new_data2[f"{i}_nutrient_c_amnt"] = right.text_input(
-                        "Amount (lb/ac)",
-                        key=f"{i}_nutrient_c_amnt"
-                    )
-                    
+    # =========================
+    # LOCATION
+    with st.expander("Field Location"):
+        left, right = st.columns(2)
+        new_data["lat"] = left.text_input("Latitude", key=f"lat_{field_idx}")
+        new_data["long"] = right.text_input("Longitude", key=f"long_{field_idx}")
 
+        new_data["county_ident"] = st.text_input(
+            "County & Road", key=f"county_{field_idx}"
+        )
 
-        
-        #Fungicide/Herbicide/Insecticide
-            st.markdown(
-            "<small style='color:black;'>Fungicide Use? (if yes...)</small>",
-            unsafe_allow_html=True
-             )
-            new_data2['fung'] = st.radio("Was Fungicide Used?", options=("Select","yes", "no"), horizontal=True)
-        
-            left, middle, right = st.columns(3, vertical_alignment = "bottom")
-            new_data2['fungicide_freq'] = right.text_input("Rate", key="fung_freq")
-            new_data2['fungicide_time'] = middle.text_input("Time of Applications", key="fung_time")
-            new_data2['fungicide_prod'] = left.text_input("Product", key="fung_prod")
+        left, mid, right = st.columns(3)
+        new_data["section"] = left.text_input("Section", key=f"sec_{field_idx}")
+        new_data["township"] = mid.text_input("Township", key=f"twp_{field_idx}")
+        new_data["range"] = right.text_input("Range", key=f"rng_{field_idx}")
 
-            st.markdown(
-            "<small style='color:black;'>Insecticide Use? (if yes...)</small>",
-            unsafe_allow_html=True
-             )
-            new_data2['insect'] = st.radio("Was insecticide Used?", options=("Select","yes", "no"), horizontal=True)
+    # =========================
+    # FIELD SIZE
+    left, right = st.columns(2)
+    new_data["field_size"] = left.text_input("Field Size", key=f"size_{field_idx}")
+    new_data["field_size_unit"] = right.selectbox(
+        "Unit", ("Acres","Hectares"), key=f"sizeu_{field_idx}"
+    )
 
-        
-            left, middle, right = st.columns(3, vertical_alignment = "bottom")
-            new_data2['insecticide_freq'] = right.text_input("Rate", key="insecticide_freq")
-            new_data2['insecticide_time'] = middle.text_input("Time of Applications", key="insecticide_time")
-            new_data2['insect_prod'] = left.text_input("Product", key="insect_prod")
+    # =========================
+    # CROP PURPOSE
+    cp = st.selectbox(
+        "Primary Crop Purpose",
+        ("seed","grain","forage","dual-purpose","other"),
+        key=f"cp_{field_idx}"
+    )
+    if cp == "other":
+        new_data["crop_purpose"] = st.text_input(
+            "Specify other purpose", key=f"cp_o_{field_idx}"
+        )
+    else:
+        new_data["crop_purpose"] = cp
 
+    # =========================
+    # PREVIOUS CROP
+    left, right = st.columns(2)
+    new_data["prev_crop"] = left.text_input("Previous Crop", key=f"pc_{field_idx}")
+    new_data["prev_crop_year"] = right.text_input("Harvest Year", key=f"pcy_{field_idx}")
+    new_data["prev_crop_purpose"] = st.selectbox(
+        "Previous Crop Purpose",
+        ("Grain","Seed","Forage","Silage","Other"),
+        key=f"pcp_{field_idx}"
+    )
+    new_data["prev_crop_irr"] = st.radio(
+        "Previous crop irrigated?",
+        ("yes","no"),
+        horizontal=True,
+        key=f"pci_{field_idx}"
+    )
 
-            st.markdown(
-            "<small style='color:black;'>Herbicide Use? (if yes...)</small>",
-            unsafe_allow_html=True
-             )
-            new_data2['herb'] = st.radio("Was herbicide Used?", options=("Select","yes", "no"), horizontal=True)
+    # =========================
+    # SOIL TESTS
+    with st.expander("Soil Testing"):
+        left, right = st.columns(2)
+        new_data["K_soil"] = left.text_input("K (ppm)", key=f"k_{field_idx}")
+        new_data["P_soil"] = right.text_input("P (ppm)", key=f"p_{field_idx}")
 
-        
-            left, middle, right = st.columns(3, vertical_alignment = "bottom")
-            new_data2['herbicide_freq'] = right.text_input("Rate", key="herbicide_freq")
-            new_data2['herbicide_time'] = middle.text_input("Time of Applications (*ex: pre-harvest*)", key="herbicide_time")
-            new_data2['herb_prod'] = left.text_input("Product", key="herb_prod")
+        left, right = st.columns(2)
+        new_data["N_soil"] = left.text_input("N", key=f"n_{field_idx}")
+        new_data["N_soildepth"] = right.text_input("Depth", key=f"nd_{field_idx}")
 
+    # =========================
+    # PLANTING / HARVEST
+    left, right = st.columns(2)
+    new_data["planting_date"] = left.date_input(
+        "Planting Date", key=f"pd_{field_idx}"
+    )
+    new_data["harvest_date"] = right.date_input(
+        "Harvest Date", key=f"hd_{field_idx}"
+    )
 
-                #------------------------------------------------------------------------------------------------#
+    # =========================
+    # YIELD
+    left, right = st.columns(2)
+    new_data["yield"] = left.text_input("Grain Yield", key=f"y_{field_idx}")
+    yu = right.selectbox(
+        "Yield Unit", ("bu/ac","lb/ac","kg/ha","other"), key=f"yu_{field_idx}"
+    )
+    if yu == "other":
+        new_data["yield_unit"] = st.text_input(
+            "Specify unit", key=f"yuo_{field_idx}"
+        )
+    else:
+        new_data["yield_unit"] = yu
 
-        
-            #Irrigation    
-            new_data2['irrigated'] = st.radio("**Did this wheat crop receive irrigation?**", options=("Select","yes", "no"), horizontal=True)
- 
-            st.markdown("<hr>", unsafe_allow_html=True) 
-            st.markdown("**Irrigation Management**")
-            st.markdown(
-            "<span style='color:#444;font-size:0.95rem;'>Complete the following questions if this field recieved irrigation",
-            unsafe_allow_html=True
-             )
-            st.markdown("")
-            new_data2['irr_shared']= st.text_input("Is the reported water supply shared with another crop? (*ex: half pivot was corn*)")
-            new_data2['irr_decision'] = st.selectbox("What drives your decision to trigger an irrigation event?", options = ("crop consultant", "moisture probes", "visual assessment", "consistent scheduled dates"))
-            new_data2['irr_type'] = st.selectbox("Irrigation Method", options = ("center pivot","drip","flood", "other")) 
+    new_data["impacting_events"] = st.text_area(
+        "Yield-impacting events", key=f"impact_{field_idx}"
+    )
 
-            left, right = st.columns(2, vertical_alignment = "bottom")
-            new_data2['system_config'] = left.text_input("Sprinkler Spacing")
-            new_data2['system_height'] = right.text_input("Sprinkler height above ground")
-            
-            new_data2['system_details'] = st.text_input("Additional details (*ex: raised drop hoses mid-season*)")
-            
-            left, right = st.columns(2, vertical_alignment = "bottom")
-            new_data2['system_capacity'] = left.text_input("System Capacity (*gal/min*)")
-            new_data2['water_source'] = right.selectbox("Water source",options = ("Ground","Surface"))
-        
-            new_data2['capacity_flux'] = st.text_input("Does system capacity fluctuate throughout the season (*if yes, breifly explain*)")
-            new_data2['pre_plant_water'] = st.radio("Pre-plant water applied?", options = ("Select","yes","no"), horizontal=True)
-            #new_data2['irr_number'] = st.text_input("Number of irrigation events throughout the season (*including pre-plant*)")
+    # =========================
+    # SUBMIT
+    add_field = st.form_submit_button("Add another field", type="primary")
+    finish = st.form_submit_button("Finish", type="secondary")
 
-        #irrigation event 1
-            st.markdown("") 
-            st.markdown("**Provide Information About Each Irrigation Event**")
-    
-            with st.expander("First Application (or pre-plant)"):
-                left, middle, right = st.columns(3, vertical_alignment = "bottom")
-                new_data2['irr1_date'] =left.date_input("Irrigation Date", 
-                                                    min_value=datetime.date(2000, 1, 1),
-                                                    max_value=datetime.date.today(),
-                                                    key = 'irr1_date')  #use key to get around having identical widgets
-                new_data2['irr1_month'] = middle.selectbox("Irrigation Month", 
-                                                           options =("Jan","Feb","Mar","Apr","May",
-                                                                     "Jun","Jul","Aug","Sep","Oct","Nov","Dec"), key = 'irr1_month')
-                new_data2['irr1_timing'] = right.selectbox("Early or Late Month", options = ("early","late"), key = 'irr1_timing')
-                #new_data2['irr1_stage'] =st.text_input("Crop Stage at time of Irrigation", key ='irr1_stage' )
-                
-                left, right = st.columns(2,vertical_alignment = "bottom")
-                new_data2['irr1_amount'] =left.text_input("Amount of water applied (*gals*)", key ='irr1_amount' )
-                new_data2['irr1_rate'] =right.text_input("Rate of application (*gal/min*)", key = 'irr1_rate')
-                new_data2['irr1_fertigation'] = st.radio("Fertigation?", options = ("Select","yes","no"), 
-                                                         horizontal=True, key = 'irr1_fertigation')
+# ---------------------------------------------------------------------
+# SAVE LOGIC
+if add_field or finish:
 
-            with st.expander("Second Application"):
-                nleft, middle, right = st.columns(3, vertical_alignment = "bottom")
-                new_data2['irr2_date'] =left.date_input("Irrigation Date", 
-                                                    min_value=datetime.date(2000, 1, 1),
-                                                    max_value=datetime.date.today(),
-                                                    key = 'irr2_date')  #use key to get around having identical widgets
-                new_data2['irr2_month'] = middle.selectbox("Irrigation Month", 
-                                                           options =("Jan","Feb","Mar","Apr","May",
-                                                                     "Jun","Jul","Aug","Sep","Oct","Nov","Dec"), key = 'irr2_month')
-                new_data2['irr2_timing'] = right.selectbox("Early or Late Month", options = ("early","late"), key = 'irr2_timing')
-                
-                left, right = st.columns(2,vertical_alignment = "bottom")
-                new_data2['irr2_amount'] =left.text_input("Amount of water applied (*gals*)", key ='irr2_amount' )
-                new_data2['irr2_rate'] =right.text_input("Rate of application (*gal/min*)", key = 'irr2_rate')
-                new_data2['irr2_fertigation'] = st.radio("Fertigation?", 
-                                                         options = ("Select","yes","no"), horizontal=True, key = 'irr2_fertigation')
+    new_data["field_number"] = field_idx
+    new_data["producer_id"] = st.session_state.get("producer_id", "error")
 
-            with st.expander("Third Application"):
-                left, middle, right = st.columns(3, vertical_alignment = "bottom")
-                new_data2['irr3_date'] =left.date_input("Irrigation Date", 
-                                                    min_value=datetime.date(2000, 1, 1),
-                                                    max_value=datetime.date.today(),
-                                                    key = 'irr3_date')  #use key to get around having identical widgets
-                new_data2['irr3_month'] = middle.selectbox("Irrigation Month", 
-                                                           options =("Jan","Feb","Mar","Apr","May",
-                                                                     "Jun","Jul","Aug","Sep","Oct","Nov","Dec"), key = 'irr3_month')
-                new_data2['irr3_timing'] = right.selectbox("Early or Late Month", options = ("early","late"), key = 'irr3_timing')
-                
-                left, right = st.columns(2,vertical_alignment = "bottom")
-                new_data2['irr3_amount'] =left.text_input("Amount of water applied (*gals*)", key ='irr3_amount' )
-                new_data2['irr3_rate'] =right.text_input("Rate of application (*gal/min*)", key = 'irr3_rate')
-                new_data2['irr3_fertigation'] = st.radio("Fertigation?", 
-                                                         options = ("Select","yes","no"), horizontal=True, key = 'irr3_fertigation')
+    df = read_csv_from_dropbox_safely(field_FILE_PATH, list(new_data.keys()))
+    df = df.loc[:, ~df.columns.str.contains("^Unnamed")]
 
-            with st.expander("Fourth Application"):
-                left, middle, right = st.columns(3, vertical_alignment = "bottom")
-                new_data2['irr4_date'] =left.date_input("Irrigation Date", 
-                                                    min_value=datetime.date(2000, 1, 1),
-                                                    max_value=datetime.date.today(),
-                                                    key = 'irr4_date')  #use key to get around having identical widgets
-                new_data2['irr4_month'] = middle.selectbox("Irrigation Month", 
-                                                           options =("Jan","Feb","Mar","Apr","May",
-                                                                     "Jun","Jul","Aug","Sep","Oct","Nov","Dec"), key = 'irr4_month')
-                new_data2['irr4_timing'] = right.selectbox("Early or Late Month", options = ("early","late"), key = 'irr4_timing')
-                
-                left, right = st.columns(2,vertical_alignment = "bottom")
-                new_data2['irr4_amount'] =left.text_input("Amount of water applied (*gals*)", key ='irr4_amount' )
-                new_data2['irr4_rate'] =right.text_input("Rate of application (*gal/min*)", key = 'irr4_rate')
-                new_data2['irr4_fertigation'] = st.radio("Fertigation?", 
-                                                         options = ("Select","yes","no"), horizontal=True, key = 'irr4_fertigation')
+    df = pd.concat([df, pd.DataFrame([new_data])], ignore_index=True)
 
-            with st.expander("Fifth Application"):
-                left, middle, right = st.columns(3, vertical_alignment = "bottom")
-                new_data2['irr5_date'] =left.date_input("Irrigation Date", 
-                                                    min_value=datetime.date(2000, 1, 1),
-                                                    max_value=datetime.date.today(),
-                                                    key = 'irr5_date')  #use key to get around having identical widgets
-                new_data2['irr5_month'] = middle.selectbox("Irrigation Month", 
-                                                           options =("Jan","Feb","Mar","Apr","May",
-                                                                     "Jun","Jul","Aug","Sep","Oct","Nov","Dec"), key = 'irr5_month')
-                new_data2['irr5_timing'] = right.selectbox("Early or Late Month", options = ("early","late"), key = 'irr5_timing')
-                
-                left, right = st.columns(2,vertical_alignment = "bottom")
-                new_data2['irr5_amount'] =left.text_input("Amount of water applied (*gals*)", key ='irr5_amount' )
-                new_data2['irr5_rate'] =right.text_input("Rate of application (*gal/min*)", key = 'irr5_rate')
-                new_data2['irr5_fertigation'] = st.radio("Fertigation?", 
-                                                         options = ("Select","yes","no"), horizontal=True, key = 'irr5_fertigation')
+    buf = StringIO()
+    df.to_csv(buf, index=False)
+    dbx.files_upload(
+        buf.getvalue().encode(),
+        field_FILE_PATH,
+        mode=dropbox.files.WriteMode("overwrite")
+    )
 
-            with st.expander("Sixth Application"):
-                left, middle, right = st.columns(3, vertical_alignment = "bottom")
-                new_data2['irr6_date'] =left.date_input("Irrigation Date", 
-                                                    min_value=datetime.date(2000, 1, 1),
-                                                    max_value=datetime.date.today(),
-                                                    key = 'irr6_date')  #use key to get around having identical widgets
-                new_data2['irr6_month'] = middle.selectbox("Irrigation Month", 
-                                                           options =("Jan","Feb","Mar","Apr","May",
-                                                                     "Jun","Jul","Aug","Sep","Oct","Nov","Dec"), key = 'irr6_month')
-                new_data2['irr6_timing'] = right.selectbox("Early or Late Month", options = ("early","late"), key = 'irr6_timing')
-                
-                left, right = st.columns(2,vertical_alignment = "bottom")
-                new_data2['irr6_amount'] =left.text_input("Amount of water applied (*gals*)", key ='irr6_amount' )
-                new_data2['irr6_rate'] =right.text_input("Rate of application (*gal/min*)", key = 'irr6_rate')
-                new_data2['irr6_fertigation'] = st.radio("Fertigation?", 
-                                                         options = ("Select","yes","no"), horizontal=True, key = 'irr6_fertigation')
+    if add_field:
+        st.session_state.field_index += 1
+        st.rerun()
 
-            with st.expander("Seventh Application"):
-                left, middle, right = st.columns(3, vertical_alignment = "bottom")
-                new_data2['irr7_date'] =left.date_input("Irrigation Date", 
-                                                    min_value=datetime.date(2000, 1, 1),
-                                                    max_value=datetime.date.today(),
-                                                    key = 'irr7_date')  #use key to get around having identical widgets
-                new_data2['irr7_month'] = middle.selectbox("Irrigation Month", 
-                                                           options =("Jan","Feb","Mar","Apr","May",
-                                                                     "Jun","Jul","Aug","Sep","Oct","Nov","Dec"), key = 'irr7_month')
-                new_data2['irr7_timing'] = right.selectbox("Early or Late Month", options = ("early","late"), key = 'irr7_timing')
-                
-                left, right = st.columns(2,vertical_alignment = "bottom")
-                new_data2['irr7_amount'] =left.text_input("Amount of water applied (*gals*)", key ='irr7_amount' )
-                new_data2['irr7_rate'] =right.text_input("Rate of application (*gal/min*)", key = 'irr7_rate')
-                new_data2['irr7_fertigation'] = st.radio("Fertigation?", 
-                                                         options = ("Select","yes","no"), horizontal=True, key = 'irr7_fertigation')
-
-            with st.expander("Eighth Application"):
-                left, middle, right = st.columns(3, vertical_alignment = "bottom")
-                new_data2['irr8_date'] =left.date_input("Irrigation Date", 
-                                                    min_value=datetime.date(2000, 1, 1),
-                                                    max_value=datetime.date.today(),
-                                                    key = 'irr8_date')  #use key to get around having identical widgets
-                new_data2['irr8_month'] = middle.selectbox("Irrigation Month", 
-                                                           options =("Jan","Feb","Mar","Apr","May",
-                                                                     "Jun","Jul","Aug","Sep","Oct","Nov","Dec"), key = 'irr8_month')
-                new_data2['irr8_timing'] = right.selectbox("Early or Late Month", options = ("early","late"), key = 'irr8_timing')
-                
-                left, right = st.columns(2,vertical_alignment = "bottom")
-                new_data2['irr8_amount'] =left.text_input("Amount of water applied (*gals*)", key ='irr8_amount' )
-                new_data2['irr8_rate'] =right.text_input("Rate of application (*gal/min*)", key = 'irr8_rate')
-                new_data2['irr8_fertigation'] = st.radio("Fertigation?", 
-                                                         options = ("Select","yes","no"), horizontal=True, key = 'irr8_fertigation')
-            
-        
-        
-        
-        
-        #submit buttons
-            dd_data = st.form_submit_button("Add another field", type = "primary") #type controls the look
-            finish = st.form_submit_button("Finish", type = "secondary")
-        
-            if finish:
-                st.markdown(
-                    """
-                    <div style='background-color: #f9f9f9; padding: 15px; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 20px;'>
-                        <strong style='color: green;'> Submission Successful:</strong> You may close the window
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
-
-
-    
-     #------------------------------------------------------------------------------------------------#
-#define other crop purpose
-    with crop_purpose:
-        selection3 = st.selectbox("Primary Purpose of Wheat Crop", options = ("--","seed","grain","forage","dual-purpose","other"), key ='other1')
-    with placeholder_3:
-        if selection3 == "other":
-            crop_purpose_other = st.text_input("Enter other purpose", key = 'other2')
-
-
-#define other yield units
-    with yield_unit:
-        selection = st.selectbox("Yield Unit",options = ("bu/ac","t/ha","lb/ac","kg/ha","other"), key = 'unit1')
-    with placeholder_text:
-        if selection == "other":
-            otherOption = st.text_input("Enter other units", key = 'unit2')
-
-    #------------------------------------------------------------------------------------------------#
-#add data       
-    if dd_data:
-            st.session_state.form_submitted = True #field1 disapears
-            st.session_state.form2_visible = True #field2 becomes visible
-        
-            new_data2['field_number'] = 1 #always is the first submission
-        
-            producer_id = st.session_state.get('producer_id', None) #take from where ID is created in form 1 and saved in session state
-            if producer_id is None:
-                    new_data2['producer_id'] = "error"
-            else:
-                # include producer_id when saving field info
-                new_data2['producer_id'] = producer_id 
-                
-        #other yield units
-            units_temp = ""
-            if selection == "other":
-                units_temp = otherOption
-            else:
-                units_temp = selection
-    
-            new_data2['yield_unit'] = units_temp
-        
-        #other crop purpose 
-            purpose_temp = ""
-            if selection3 == "other":
-                purpose_temp = crop_purpose_other
-            else:
-                purpose_temp = selection3
-    
-            new_data2['crop_purpose'] = purpose_temp
-    
-            #add to csv
-                        
-            df2 = read_csv_from_dropbox_safely(field_FILE_PATH, columns)
-        
-            df2 = df2.loc[:, ~df2.columns.str.contains('^Unnamed')]  #to correct problems with unnamed columns
-        
-            new_df2 = pd.DataFrame([new_data2]) #dictionary to data frame
-
-            df2 = pd.concat([df2, new_df2], ignore_index=True) 
-                     
-            # Save updated DataFrame to Dropbox
-            csv_buffer2 = StringIO()
-            df2.to_csv(csv_buffer2, index=False)
-            dbx.files_upload(csv_buffer2.getvalue().encode(), field_FILE_PATH, mode=dropbox.files.WriteMode("overwrite"))
-
-            placeholder.empty()  
-            st.rerun() 
-            #Display updated file
-           # st.write(df2) 
-
-#finish       
     if finish:
-            new_data2['field_number'] = 1   
-
-            #capture producer ID from form 1
-            producer_id = st.session_state.get('producer_id', None)
-            if producer_id is None:
-                    new_data2['producer_id'] = "error"
-            else:
-                # include producer_id when saving field info
-                new_data2['producer_id'] = producer_id
-                
-            #other yield units
-            units_temp = ""
-            if selection == "other":
-                units_temp = otherOption
-            else:
-                units_temp = selection
-    
-            new_data2['yield_unit'] = units_temp
-        
-            #other crop purpose 
-            purpose_temp = ""
-            if selection3 == "other":
-                purpose_temp = crop_purpose_other
-            else:
-                purpose_temp = selection3
-    
-            new_data2['crop_purpose'] = purpose_temp
-    
-            #add to csv  
-            df2 = read_csv_from_dropbox_safely(field_FILE_PATH, columns)
-            df2 = df2.loc[:, ~df2.columns.str.contains('^Unnamed')]
-        
-            new_df2 = pd.DataFrame([new_data2]) #dictionary to data frame
-
-            df2 = pd.concat([df2, new_df2], ignore_index=True) 
-                    
-            # Save updated DataFrame to Dropbox
-            csv_buffer2 = StringIO()
-            df2.to_csv(csv_buffer2, index=False)
-            dbx.files_upload(csv_buffer2.getvalue().encode(), field_FILE_PATH, mode=dropbox.files.WriteMode("overwrite"))
-            
-            #st.write(df2)
-
-
-#=====================================================================================================================================================
-#Form 3 - Additional fields - Copy from form 2
-#=====================================================================================================================================================
-
-        
-new_data3 = {
-    "producer_id":"",
-    "yield": "",
-    "yield_unit": "",
-    "field_number": "",
-    "lat": "",
-    "long": "",
-    "county_ident": "",
-    "section": "",
-    "township": "",
-    "range": "",
-    "irrigated": "",
-    "crop_purpose": "",
-    "prev_crop": "",
-    "prev_crop_year": "",
-    "prev_crop_irr": "",
-    "field_size": "",
-    "field_size_unit": "",
-    "planting_date": "",
-    "harvest_date": "",
-    "forage_yield": "",
-    "forage_unit": "",
-    "impacting_events": "",
-    "cultivar": "",
-    "seed_treat": "",
-    "seed_source": "",
-    "seed_cleaned": "",
-    "profile_h20":"",
-    'K_soil':"",
-    'P_soil':"",
-    'N_soil':"",
-    'N_soildepth':"",
-    'row_space':"",
-    'seeding_rate':"",
-    'seeding_rate_unit':"",
-    'furrow_fert_product':"",
-    'furrow_fert_rate':"",
-    'manure_freq':"",
-    'manure_rate':"",
-    'preplant': "",
-    'fall': "",
-    'greenup': "",
-    'late_season': "",
-    'post_harvest': "",
-    # 'lime_time':"",
-    # 'lime_rate':"",
-    # 'lime_product':"",
-    # 'P_time':"",
-    # 'P_rate':"",
-    # 'P_product':"",
-    # 'K_time':"",
-    # 'K_rate':"",
-    # 'K_product':"",
-    # 'N_time':"",
-    # 'N_rate':"",
-    # 'N_product':"",
-    # 'micro_time':"",
-    # 'micro_rate':"",
-    # 'micro_product':"",
-    # 'fungicide_freq':"",
-    # 'fungicide_time':"",
-    # 'insecticide_freq':"",
-    # 'insecticide_time':"",
-    # 'herbicide_freq':"",
-    # 'herbicide_time':"",
-    'irr_decision':"",
-    'irr_type':"",
-    'system_config':"",
-    'system_capacity':"",
-    'water_source':"",
-    'capacity_flux':"",
-    'pre_plant_water':"",
-    'irr_number':"",
-    'irr1_date':"",
-    'irr1_stage':"",
-    'irr1_amount':"",
-    'irr1_rate':"",
-    'irr1_fertigation':"",
-    'irr2_date':"",
-    'irr2_stage':"",
-    'irr2_amount':"",
-    'irr2_rate':"",
-    'irr2_fertigation':"",
-    'irr3_date':"",
-    'irr3_stage':"",
-    'irr3_amount':"",
-    'irr3_rate':"",
-    'irr3_fertigation':"",
-    'irr4_date':"",
-    'irr4_stage':"",
-    'irr4_amount':"",
-    'irr4_rate':"",
-    'irr4_fertigation':"",
-    'irr_shared':""
-}
-
-#---------------------------------------------------------------------------------------------------------------------------------------
-if st.session_state.form2_visible:
-    with st.form("Another Field",clear_on_submit = True):
-            st.markdown("### Field Specific Information")
-            st.markdown("**Add Another Field**", unsafe_allow_html=True)
-            st.markdown("")
-        
-            #field location
-            st.markdown("**Field Location:** *Provide ONE of the following 3 options*")
-            
-            st.markdown(
-                "<small style='color:gray;'>Identify the specific field. Please be as precise as possible</small>",
-                unsafe_allow_html=True
-                 )
-
-            with st.expander("Coordinates"):
-                st.markdown("")
-                st.markdown(
-                    "<small style='color:black;'>If necessary, use Google Maps to locate the field and enter the coordinates here. </small>",
-                    unsafe_allow_html=True
-                     )
-                st.link_button("Go to google maps", "https://www.google.com/maps/@39.1876134,-96.567296,2926m/data=!3m1!1e3?entry=ttu&g_ep=EgoyMDI1MDQyMS4wIKXMDSoASAFQAw%3D%3D")
-
-                left, right = st.columns(2, vertical_alignment = "bottom")
-                new_data3['lat'] = left.text_input("Latitude", key = 'lat2')
-                new_data3['long'] = right.text_input("Longitude", key = 'long2')
-           
-            with st.expander("County and Rd Intersections"):
-                st.markdown("")
-            
-                st.markdown(
-                        "<small style='color:gray;'>ex: Riley CO, SW of Rd 11 & Sheridan</small>",
-                        unsafe_allow_html=True
-                         )
-                new_data3['county_ident'] = st.text_input("County and Rd", key = 'county2')
-                
-            
-            with st.expander("Section/Township/Range"):
-                st.markdown("")
-    
-                left, middle, right = st.columns(3, vertical_alignment = "bottom")
-                new_data3['section'] = left.text_input("Section", key ='section2')
-                new_data3['township'] = middle.text_input("Township", key ='twnsp2')
-                new_data3['range'] = right.text_input("Range", key = 'range2')
-        
-            st.markdown("<hr>", unsafe_allow_html=True) 
-
-        #------------------------------------------------------------------------------------------------#
-            
-            left, right = st.columns(2, vertical_alignment = "bottom")
-            new_data3['field_size'] = left.text_input("Field Size", key = 'size2')
-            new_data3['field_size_unit'] = right.selectbox("Unit", options = ("Acres","Hectares"), key = 'sizeunit2')
-        
-            #crop purpose
-            crop_purpose = st.empty()
-            placeholder_3 = st.empty() #input for other crop purpose
-
-            #previous crop
-            st.markdown("Previous Crop")
-            left, right = st.columns(2, vertical_alignment = "bottom")
-            new_data3['prev_crop'] = left.text_input("Previous Crop (ex: wheat)",key = 'prevcrop2')
-            new_data3['prev_crop_year'] = right.text_input("Harvest Year (ex: 2021)", key = 'prevcropyear2')
-
-            new_data3['prev_crop_irr'] = st.radio("Did the previous crop receive irrigation?", options=("Select","yes", "no"), 
-                                                  horizontal=True, key = 'previrr2')
-                        
-
-        #------------------------------------------------------------------------------------------------#
-            #soil testing
-
-            with st.expander("**If Soil Testing Prior to Planting;** provide details here"):
-                st.markdown("Upload Files **OR** Add Data Manually")
-                st.markdown("")
-            
-                uploaded_files = st.file_uploader(
-                    "Choose a file", accept_multiple_files=True, key='upload2'
-                )
-            
-                left, right = st.columns(2, vertical_alignment="bottom")
-                new_data3['K_soil'] = left.text_input("Potassium (K) ppm", key='k2')
-                new_data3['P_soil'] = right.text_input("Phosphorus (P) ppm", key='p2')
-            
-                left, right = st.columns(2, vertical_alignment="bottom")
-                new_data3['N_soil'] = left.text_input("Nitrogen (Nitrate (NO3) ppm or N/acre)", key='n2')
-                new_data3['N_soildepth'] = right.text_input("N measured at what depth?", key='ndepth2')
-            
-            # Handle uploads
-            if uploaded_files:
-                number = 0
-            
-                # Safely read fields_info.csv from Dropbox
-                df2 = read_csv_from_dropbox_safely(field_FILE_PATH, list(new_data3.keys()))
-                
-                # Determine next field number
-                if not df2.empty and 'field_number' in df2.columns:
-                    last_field_numbertemp = df2['field_number'].iloc[-1]
-                else:
-                    last_field_numbertemp = 0
-            
-                field_numbtemp = int(last_field_numbertemp) + 1
-            
-                producer_id2 = st.session_state.get("producer_id", None)
-                if producer_id2 is None:
-                    st.warning("Producer ID not found in session state.")
-                else:
-                    for uploaded_file in uploaded_files:
-                        number += 1
-                        file_extension = os.path.splitext(uploaded_file.name)[1]
-                        new_filename = f"soiltest{number}_{producer_id2}_field{field_numbtemp}{file_extension}"
-            
-                        # Define Dropbox path
-                        dropbox_path = f"/streamlit/soiltest_uploads/{new_filename}"
-            
-                        # Upload file to Dropbox
-                        dbx.files_upload(
-                            uploaded_file.read(),
-                            dropbox_path,
-                            mode=dropbox.files.WriteMode("overwrite")
-                        )
-            
-                    st.success(f"Uploaded soil test file(s)")
-        #------------------------------------------------------------------------------------------------#
-
-            left, right = st.columns(2)
-            new_data3['planting_date'] = left.date_input("Planting Date",
-                min_value=datetime.date(2000, 1, 1),
-                max_value=datetime.date.today(), key = 'pd2')
-            new_data3['harvest_date'] = right.date_input("Harvest Date",
-                min_value=datetime.date(2000, 1, 1),
-                max_value=datetime.date.today(), key = 'hd2')
-           
-            new_data3['cultivar'] = st.text_input("Cultivar Name (brand and number)", key = 'cultivar2')
-
-            left,right = st.columns([2,1], vertical_alignment = "bottom")
-            new_data3['seed_source'] = left.selectbox("Seed Source", options = ("--","Saved","Certified"), key = 'seedsource2')
-            new_data3['seed_cleaned'] = right.selectbox("If saved seed, was it cleaned?", options = ("--","yes","no"), key = 'seedclean2')
-
-            new_data3['seed_treat'] = st.selectbox("Seed Treatment?", options = ("--","None","Insecticide only","Fungicide only","Both"), key = 'seedtreat2')
-
-            new_data3['profile_h20'] = st.text_input("Estimated profile water at planting (ft)", key = 'profile2')
-
-        
-            new_data3['row_space'] = st.text_input("Row Spacing (inches)", key = 'rowspace2')
-            
-            left, right = st.columns(2, vertical_alignment = "bottom")
-            new_data3['seeding_rate'] = left.text_input("Seeding Rate", key = 'seedingrate2')
-            new_data3['seeding_rate_unit'] = right.selectbox("Seeding Rate Units", options = ("lbs/ac","seeds/ac"), key = 'rateunit2')
-            
-
-            st.markdown("<hr>", unsafe_allow_html=True)
-            #side by side yield and units
-            left,right = st.columns([2,1], vertical_alignment = "bottom")
-            new_data3['yield'] = left.text_input("Grain Yield", key = 'yield2')
-            yield_unit = right.empty()
-            placeholder_text = st.empty() #input options for other units
-  
-            left,right = st.columns([2,1], vertical_alignment = "bottom")
-            new_data3['forage_yield'] = left.text_input("Forage Yield if Applicable", key = 'forage2')
-            new_data3['forage_unit'] = right.text_input("Yield Unit", key = 'forageunit2')
-
-            st.markdown("Describe any events that may have significantly impacted yield")
-            st.markdown(
-               "<span style='color: #444; font-size: 0.95rem;'>e.g. Stripe rust impacted 20% of field</span>",
-                unsafe_allow_html=True
-                 )
-            new_data3['impacting_events'] = st.text_input("", key = 'impacting2')
-
-       #------------------------------------------------------------------------------------------------#
-            st.markdown("<hr>", unsafe_allow_html=True) 
-            st.markdown("**Inputs**")
-            
-            #Inputs
-            ####
-            #manure
-            st.markdown(
-                "<p style='font-size:16px; margin-bottom:4px;'>Manure Use? (if yes...)</p>",
-                unsafe_allow_html=True
-            )
-
-            left, right = st.columns(2)
-            new_data3['manure_rate'] = left.text_input("Rate (*ex: 30t/ac*)", key="manure_rate2")
-            new_data3['manure_freq'] = right.text_input("Frequency (*ex: every other year*)", key="manure_freq2")
-            st.markdown("")
-
-            st.markdown("List ALL inputs used in each part of the season *(Fertilizers, Fungicides, Herbicides, Pesticides etc)*")
-
-            # --- Pre-Plant / At Seeding ---
-            with st.expander("Pre-Plant / At Seeding"):
-                st.markdown("**Product; Rate; Time of Application**, list multiple inputs when applicable")
-                new_data3['preplant'] = st.text_input("ex: 18-46-00 DAP; 50lb/ac; in-furrow", key="preplant2")
-            
-            # --- Fall ---
-            with st.expander("Fall (after planting - pre-dormancy)"):
-                st.markdown("**Product; Rate; Time of Application**, list multiple inputs when applicable")
-                new_data3['fall'] = st.text_input("ex: 2,4-D Amine; 0.5 pt/acre; late November", key="fall2")
-            
-            # --- Green-up ---
-            with st.expander("Green-up/Top Dress"):
-                st.markdown("**Product; Rate; Time of Application**, list multiple inputs when applicable")
-                new_data3['greenup'] = st.text_input("ex: UAN; 40 lb N/acre; late March", key="greenup2")
-            
-            # --- Late Season ---
-            with st.expander("Late Season (Flag leaf - Heading)"):
-                st.markdown("**Product; Rate; Time of Application**, list multiple inputs when applicable")
-                new_data3['late_season'] = st.text_input("ex: Folicur (tebuconazole); 6 fl oz/acre; boot stage", key="late_season2")
-            
-            # --- Post Harvest ---
-            with st.expander("Post Harvest"):
-                st.markdown("**Product; Rate; Time of Application**, list multiple inputs when applicable")
-                new_data3['post_harvest'] = st.text_input("ex: Glyphosate; 1 qt/acre; 3 days after harvest", key="post_harvest2")
-
-
-            ####
-            
-
-            # st.markdown(
-            # "<small style='color:black;'>Fungicide Use? (if yes...)</small>",
-            # unsafe_allow_html=True
-            #  )
-        
-            # left, right = st.columns(2, vertical_alignment = "bottom")
-            # new_data3['fungicide_freq'] = right.text_input("Number of Applications", key ='fungfreq2')
-            # new_data3['fungicide_time'] = left.text_input("Time of Applications (*ex: boot stage*)", key = 'fungtime2')
-
-            # st.markdown(
-            # "<small style='color:black;'>Insecticide Use? (if yes...)</small>",
-            # unsafe_allow_html=True
-            #  )
-        
-            # left, right = st.columns(2, vertical_alignment = "bottom")
-            # new_data3['insecticide_freq'] = right.text_input("Number of Applications ", key ='insect2')
-            # new_data3['insecticide_time'] = left.text_input("Time of Applications", key = 'insecttime2')
-
-            # st.markdown(
-            # "<small style='color:black;'>Herbicide Use? (if yes...)</small>",
-            # unsafe_allow_html=True
-            #  )
-        
-            # left, right = st.columns(2, vertical_alignment = "bottom")
-            # new_data3['herbicide_freq'] = right.text_input("Number of Applications  ",  key ='herbfreq2')
-            # new_data3['herbicide_time'] = left.text_input("Time of Applications (*ex: pre-harvest*)",  key ='herbtime2')
-
-                #------------------------------------------------------------------------------------------------#
-            #Irrigation    
-            new_data2['irrigated'] = st.radio("Did this wheat crop receive irrigation?", options=("Select","yes", "no"), horizontal=True)
- 
-            st.markdown("<hr>", unsafe_allow_html=True) 
-            st.markdown("**Irrigation Management**")
-            st.markdown(
-            "<small style='color:gray;'>Complete the following questions if this field recieved irrigation</small>",
-            unsafe_allow_html=True
-             )
-            st.markdown("")
-            new_data3['irr_shared']= st.text_input("Is the reported water supply shared with another crop? (*ex: half pivot was corn*)", key = 'irrshare2')
-            new_data3['irr_decision'] = st.text_area("What drives your decision to trigger an irrigation event? (*ex: visual appearance of soil, moisture sensor*)", height = 68, key = 'irrdescision2')
-            new_data3['irr_type'] = st.text_input("Irrigation Method (*i.e. center pivot, flood*)", key = 'irrtype2') 
-            new_data3['system_config'] = st.text_area("Briefly describe the sprinkler configuration: spacing, height...", height = 68, key = 'system2')
-            
-            left, right = st.columns(2, vertical_alignment = "bottom")
-            new_data3['system_capacity'] = left.text_input("System Capacity (*gal/min*)", key = 'systemcapac2')
-            new_data3['water_source'] = right.text_input("Water source (*i.e. ground, surface*)", key = 'source2')
-        
-            new_data3['capacity_flux'] = st.text_input("Does system capacity fluctuate throughout the season (*if yes, breifly explain*)", key = 'capacflux2')
-            new_data3['pre_plant_water'] = st.radio("Pre-plant water applied?", options = ("Select","yes","no"), horizontal=True, key = 'preplant2')
-            new_data3['irr_number'] = st.text_input("Number of irrigation events throughout the season (*including pre-plant*)", key = 'irrnumb2')
-
-            #irrigation event 1
-            st.markdown("") 
-            st.markdown("**Provide Information About Each Irrigation Event**")
-
-            with st.expander("First Application (or pre-plant) form2 "):
-                new_data3['irr1_date'] =st.date_input("Irrigation Date", key = 'irr1_date2')  #use key to get around having identical widgets
-                new_data3['irr1_stage'] =st.text_input("Crop Stage at time of Irrigation", key ='irr1_stage2' )
-                
-                left, right = st.columns(2,vertical_alignment = "bottom")
-                new_data3['irr1_amount'] =left.text_input("Amount of water applied (*gals*)", key ='irr1_amount2' )
-                new_data3['irr1_rate'] =right.text_input("Rate of application (*gal/min*)", key = 'irr1_rate2')
-                new_data3['irr1_fertigation'] = st.radio("Fertigation?", options = ("Select","yes","no"), horizontal=True, key = 'irr1_fertigation2')
-
-            with st.expander("Second Application  "):
-                new_data3['irr2_date'] =st.date_input("Irrigation Date", key = 'irr2_date2')
-                new_data3['irr2_stage'] =st.text_input("Crop Stage at time of Irrigation", key ='irr2_stage2' )
-                
-                left, right = st.columns(2,vertical_alignment = "bottom")
-                new_data3['irr2_amount'] =left.text_input("Amount of water applied (*gals*)", key ='irr2_amount2' )
-                new_data3['irr2_rate'] =right.text_input("Rate of application (*gal/min*)", key = 'irr2_rate2')
-                new_data3['irr2_fertigation'] = st.radio("Fertigation?", options = ("Select","yes","no"), horizontal=True, key = 'irr2_fertigation2')
-
-            with st.expander("Third Application  "):
-                new_data3['irr3_date'] =st.date_input("Irrigation Date", key = 'irr3_date2')
-                new_data3['irr3_stage'] =st.text_input("Crop Stage at time of Irrigation", key ='irr3_stage2' )
-                
-                left, right = st.columns(2,vertical_alignment = "bottom")
-                new_data3['irr3_amount'] =left.text_input("Amount of water applied (*gals*)", key ='irr3_amount2' )
-                new_data3['irr3_rate'] =right.text_input("Rate of application (*gal/min*)", key = 'irr3_rate2')
-                new_data3['irr3_fertigation'] = st.radio("Fertigation?", options = ("Select","yes","no"), horizontal=True, key = 'irr3_fertigation2')
-
-            with st.expander("Fourth Application  "):
-                new_data3['irr4_date'] =st.date_input("Irrigation Date", key = 'irr4_date2')
-                new_data3['irr4_stage'] =st.text_input("Crop Stage at time of Irrigation", key ='irr4_stage2' )
-                
-                left, right = st.columns(2,vertical_alignment = "bottom")
-                new_data3['irr4_amount'] =left.text_input("Amount of water applied (*gals*)", key ='irr4_amount2' )
-                new_data3['irr4_rate'] =right.text_input("Rate of application (*gal/min*)", key = 'irr4_rate2')
-                new_data3['irr4_fertigation'] = st.radio("Fertigation?", options = ("Select","yes","no"), horizontal=True, key = 'irr4_fertigation2')
-
-              #submit buttons
-            submit2 = st.form_submit_button("Add another field", type = "primary") #type controls the look
-            finish2 = st.form_submit_button("Finish", type = "secondary")
-
-        
-            if finish2:
-                st.markdown(
-                    """
-                    <div style='background-color: #f9f9f9; padding: 15px; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 20px;'>
-                        <strong style='color: green;'> Submission Successful:</strong> You may close the window
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
-#---------------------------------------------------------------------------------------
-#define other crop purpose
-    with crop_purpose:
-        selection3 = st.selectbox("Primary Purpose of Wheat Crop", options = ("--","seed","grain","forage","dual-purpose","other"), key = 'select3')
-    with placeholder_3:
-        if selection3 == "other":
-            crop_purpose_other = st.text_input("Enter other purpose", key = 'purp3')
-
-
-#define other yield units
-    with yield_unit:
-        selection2 = st.selectbox("Yield Unit",options = ("bu/ac","t/ha","lb/ac","kg/ha","other"), key = 'selection3')
-    with placeholder_text:
-        if selection2 == "other":
-            otherOption2 = st.text_input("Enter other units", key = 'other2')
-#----------------------------------------------------------------------------------------          
-
-#add data       
-    if submit2:
-        #grab last field number from above csv line and add 1
-            df2 = read_csv_from_dropbox_safely(field_FILE_PATH, columns) #need to call it here
-            df2 = df2.loc[:, ~df2.columns.str.contains('^Unnamed')] #remove filler columns
-            last_field_number = df2['field_number'].iloc[-1] if not df2.empty else 0
-            new_data3['field_number'] = last_field_number + 1
-        
-        #producer ID from session state
-            producer_id = st.session_state.get('producer_id', None)
-            if producer_id is None:
-                    new_data3['producer_id'] = "error"
-            else:
-                # include producer_id when saving field info
-                new_data3['producer_id'] = producer_id
-                
-        #other yield units
-            units_temp = ""
-            if selection2 == "other":
-                units_temp2 = otherOption2
-            else:
-                units_temp2 = selection2
-    
-            new_data3['yield_unit'] = units_temp2
-        
-        #other crop purpose 
-            purpose_temp = ""
-            if selection3 == "other":
-                purpose_temp2 = crop_purpose_other
-            else:
-                purpose_temp2 = selection3
-    
-            new_data3['crop_purpose'] = purpose_temp2
-    
-            #add to csv
-            
-            new_df3 = pd.DataFrame([new_data3]) #dictionary to data frame
-
-            df2 = pd.concat([df2, new_df3], ignore_index=True) 
-            
-            # Save updated DataFrame to Dropbox
-            csv_buffer2 = StringIO()
-            df2.to_csv(csv_buffer2, index=False)
-            dbx.files_upload(csv_buffer2.getvalue().encode(), field_FILE_PATH, mode=dropbox.files.WriteMode("overwrite"))
-
-            placeholder.empty()  
-            st.rerun() 
-            #Display updated file
-            #st.write(df2) 
-
-#finish       
-    if finish2:
-            #grab last field number and add 1
-            df2 = read_csv_from_dropbox_safely(field_FILE_PATH, columns)
-            df2 = df2.loc[:, ~df2.columns.str.contains('^Unnamed')]
-                
-            last_field_number = df2['field_number'].iloc[-1] if not df2.empty else 0
-            new_data3['field_number'] = last_field_number + 1
-        #producer ID from session state
-            producer_id = st.session_state.get('producer_id', None)
-            if producer_id is None:
-                    new_data3['producer_id'] = "error"
-            else:
-                # include producer_id when saving field info
-                new_data3['producer_id'] = producer_id
-                
-        #other yield units
-            units_temp = ""
-            if selection2 == "other":
-                units_temp2 = otherOption2
-            else:
-                units_temp2 = selection2
-    
-            new_data3['yield_unit'] = units_temp2
-        
-        #other crop purpose 
-            purpose_temp = ""
-            if selection3 == "other":
-                purpose_temp2 = crop_purpose_other
-            else:
-                purpose_temp2 = selection3
-    
-            new_data3['crop_purpose'] = purpose_temp2
-    
-            #add to csv
-            new_df3 = pd.DataFrame([new_data3]) #dictionary to data frame
-
-            df2 = pd.concat([df2, new_df3], ignore_index=True) 
-            
-            # Save updated DataFrame to Dropbox
-            csv_buffer2 = StringIO()
-            df2.to_csv(csv_buffer2, index=False)
-            dbx.files_upload(csv_buffer2.getvalue().encode(), field_FILE_PATH, mode=dropbox.files.WriteMode("overwrite"))
-
-            placeholder.empty()  
-            #st.rerun() 
-        
-            #Display updated file
-            #st.write(df2) 
-
-
-
-
+        st.success("Submission complete. You may close the window.")
