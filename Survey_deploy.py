@@ -469,35 +469,72 @@ new_data2 = {
     'pre_plant_water':"",
     'irr_number':"",
     'irr1_date':"",
+    'irr1_month': "",
+    'irr1_timing':"",
     'irr1_stage':"",
     'irr1_amount':"",
     'irr1_rate':"",
     'irr1_fertigation':"",
     'irr2_date':"",
+    'irr2_month': "",
+    'irr2_timing':"",
     'irr2_stage':"",
     'irr2_amount':"",
     'irr2_rate':"",
     'irr2_fertigation':"",
     'irr3_date':"",
+    'irr3_month': "",
+    'irr3_timing':"",
     'irr3_stage':"",
     'irr3_amount':"",
     'irr3_rate':"",
     'irr3_fertigation':"",
     'irr4_date':"",
+    'irr4_month': "",
+    'irr4_timing':"",
     'irr4_stage':"",
     'irr4_amount':"",
     'irr4_rate':"",
     'irr4_fertigation':"",
-    'irr_shared':""
+    'irr_shared':"",
+    'irr5_date':"",
+    'irr5_month': "",
+    'irr5_timing':"",
+    'irr5_stage':"",
+    'irr5_amount':"",
+    'irr5_rate':"",
+    'irr5_fertigation':"",
+    'irr6_date':"",
+    'irr6_month': "",
+    'irr6_timing':"",
+    'irr6_stage':"",
+    'irr6_amount':"",
+    'irr6_rate':"",
+    'irr6_fertigation':"",
+    'irr7_date':"",
+    'irr7_month': "",
+    'irr7_timing':"",
+    'irr7_stage':"",
+    'irr7_amount':"",
+    'irr7_rate':"",
+    'irr7_fertigation':"",
+    'irr8_date':"",
+    'irr8_month': "",
+    'irr8_timing':"",
+    'irr8_stage':"",
+    'irr8_amount':"",
+    'irr8_rate':"",
+    'irr8_fertigation':""
 }
 #for adding nutrient keys and using loop later
-N_PRODUCTS = 5
+N_PRODUCTS = 6
 PRODUCT_FIELDS = [
     "product",
     "rate",
     "time",
     "date",
     "month",
+    "plus",
     "nutrient_a",
     "nutrient_a_amnt",
     "nutrient_b",
@@ -693,10 +730,10 @@ if not st.session_state.form_submitted:
 
 
 
-######
+
             st.markdown("List ALL nutrients applied")
 
-            # Pre-Plant / At Seeding
+            # 5 inputs with drop-down expanders
             for i in range(1, N_PRODUCTS + 1):
                 with st.expander(f"Product {i}"):
                     left, right = st.columns(2, vertical_alignment="bottom")
@@ -728,6 +765,8 @@ if not st.session_state.form_submitted:
                         "Month of application",
                         key=f"{i}_month"
                     )
+                    new_data2[f"{i}_plus"] = st.radio("Nutrient applied with:?", 
+                                                      options=("None","Herbicide", "Fertigation", "Fungicide"), horizontal=True)
             
                     left, right = st.columns(2, vertical_alignment="bottom")
                     new_data2[f"{i}_nutrient_a"] = left.selectbox(
@@ -762,10 +801,7 @@ if not st.session_state.form_submitted:
                         key=f"{i}_nutrient_c_amnt"
                     )
                     
-            
-           
 
-######
 
         
         #Fungicide/Herbicide/Insecticide
@@ -807,6 +843,8 @@ if not st.session_state.form_submitted:
 
 
                 #------------------------------------------------------------------------------------------------#
+
+        
             #Irrigation    
             new_data2['irrigated'] = st.radio("**Did this wheat crop receive irrigation?**", options=("Select","yes", "no"), horizontal=True)
  
@@ -840,49 +878,147 @@ if not st.session_state.form_submitted:
             st.markdown("**Provide Information About Each Irrigation Event**")
     
             with st.expander("First Application (or pre-plant)"):
-                new_data2['irr1_date'] =st.date_input("Irrigation Date", 
+                left, middle, right = st.columns(4, vertical_alignment = "bottom")
+                new_data2['irr1_date'] =left.date_input("Irrigation Date", 
                                                     min_value=datetime.date(2000, 1, 1),
                                                     max_value=datetime.date.today(),
                                                     key = 'irr1_date')  #use key to get around having identical widgets
-                new_data2['irr1_stage'] =st.text_input("Crop Stage at time of Irrigation", key ='irr1_stage' )
+                new_data2['irr1_month'] = middle.selectbox("Irrigation Month", 
+                                                           options =("Jan","Feb","Mar","Apr","May",
+                                                                     "Jun","Jul","Aug","Sep","Oct","Nov","Dec"), key = 'irr1_month')
+                new_data2['irr1_timing'] = right.selectbox("Early or Late Month", options = ("early","late"), key = 'irr1_timing')
+                #new_data2['irr1_stage'] =st.text_input("Crop Stage at time of Irrigation", key ='irr1_stage' )
                 
                 left, right = st.columns(2,vertical_alignment = "bottom")
                 new_data2['irr1_amount'] =left.text_input("Amount of water applied (*gals*)", key ='irr1_amount' )
                 new_data2['irr1_rate'] =right.text_input("Rate of application (*gal/min*)", key = 'irr1_rate')
-                new_data2['irr1_fertigation'] = st.radio("Fertigation?", options = ("Select","yes","no"), horizontal=True, key = 'irr1_fertigation')
+                new_data2['irr1_fertigation'] = st.radio("Fertigation?", options = ("Select","yes","no"), 
+                                                         horizontal=True, key = 'irr1_fertigation')
 
             with st.expander("Second Application"):
-                new_data2['irr2_date'] =st.date_input("Irrigation Date",
+                nleft, middle, right = st.columns(4, vertical_alignment = "bottom")
+                new_data2['irr2_date'] =left.date_input("Irrigation Date", 
                                                     min_value=datetime.date(2000, 1, 1),
-                                                    max_value=datetime.date.today(), 
-                                                    key = 'irr2_date')
-                new_data2['irr2_stage'] =st.text_input("Crop Stage at time of Irrigation",key ='irr2_stage' )
+                                                    max_value=datetime.date.today(),
+                                                    key = 'irr2_date')  #use key to get around having identical widgets
+                new_data2['irr2_month'] = middle.selectbox("Irrigation Month", 
+                                                           options =("Jan","Feb","Mar","Apr","May",
+                                                                     "Jun","Jul","Aug","Sep","Oct","Nov","Dec"), key = 'irr2_month')
+                new_data2['irr2_timing'] = right.selectbox("Early or Late Month", options = ("early","late"), key = 'irr2_timing')
                 
                 left, right = st.columns(2,vertical_alignment = "bottom")
                 new_data2['irr2_amount'] =left.text_input("Amount of water applied (*gals*)", key ='irr2_amount' )
                 new_data2['irr2_rate'] =right.text_input("Rate of application (*gal/min*)", key = 'irr2_rate')
-                new_data2['irr2_fertigation'] = st.radio("Fertigation?", options = ("Select","yes","no"), horizontal=True, key = 'irr2_fertigation')
+                new_data2['irr2_fertigation'] = st.radio("Fertigation?", 
+                                                         options = ("Select","yes","no"), horizontal=True, key = 'irr2_fertigation')
 
             with st.expander("Third Application"):
-                new_data2['irr3_date'] =st.date_input("Irrigation Date",min_value=datetime.date(2000, 1, 1),max_value=datetime.date.today(), key = 'irr3_date')
-                new_data2['irr3_stage'] =st.text_input("Crop Stage at time of Irrigation", key ='irr3_stage' )
+                left, middle, right = st.columns(4, vertical_alignment = "bottom")
+                new_data2['irr3_date'] =left.date_input("Irrigation Date", 
+                                                    min_value=datetime.date(2000, 1, 1),
+                                                    max_value=datetime.date.today(),
+                                                    key = 'irr3_date')  #use key to get around having identical widgets
+                new_data2['irr3_month'] = middle.selectbox("Irrigation Month", 
+                                                           options =("Jan","Feb","Mar","Apr","May",
+                                                                     "Jun","Jul","Aug","Sep","Oct","Nov","Dec"), key = 'irr3_month')
+                new_data2['irr3_timing'] = right.selectbox("Early or Late Month", options = ("early","late"), key = 'irr3_timing')
                 
                 left, right = st.columns(2,vertical_alignment = "bottom")
                 new_data2['irr3_amount'] =left.text_input("Amount of water applied (*gals*)", key ='irr3_amount' )
                 new_data2['irr3_rate'] =right.text_input("Rate of application (*gal/min*)", key = 'irr3_rate')
-                new_data2['irr3_fertigation'] = st.radio("Fertigation?", options = ("Select","yes","no"), horizontal=True, key = 'irr3_fertigation')
+                new_data2['irr3_fertigation'] = st.radio("Fertigation?", 
+                                                         options = ("Select","yes","no"), horizontal=True, key = 'irr3_fertigation')
 
             with st.expander("Fourth Application"):
-                new_data2['irr4_date'] =st.date_input("Irrigation Date", min_value=datetime.date(2000, 1, 1),max_value=datetime.date.today(),key = 'irr4_date')
-                new_data2['irr4_stage'] =st.text_input("Crop Stage at time of Irrigation", key ='irr4_stage' )
+                left, middle, right = st.columns(4, vertical_alignment = "bottom")
+                new_data2['irr4_date'] =left.date_input("Irrigation Date", 
+                                                    min_value=datetime.date(2000, 1, 1),
+                                                    max_value=datetime.date.today(),
+                                                    key = 'irr4_date')  #use key to get around having identical widgets
+                new_data2['irr4_month'] = middle.selectbox("Irrigation Month", 
+                                                           options =("Jan","Feb","Mar","Apr","May",
+                                                                     "Jun","Jul","Aug","Sep","Oct","Nov","Dec"), key = 'irr4_month')
+                new_data2['irr4_timing'] = right.selectbox("Early or Late Month", options = ("early","late"), key = 'irr4_timing')
                 
                 left, right = st.columns(2,vertical_alignment = "bottom")
                 new_data2['irr4_amount'] =left.text_input("Amount of water applied (*gals*)", key ='irr4_amount' )
                 new_data2['irr4_rate'] =right.text_input("Rate of application (*gal/min*)", key = 'irr4_rate')
-                new_data2['irr4_fertigation'] = st.radio("Fertigation?", options = ("Select","yes","no"), horizontal=True, key = 'irr4_fertigation')
+                new_data2['irr4_fertigation'] = st.radio("Fertigation?", 
+                                                         options = ("Select","yes","no"), horizontal=True, key = 'irr4_fertigation')
 
+            with st.expander("Fifth Application"):
+                left, middle, right = st.columns(4, vertical_alignment = "bottom")
+                new_data2['irr5_date'] =left.date_input("Irrigation Date", 
+                                                    min_value=datetime.date(2000, 1, 1),
+                                                    max_value=datetime.date.today(),
+                                                    key = 'irr5_date')  #use key to get around having identical widgets
+                new_data2['irr5_month'] = middle.selectbox("Irrigation Month", 
+                                                           options =("Jan","Feb","Mar","Apr","May",
+                                                                     "Jun","Jul","Aug","Sep","Oct","Nov","Dec"), key = 'irr5_month')
+                new_data2['irr5_timing'] = right.selectbox("Early or Late Month", options = ("early","late"), key = 'irr5_timing')
+                
+                left, right = st.columns(2,vertical_alignment = "bottom")
+                new_data2['irr5_amount'] =left.text_input("Amount of water applied (*gals*)", key ='irr5_amount' )
+                new_data2['irr5_rate'] =right.text_input("Rate of application (*gal/min*)", key = 'irr5_rate')
+                new_data2['irr5_fertigation'] = st.radio("Fertigation?", 
+                                                         options = ("Select","yes","no"), horizontal=True, key = 'irr5_fertigation')
+
+            with st.expander("Sixth Application"):
+                left, middle, right = st.columns(4, vertical_alignment = "bottom")
+                new_data2['irr6_date'] =left.date_input("Irrigation Date", 
+                                                    min_value=datetime.date(2000, 1, 1),
+                                                    max_value=datetime.date.today(),
+                                                    key = 'irr6_date')  #use key to get around having identical widgets
+                new_data2['irr6_month'] = middle.selectbox("Irrigation Month", 
+                                                           options =("Jan","Feb","Mar","Apr","May",
+                                                                     "Jun","Jul","Aug","Sep","Oct","Nov","Dec"), key = 'irr6_month')
+                new_data2['irr6_timing'] = right.selectbox("Early or Late Month", options = ("early","late"), key = 'irr6_timing')
+                
+                left, right = st.columns(2,vertical_alignment = "bottom")
+                new_data2['irr6_amount'] =left.text_input("Amount of water applied (*gals*)", key ='irr6_amount' )
+                new_data2['irr6_rate'] =right.text_input("Rate of application (*gal/min*)", key = 'irr6_rate')
+                new_data2['irr6_fertigation'] = st.radio("Fertigation?", 
+                                                         options = ("Select","yes","no"), horizontal=True, key = 'irr6_fertigation')
+
+            with st.expander("Seventh Application"):
+                left, middle, right = st.columns(4, vertical_alignment = "bottom")
+                new_data2['irr7_date'] =left.date_input("Irrigation Date", 
+                                                    min_value=datetime.date(2000, 1, 1),
+                                                    max_value=datetime.date.today(),
+                                                    key = 'irr7_date')  #use key to get around having identical widgets
+                new_data2['irr7_month'] = middle.selectbox("Irrigation Month", 
+                                                           options =("Jan","Feb","Mar","Apr","May",
+                                                                     "Jun","Jul","Aug","Sep","Oct","Nov","Dec"), key = 'irr7_month')
+                new_data2['irr7_timing'] = right.selectbox("Early or Late Month", options = ("early","late"), key = 'irr7_timing')
+                
+                left, right = st.columns(2,vertical_alignment = "bottom")
+                new_data2['irr7_amount'] =left.text_input("Amount of water applied (*gals*)", key ='irr7_amount' )
+                new_data2['irr7_rate'] =right.text_input("Rate of application (*gal/min*)", key = 'irr7_rate')
+                new_data2['irr7_fertigation'] = st.radio("Fertigation?", 
+                                                         options = ("Select","yes","no"), horizontal=True, key = 'irr7_fertigation')
+
+            with st.expander("Eighth Application"):
+                left, middle, right = st.columns(4, vertical_alignment = "bottom")
+                new_data2['irr8_date'] =left.date_input("Irrigation Date", 
+                                                    min_value=datetime.date(2000, 1, 1),
+                                                    max_value=datetime.date.today(),
+                                                    key = 'irr8_date')  #use key to get around having identical widgets
+                new_data2['irr8_month'] = middle.selectbox("Irrigation Month", 
+                                                           options =("Jan","Feb","Mar","Apr","May",
+                                                                     "Jun","Jul","Aug","Sep","Oct","Nov","Dec"), key = 'irr8_month')
+                new_data2['irr8_timing'] = right.selectbox("Early or Late Month", options = ("early","late"), key = 'irr8_timing')
+                
+                left, right = st.columns(2,vertical_alignment = "bottom")
+                new_data2['irr8_amount'] =left.text_input("Amount of water applied (*gals*)", key ='irr8_amount' )
+                new_data2['irr8_rate'] =right.text_input("Rate of application (*gal/min*)", key = 'irr8_rate')
+                new_data2['irr8_fertigation'] = st.radio("Fertigation?", 
+                                                         options = ("Select","yes","no"), horizontal=True, key = 'irr8_fertigation')
+            
         
-            #submit buttons
+        
+        
+        
+        #submit buttons
             dd_data = st.form_submit_button("Add another field", type = "primary") #type controls the look
             finish = st.form_submit_button("Finish", type = "secondary")
         
@@ -895,6 +1031,9 @@ if not st.session_state.form_submitted:
                     """,
                     unsafe_allow_html=True
                 )
+
+
+    
      #------------------------------------------------------------------------------------------------#
 #define other crop purpose
     with crop_purpose:
