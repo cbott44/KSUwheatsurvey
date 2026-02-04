@@ -627,7 +627,6 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
             )
             new_data[f"{i}_date"] = mid.date_input(
                 "Date of application",
-                datetime.date(2022, 9, 1),
                 key=f"{i}_date_{field_idx}",
             )
             new_data[f"{i}_month"] = right.text_input(
@@ -645,11 +644,11 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
                 left, right = st.columns(2)
                 new_data[f"{i}_nutrient_{n}"] = left.selectbox(
                     "Specific Nutrient",
-                    ("N", "P", "K", "S", "Lime", "Micro"),
+                    ("none","N", "P", "K", "S", "Lime", "Micro"),
                     key=f"{i}_nutrient_{n}_{field_idx}",
                 )
                 new_data[f"{i}_nutrient_{n}_amnt"] = right.text_input(
-                    "Amount (lb/ac)",
+                    "Amount (with unit)",
                     key=f"{i}_nutrient_{n}_amnt_{field_idx}",
                 )
 
@@ -725,10 +724,10 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
 
     left, right = st.columns(2)
     new_data["system_config"] = left.text_input(
-        "Sprinkler spacing", key=f"sys_config_{field_idx}"
+        "Sprinkler spacing (in)", key=f"sys_config_{field_idx}"
     )
     new_data["system_height"] = right.text_input(
-        "Sprinkler height", key=f"sys_height_{field_idx}"
+        "Sprinkler height above ground (in)", key=f"sys_height_{field_idx}"
     )
 
     new_data["system_details"] = st.text_input(
