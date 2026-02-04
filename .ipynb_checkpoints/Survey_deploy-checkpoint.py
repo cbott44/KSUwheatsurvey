@@ -51,6 +51,7 @@ producer_FILE_PATH = "/streamlit/producers_info.csv"
 #csv for field information
 field_FILE_PATH = "/streamlit/fields_info.csv"
 
+
 #folder to save soil test uploads
 soil_tests = "/streamlit/soiltest_uploads"
 
@@ -480,27 +481,41 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
 
     # =========================
     # LOCATION
-    with st.expander("Field Location"):
+   with st.expander("Field Location"):
+        st.markdown(
+            "<small style='color:black;'>If necessary, use Google Maps to locate the field and enter the coordinates here.</small>",
+            unsafe_allow_html=True
+        )
+        st.link_button(
+            "Go to Google Maps", 
+            "https://www.google.com/maps/@39.1876134,-96.567296,2926m/data=!3m1!1e3?entry=ttu&g_ep=EgoyMDI1MDQyMS4wIKXMDSoASAFQAw%3D%3D"
+        )
+    
+        # Latitude and Longitude
         left, right = st.columns(2)
-        new_data["lat"] = left.text_input("Latitude", key=f"lat_{field_idx}")
-        new_data["long"] = right.text_input("Longitude", key=f"long_{field_idx}")
-
-        new_data["county_ident"] = st.text_input(
+        new_data2["lat"] = left.text_input(
+            "Latitude (* ex: 39.19303*)", key=f"lat_{field_idx}"
+        )
+        new_data2["long"] = right.text_input(
+            "Longitude (* ex: -96.58548*)", key=f"long_{field_idx}"
+        )
+    
+        # County and Road Intersection
+        st.markdown(
+            "<small style='color:gray;'>ex: Riley CO, SW of Rd 11 & Sheridan</small>",
+            unsafe_allow_html=True
+        )
+        new_data2["county_ident"] = st.text_input(
             "County & Road", key=f"county_{field_idx}"
         )
-
+    
+        # Section / Township / Range
         left, mid, right = st.columns(3)
-        new_data["section"] = left.text_input("Section", key=f"sec_{field_idx}")
-        new_data["township"] = mid.text_input("Township", key=f"twp_{field_idx}")
-        new_data["range"] = right.text_input("Range", key=f"rng_{field_idx}")
-
-    # =========================
-    # FIELD SIZE
-    left, right = st.columns(2)
-    new_data["field_size"] = left.text_input("Field Size", key=f"size_{field_idx}")
-    new_data["field_size_unit"] = right.selectbox(
-        "Unit", ("Acres","Hectares"), key=f"sizeu_{field_idx}"
-    )
+        new_data2["section"] = left.text_input("Section", key=f"sec_{field_idx}")
+        new_data2["township"] = mid.text_input("Township", key=f"twp_{field_idx}")
+        new_data2["range"] = right.text_input("Range", key=f"rng_{field_idx}")
+    
+    st.markdown("<hr>", unsafe_allow_html=True)
 
     # =========================
     # CROP PURPOSE
@@ -640,7 +655,6 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
 
     # -------------------
     # Fungicide / Insecticide / Herbicide
-    st.markdown("### Pesticide Use")
 
     new_data["fung"] = st.radio(
         "Was fungicide used?",
@@ -768,7 +782,7 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
 
             c1, c2 = st.columns(2)
             new_data[f"irr{i}_amount"] = c1.text_input(
-                "Amount applied (gallons)",
+                "Amount applied (inches)",
                 key=f"irr{i}_amount_{field_idx}",
             )
             new_data[f"irr{i}_rate"] = c2.text_input(
@@ -778,7 +792,7 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
 
             new_data[f"irr{i}_fertigation"] = st.radio(
                 "Fertigation?",
-                ("Select", "yes", "no"),
+                ("no", "yes"),
                 horizontal=True,
                 key=f"irr{i}_fert_{field_idx}",
             )
