@@ -767,7 +767,6 @@ if not st.session_state.form_submitted:
                     )
                     new_data2[f"{i}_plus"] = st.radio("Nutrient applied with:?", 
                                                       options=("None","Herbicide", "Fertigation", "Fungicide"), horizontal=True)
-            
                     left, right = st.columns(2, vertical_alignment="bottom")
                     new_data2[f"{i}_nutrient_a"] = left.selectbox(
                         "Specific Nutrient",
