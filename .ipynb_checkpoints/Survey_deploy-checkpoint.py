@@ -896,7 +896,7 @@ if not st.session_state.form_submitted:
                                                          horizontal=True, key = 'irr1_fertigation')
 
             with st.expander("Second Application"):
-                nleft, middle, right = st.columns(4, vertical_alignment = "bottom")
+                nleft, middle, right = st.columns(3, vertical_alignment = "bottom")
                 new_data2['irr2_date'] =left.date_input("Irrigation Date", 
                                                     min_value=datetime.date(2000, 1, 1),
                                                     max_value=datetime.date.today(),
@@ -913,7 +913,7 @@ if not st.session_state.form_submitted:
                                                          options = ("Select","yes","no"), horizontal=True, key = 'irr2_fertigation')
 
             with st.expander("Third Application"):
-                left, middle, right = st.columns(4, vertical_alignment = "bottom")
+                left, middle, right = st.columns(3, vertical_alignment = "bottom")
                 new_data2['irr3_date'] =left.date_input("Irrigation Date", 
                                                     min_value=datetime.date(2000, 1, 1),
                                                     max_value=datetime.date.today(),
@@ -930,7 +930,7 @@ if not st.session_state.form_submitted:
                                                          options = ("Select","yes","no"), horizontal=True, key = 'irr3_fertigation')
 
             with st.expander("Fourth Application"):
-                left, middle, right = st.columns(4, vertical_alignment = "bottom")
+                left, middle, right = st.columns(3, vertical_alignment = "bottom")
                 new_data2['irr4_date'] =left.date_input("Irrigation Date", 
                                                     min_value=datetime.date(2000, 1, 1),
                                                     max_value=datetime.date.today(),
@@ -947,7 +947,7 @@ if not st.session_state.form_submitted:
                                                          options = ("Select","yes","no"), horizontal=True, key = 'irr4_fertigation')
 
             with st.expander("Fifth Application"):
-                left, middle, right = st.columns(4, vertical_alignment = "bottom")
+                left, middle, right = st.columns(3, vertical_alignment = "bottom")
                 new_data2['irr5_date'] =left.date_input("Irrigation Date", 
                                                     min_value=datetime.date(2000, 1, 1),
                                                     max_value=datetime.date.today(),
@@ -964,7 +964,7 @@ if not st.session_state.form_submitted:
                                                          options = ("Select","yes","no"), horizontal=True, key = 'irr5_fertigation')
 
             with st.expander("Sixth Application"):
-                left, middle, right = st.columns(4, vertical_alignment = "bottom")
+                left, middle, right = st.columns(3, vertical_alignment = "bottom")
                 new_data2['irr6_date'] =left.date_input("Irrigation Date", 
                                                     min_value=datetime.date(2000, 1, 1),
                                                     max_value=datetime.date.today(),
@@ -981,7 +981,7 @@ if not st.session_state.form_submitted:
                                                          options = ("Select","yes","no"), horizontal=True, key = 'irr6_fertigation')
 
             with st.expander("Seventh Application"):
-                left, middle, right = st.columns(4, vertical_alignment = "bottom")
+                left, middle, right = st.columns(3, vertical_alignment = "bottom")
                 new_data2['irr7_date'] =left.date_input("Irrigation Date", 
                                                     min_value=datetime.date(2000, 1, 1),
                                                     max_value=datetime.date.today(),
@@ -998,7 +998,7 @@ if not st.session_state.form_submitted:
                                                          options = ("Select","yes","no"), horizontal=True, key = 'irr7_fertigation')
 
             with st.expander("Eighth Application"):
-                left, middle, right = st.columns(4, vertical_alignment = "bottom")
+                left, middle, right = st.columns(3, vertical_alignment = "bottom")
                 new_data2['irr8_date'] =left.date_input("Irrigation Date", 
                                                     min_value=datetime.date(2000, 1, 1),
                                                     max_value=datetime.date.today(),
