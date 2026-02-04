@@ -571,6 +571,220 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
     new_data["impacting_events"] = st.text_area(
         "Yield-impacting events", key=f"impact_{field_idx}"
     )
+     st.markdown(
+        "<p style='font-size:16px; margin-bottom:4px;'>Manure Use? (if yes...)</p>",
+        unsafe_allow_html=True
+    )
+
+    st.markdown("<hr>", unsafe_allow_html=True)
+    st.markdown("### Inputs")
+
+    left, right = st.columns(2)
+    new_data["manure_rate"] = left.text_input(
+        "Rate (ex: 30 t/ac)", key=f"manure_rate_{field_idx}"
+    )
+    new_data["manure_freq"] = right.text_input(
+        "Frequency (ex: every other year)", key=f"manure_freq_{field_idx}"
+    )
+
+    # -------------------
+    # Nutrient products
+    st.markdown("**List ALL nutrients applied**")
+
+    for i in range(1, 7):
+        with st.expander(f"Product {i}"):
+            left, right = st.columns(2)
+            new_data[f"{i}_product"] = left.text_input(
+                "Product Name", key=f"{i}_product_{field_idx}"
+            )
+            new_data[f"{i}_rate"] = right.text_input(
+                "Rate of application (lb/ac)", key=f"{i}_rate_{field_idx}"
+            )
+
+            left, mid, right = st.columns(3)
+            new_data[f"{i}_time"] = left.selectbox(
+                "Time of Application",
+                (
+                    "pre-plant/at-drilling",
+                    "Fall",
+                    "Green-up",
+                    "Late season",
+                    "Post Harvest",
+                ),
+                key=f"{i}_time_{field_idx}",
+            )
+            new_data[f"{i}_date"] = mid.date_input(
+                "Date of application",
+                datetime.date(2022, 9, 1),
+                key=f"{i}_date_{field_idx}",
+            )
+            new_data[f"{i}_month"] = right.text_input(
+                "Month of application", key=f"{i}_month_{field_idx}"
+            )
+
+            new_data[f"{i}_plus"] = st.radio(
+                "Nutrient applied with?",
+                ("None", "Herbicide", "Fertigation", "Fungicide"),
+                horizontal=True,
+                key=f"{i}_plus_{field_idx}",
+            )
+
+            for n in ["a", "b", "c"]:
+                left, right = st.columns(2)
+                new_data[f"{i}_nutrient_{n}"] = left.selectbox(
+                    "Specific Nutrient",
+                    ("N", "P", "K", "S", "Lime", "Micro"),
+                    key=f"{i}_nutrient_{n}_{field_idx}",
+                )
+                new_data[f"{i}_nutrient_{n}_amnt"] = right.text_input(
+                    "Amount (lb/ac)",
+                    key=f"{i}_nutrient_{n}_amnt_{field_idx}",
+                )
+
+    # -------------------
+    # Fungicide / Insecticide / Herbicide
+    st.markdown("### Pesticide Use")
+
+    new_data["fung"] = st.radio(
+        "Was fungicide used?",
+        ("Select", "yes", "no"),
+        horizontal=True,
+        key=f"fung_{field_idx}",
+    )
+    c1, c2, c3 = st.columns(3)
+    new_data["fungicide_prod"] = c1.text_input("Product", key=f"fung_prod_{field_idx}")
+    new_data["fungicide_time"] = c2.text_input("Timing", key=f"fung_time_{field_idx}")
+    new_data["fungicide_freq"] = c3.text_input("Rate", key=f"fung_rate_{field_idx}")
+
+    new_data["insect"] = st.radio(
+        "Was insecticide used?",
+        ("Select", "yes", "no"),
+        horizontal=True,
+        key=f"insect_{field_idx}",
+    )
+    c1, c2, c3 = st.columns(3)
+    new_data["insect_prod"] = c1.text_input("Product", key=f"insect_prod_{field_idx}")
+    new_data["insecticide_time"] = c2.text_input("Timing", key=f"insect_time_{field_idx}")
+    new_data["insecticide_freq"] = c3.text_input("Rate", key=f"insect_rate_{field_idx}")
+
+    new_data["herb"] = st.radio(
+        "Was herbicide used?",
+        ("Select", "yes", "no"),
+        horizontal=True,
+        key=f"herb_{field_idx}",
+    )
+    c1, c2, c3 = st.columns(3)
+    new_data["herb_prod"] = c1.text_input("Product", key=f"herb_prod_{field_idx}")
+    new_data["herbicide_time"] = c2.text_input("Timing", key=f"herb_time_{field_idx}")
+    new_data["herbicide_freq"] = c3.text_input("Rate", key=f"herb_rate_{field_idx}")
+
+    st.markdown("<hr>", unsafe_allow_html=True)
+    st.markdown("### Irrigation")
+
+    new_data["irrigated"] = st.radio(
+        "Did this wheat crop receive irrigation?",
+        ("Select", "yes", "no"),
+        horizontal=True,
+        key=f"irrigated_{field_idx}",
+    )
+
+    st.markdown("**Irrigation Management**")
+
+    new_data["irr_shared"] = st.text_input(
+        "Is the water supply shared with another crop?",
+        key=f"irr_shared_{field_idx}",
+    )
+
+    new_data["irr_decision"] = st.selectbox(
+        "What drives your irrigation decisions?",
+        (
+            "crop consultant",
+            "moisture probes",
+            "visual assessment",
+            "consistent scheduled dates",
+        ),
+        key=f"irr_decision_{field_idx}",
+    )
+
+    new_data["irr_type"] = st.selectbox(
+        "Irrigation Method",
+        ("center pivot", "drip", "flood", "other"),
+        key=f"irr_type_{field_idx}",
+    )
+
+    left, right = st.columns(2)
+    new_data["system_config"] = left.text_input(
+        "Sprinkler spacing", key=f"sys_config_{field_idx}"
+    )
+    new_data["system_height"] = right.text_input(
+        "Sprinkler height", key=f"sys_height_{field_idx}"
+    )
+
+    new_data["system_details"] = st.text_input(
+        "Additional system details", key=f"sys_details_{field_idx}"
+    )
+
+    left, right = st.columns(2)
+    new_data["system_capacity"] = left.text_input(
+        "System capacity (gal/min)", key=f"sys_cap_{field_idx}"
+    )
+    new_data["water_source"] = right.selectbox(
+        "Water source", ("Ground", "Surface"), key=f"water_{field_idx}"
+    )
+
+    new_data["capacity_flux"] = st.text_input(
+        "Does system capacity fluctuate?",
+        key=f"cap_flux_{field_idx}",
+    )
+
+    new_data["pre_plant_water"] = st.radio(
+        "Pre-plant water applied?",
+        ("Select", "yes", "no"),
+        horizontal=True,
+        key=f"preplant_{field_idx}",
+    )
+
+    st.markdown("### Irrigation Events")
+
+    for i in range(1, 9):
+        with st.expander(f"Irrigation Event {i}"):
+            c1, c2, c3 = st.columns(3)
+            new_data[f"irr{i}_date"] = c1.date_input(
+                "Date",
+                min_value=datetime.date(2000, 1, 1),
+                max_value=datetime.date.today(),
+                key=f"irr{i}_date_{field_idx}",
+            )
+            new_data[f"irr{i}_month"] = c2.selectbox(
+                "Month",
+                (
+                    "Jan","Feb","Mar","Apr","May","Jun",
+                    "Jul","Aug","Sep","Oct","Nov","Dec"
+                ),
+                key=f"irr{i}_month_{field_idx}",
+            )
+            new_data[f"irr{i}_timing"] = c3.selectbox(
+                "Early or Late",
+                ("early", "late"),
+                key=f"irr{i}_timing_{field_idx}",
+            )
+
+            c1, c2 = st.columns(2)
+            new_data[f"irr{i}_amount"] = c1.text_input(
+                "Amount applied (gallons)",
+                key=f"irr{i}_amount_{field_idx}",
+            )
+            new_data[f"irr{i}_rate"] = c2.text_input(
+                "Application rate (gal/min)",
+                key=f"irr{i}_rate_{field_idx}",
+            )
+
+            new_data[f"irr{i}_fertigation"] = st.radio(
+                "Fertigation?",
+                ("Select", "yes", "no"),
+                horizontal=True,
+                key=f"irr{i}_fert_{field_idx}",
+            )
 
     # =========================
     # SUBMIT
