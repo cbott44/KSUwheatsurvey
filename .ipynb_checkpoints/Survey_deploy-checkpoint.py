@@ -878,7 +878,7 @@ if not st.session_state.form_submitted:
             st.markdown("**Provide Information About Each Irrigation Event**")
     
             with st.expander("First Application (or pre-plant)"):
-                left, middle, right = st.columns(4, vertical_alignment = "bottom")
+                left, middle, right = st.columns(3, vertical_alignment = "bottom")
                 new_data2['irr1_date'] =left.date_input("Irrigation Date", 
                                                     min_value=datetime.date(2000, 1, 1),
                                                     max_value=datetime.date.today(),
