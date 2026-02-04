@@ -493,10 +493,10 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
 
         # Latitude and Longitude
         left, right = st.columns(2)
-        new_data2["lat"] = left.text_input(
+        new_data["lat"] = left.text_input(
             "Latitude (* ex: 39.19303*)", key=f"lat_{field_idx}"
         )
-        new_data2["long"] = right.text_input(
+        new_data["long"] = right.text_input(
             "Longitude (* ex: -96.58548*)", key=f"long_{field_idx}"
         )
 
@@ -505,15 +505,15 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
             "<small style='color:gray;'>ex: Riley CO, SW of Rd 11 & Sheridan</small>",
             unsafe_allow_html=True
         )
-        new_data2["county_ident"] = st.text_input(
+        new_data["county_ident"] = st.text_input(
             "County & Road", key=f"county_{field_idx}"
         )
 
         # Section / Township / Range
         left, mid, right = st.columns(3)
-        new_data2["section"] = left.text_input("Section", key=f"sec_{field_idx}")
-        new_data2["township"] = mid.text_input("Township", key=f"twp_{field_idx}")
-        new_data2["range"] = right.text_input("Range", key=f"rng_{field_idx}")
+        new_data["section"] = left.text_input("Section", key=f"sec_{field_idx}")
+        new_data["township"] = mid.text_input("Township", key=f"twp_{field_idx}")
+        new_data["range"] = right.text_input("Range", key=f"rng_{field_idx}")
 
     st.markdown("<hr>", unsafe_allow_html=True)
 
