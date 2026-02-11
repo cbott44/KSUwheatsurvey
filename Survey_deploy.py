@@ -275,15 +275,15 @@ with options_form:
     new_data['farm_size'] = left.text_input("Total Farm Acreage")
     new_data['irr_wheat_ac'] = right.text_input("Average Irrigated Wheat Acreage")
 
+    new_data['years_irr'] = options_form.text_input("Year Spent Irrigating Wheat")
+    new_data['dry_v_irr'] = options_form.radio("Also Grow Dryland Wheat?", options=("Select","yes", "no"), horizontal=True)
+
     farm_purpose = options_form.empty()
     placeholder_2 = options_form.empty() #input for other farm purpose
 
     new_data['rotation_dry'] = options_form.text_input("Typical Dryland Rotation")
     new_data['rotation_irr'] = options_form.text_input("Typical Irrigated Rotation")
     
-    new_data['years_irr'] = options_form.text_input("Year Spent Irrigating Wheat")
-    new_data['dry_v_irr'] = options_form.radio("Also Grow Dryland Wheat?", options=("Select","yes", "no"), horizontal=True)
-
     #water limitations
     options_form.markdown("Briefly describe any restrictions faced on water usage?")
     options_form.markdown(
@@ -530,7 +530,7 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
     # CROP PURPOSE
     cp = st.selectbox(
         "Primary Crop Purpose",
-        ("seed","grain","forage","dual-purpose","other"),
+        ("--","seed","grain","forage","dual-purpose","other"),
         key=f"cp_{field_idx}"
     )
     if cp == "other":
@@ -547,7 +547,7 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
     new_data["prev_crop_year"] = right.text_input("Harvest Year", key=f"pcy_{field_idx}")
     new_data["prev_crop_purpose"] = st.selectbox(
         "Previous Crop Purpose",
-        ("Grain","Seed","Forage","Silage","Other"),
+        ("--", "Grain","Seed","Forage","Silage","Other"),
         key=f"pcp_{field_idx}"
     )
     new_data["prev_crop_irr"] = st.radio(
