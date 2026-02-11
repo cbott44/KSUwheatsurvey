@@ -415,6 +415,7 @@ def empty_field_dict():
         "field_size": "",
         "field_size_unit": "",
         "crop_purpose": "",
+        "irr":"",
         "prev_crop": "",
         "prev_crop_year": "",
         "prev_crop_purpose": "",
@@ -539,6 +540,8 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
         )
     else:
         new_data["crop_purpose"] = cp
+
+    new_data["irr"] = st.radio("Field Irrigated?", options = ("yes","no"), horizontal = True)
 
     # =========================
     # PREVIOUS CROP
