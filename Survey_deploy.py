@@ -541,7 +541,7 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
     else:
         new_data["crop_purpose"] = cp
 
-    new_data["irr"] = st.radio("Field Irrigated?", options = ("yes","no"), horizontal = True)
+    new_data["irr"] = st.radio("Field Irrigated?", options = ("yes","no"), horizontal = True, key=f"irr_{field_idx})
 
     # =========================
     # PREVIOUS CROP
@@ -597,6 +597,7 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
     new_data["impacting_events"] = st.text_area(
         "Yield-impacting events", key=f"impact_{field_idx}"
     )
+    new_data['tillage']= st.selectbox("Tillage", ("--","no-till","minimal","full"), key =f"tillage_{field_idx} )
     st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown("### Inputs")
     
@@ -610,6 +611,35 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
     new_data["manure_freq"] = right.text_input(
         "Frequency (ex: every other year)", key=f"manure_freq_{field_idx}"
     )
+
+    new_data["profile_h20"] = st.text_input(
+        "Profile water at planting", key=f"profile_h20_{field_idx}"
+    )
+
+    new_data["cultivar"] = st.text_input(
+        "Cultivar Type", key=f"cultivar_{field_idx}"
+    )
+
+    left, right = st.columns(2)
+    new_data["seed_source"] = left.selectbox(
+        "Seed Source",("--","Saved","Cerified","Registered") ,key=f"seed_source_{field_idx}"
+    )
+    new_data["seed_treat"] = left.selectbox(
+        "Seed Treatment",("--","both","funicide","herbicide") ,key=f"seed_treat_{field_idx}"
+    )
+
+    left, middle, right = st.columns(3)
+    new_data["row_space"] = left.text_input(
+        "Row spacing (in)",key=f"row_space_{field_idx}"
+    )
+    new_data["seeding_rate"] = middle.text_input(
+        "Seeding Rate",key=f"seeding_rate_{field_idx}"
+    )
+    new_data["seed_rate_unit"] = left.selectbox(
+        "Seeding Rate Unit",("--","lb/ac","plants/ac","seeds/ac") ,key=f"seed_rate_unit_{field_idx}"
+    )
+
+
 
     # -------------------
     # Nutrient products
