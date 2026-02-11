@@ -607,7 +607,7 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
     new_data["seed_source"] = left.selectbox(
         "Seed Source",("--","Saved","Cerified","Registered") ,key=f"seed_source_{field_idx}"
     )
-    new_data["seed_treat"] = left.selectbox(
+    new_data["seed_treat"] = right.selectbox(
         "Seed Treatment",("--","both","funicide","herbicide") ,key=f"seed_treat_{field_idx}"
     )
 
@@ -622,7 +622,7 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
     new_data["seeding_rate"] = middle.text_input(
         "Seeding Rate",key=f"seeding_rate_{field_idx}"
     )
-    new_data["seed_rate_unit"] = left.selectbox(
+    new_data["seed_rate_unit"] = right.selectbox(
         "Seeding Rate Unit",("--","lb/ac","plants/ac","seeds/ac") ,key=f"seed_rate_unit_{field_idx}"
     )
 
