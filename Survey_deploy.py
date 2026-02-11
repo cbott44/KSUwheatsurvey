@@ -192,12 +192,15 @@ new_data = {
 
     'irr_wheat_ac': "",
     'farm_size':"",
-    "farm_purpose": "",
-    #'years_irr': "",
-    #'dry_v_irr': "",
+    'farm_purpose': "",
+    'rotation_dry':"",
+    'rotaion_irr':"",
+    'years_irr': "",
+    'dry_v_irr': "",
     'water_limits': "",
-    'statement1':"",
-    'statement2':""
+    #'statement1':"",
+    #'statement2':"",
+    'quality': ""
 }
 expected_columns = list(new_data.keys())
 
@@ -274,9 +277,12 @@ with options_form:
 
     farm_purpose = options_form.empty()
     placeholder_2 = options_form.empty() #input for other farm purpose
+
+    new_data['rotation_dry'] = options_form.text_input("Typical Dryland Rotation")
+    new_data['rotation_irr'] = options_form.text_input("Typical Irrigated Rotation")
     
-    # new_data['years_irr'] = options_form.text_input("Year Spent Irrigating Wheat")
-    # new_data['dry_v_irr'] = options_form.radio("Also Grow Dryland Wheat?", options=("Select","yes", "no"), horizontal=True)
+    new_data['years_irr'] = options_form.text_input("Year Spent Irrigating Wheat")
+    new_data['dry_v_irr'] = options_form.radio("Also Grow Dryland Wheat?", options=("Select","yes", "no"), horizontal=True)
 
     #water limitations
     options_form.markdown("Briefly describe any restrictions faced on water usage?")
@@ -290,6 +296,9 @@ with options_form:
     )
 
     new_data['limits'] = options_form.text_area("", height = 68)
+    
+    options_form.markdown("<hr>", unsafe_allow_html=True)
+    new_data['quality'] = options_form.radio("Relative Data Quality", options = ("a","b","c"), horizontal = True)
 
     #agreement with the statements
     # options_form.markdown("Rate the following two statements:")
