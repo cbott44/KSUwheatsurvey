@@ -626,7 +626,7 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
         "Seeding Rate Unit",("--","lb/ac","plants/ac","seeds/ac") ,key=f"seed_rate_unit_{field_idx}"
     )
 
-    new_data['tillage']= st.selectbox("Tillage", ("--","no-till","minimal","full"), key =f"tillage_{field_idx} )
+    new_data['tillage']= st.selectbox("Tillage", ("--","no-till","minimal","full"), key =f"tillage_{field_idx}" )
 
     st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown("### Inputs")
