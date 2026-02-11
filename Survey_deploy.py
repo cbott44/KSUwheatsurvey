@@ -597,24 +597,7 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
     new_data["impacting_events"] = st.text_area(
         "Yield-impacting events", key=f"impact_{field_idx}"
     )
-    new_data['tillage']= st.selectbox("Tillage", ("--","no-till","minimal","full"), key =f"tillage_{field_idx} )
-    st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown("### Inputs")
-    
-    st.markdown("<p style='font-size:16px; margin-bottom:4px;'>Manure Use? (if yes...)</p>",
-        unsafe_allow_html=True
-    )
-    left, right = st.columns(2)
-    new_data["manure_rate"] = left.text_input(
-        "Rate (ex: 30 t/ac)", key=f"manure_rate_{field_idx}"
-    )
-    new_data["manure_freq"] = right.text_input(
-        "Frequency (ex: every other year)", key=f"manure_freq_{field_idx}"
-    )
 
-    new_data["profile_h20"] = st.text_input(
-        "Profile water at planting", key=f"profile_h20_{field_idx}"
-    )
 
     new_data["cultivar"] = st.text_input(
         "Cultivar Type", key=f"cultivar_{field_idx}"
@@ -628,6 +611,10 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
         "Seed Treatment",("--","both","funicide","herbicide") ,key=f"seed_treat_{field_idx}"
     )
 
+    new_data["profile_h20"] = st.text_input(
+        "Profile water at planting", key=f"profile_h20_{field_idx}"
+    )
+
     left, middle, right = st.columns(3)
     new_data["row_space"] = left.text_input(
         "Row spacing (in)",key=f"row_space_{field_idx}"
@@ -639,7 +626,21 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
         "Seeding Rate Unit",("--","lb/ac","plants/ac","seeds/ac") ,key=f"seed_rate_unit_{field_idx}"
     )
 
+    new_data['tillage']= st.selectbox("Tillage", ("--","no-till","minimal","full"), key =f"tillage_{field_idx} )
 
+    st.markdown("<hr>", unsafe_allow_html=True)
+    st.markdown("### Inputs")
+    
+    st.markdown("<p style='font-size:16px; margin-bottom:4px;'>Manure Use? (if yes...)</p>",
+        unsafe_allow_html=True
+    )
+    left, right = st.columns(2)
+    new_data["manure_rate"] = left.text_input(
+        "Rate (ex: 30 t/ac)", key=f"manure_rate_{field_idx}"
+    )
+    new_data["manure_freq"] = right.text_input(
+        "Frequency (ex: every other year)", key=f"manure_freq_{field_idx}"
+    )
 
     # -------------------
     # Nutrient products
