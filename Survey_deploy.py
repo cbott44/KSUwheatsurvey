@@ -274,16 +274,16 @@ with options_form:
     left, right = st.columns(2, vertical_alignment = "bottom")
     new_data['farm_size'] = left.text_input("Total Farm Acreage")
     new_data['irr_wheat_ac'] = right.text_input("Average Irrigated Wheat Acreage")
+    
+    farm_purpose = options_form.empty()
+    placeholder_2 = options_form.empty() #input for other farm purpose
+    
+    new_data['rotation_dry'] = options_form.text_input("Typical Dryland Rotation")
+    new_data['rotation_irr'] = options_form.text_input("Typical Irrigated Rotation")
 
     new_data['years_irr'] = options_form.text_input("Year Spent Irrigating Wheat")
     new_data['dry_v_irr'] = options_form.radio("Also Grow Dryland Wheat?", options=("Select","yes", "no"), horizontal=True)
 
-    farm_purpose = options_form.empty()
-    placeholder_2 = options_form.empty() #input for other farm purpose
-
-    new_data['rotation_dry'] = options_form.text_input("Typical Dryland Rotation")
-    new_data['rotation_irr'] = options_form.text_input("Typical Irrigated Rotation")
-    
     #water limitations
     options_form.markdown("Briefly describe any restrictions faced on water usage?")
     options_form.markdown(
@@ -560,26 +560,7 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
         key=f"pci_{field_idx}"
     )
 
-    # =========================
-    # SOIL TESTS
-    with st.expander("Soil Testing"):
-        left, right = st.columns(2)
-        new_data["K_soil"] = left.text_input("K (ppm)", key=f"k_{field_idx}")
-        new_data["P_soil"] = right.text_input("P (ppm)", key=f"p_{field_idx}")
 
-        left, right = st.columns(2)
-        new_data["N_soil"] = left.text_input("N", key=f"n_{field_idx}")
-        new_data["N_soildepth"] = right.text_input("Depth", key=f"nd_{field_idx}")
-
-    # =========================
-    # PLANTING / HARVEST
-    left, right = st.columns(2)
-    new_data["planting_date"] = left.date_input(
-        "Planting Date", key=f"pd_{field_idx}"
-    )
-    new_data["harvest_date"] = right.date_input(
-        "Harvest Date", key=f"hd_{field_idx}"
-    )
 
     # =========================
     # YIELD
@@ -628,6 +609,28 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
 
     new_data['tillage']= st.selectbox("Tillage", ("--","no-till","minimal","full"), key =f"tillage_{field_idx}" )
 
+    # =========================
+    # SOIL TESTS
+    with st.expander("Soil Testing"):
+        left, right = st.columns(2)
+        new_data["K_soil"] = left.text_input("K (ppm)", key=f"k_{field_idx}")
+        new_data["P_soil"] = right.text_input("P (ppm)", key=f"p_{field_idx}")
+
+        left, right = st.columns(2)
+        new_data["N_soil"] = left.text_input("N", key=f"n_{field_idx}")
+        new_data["N_soildepth"] = right.text_input("Depth", key=f"nd_{field_idx}")
+
+    # =========================
+    # PLANTING / HARVEST
+    left, right = st.columns(2)
+    new_data["planting_date"] = left.date_input(
+        "Planting Date", key=f"pd_{field_idx}"
+    )
+    new_data["harvest_date"] = right.date_input(
+        "Harvest Date", key=f"hd_{field_idx}"
+    )
+    
+
     st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown("### Inputs")
     
@@ -670,6 +673,7 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
             )
             new_data[f"{i}_date"] = mid.date_input(
                 "Date of application",
+                value=datetime.date(2026, 1, 1),
                 key=f"{i}_date_{field_idx}",
             )
             new_data[f"{i}_month"] = right.text_input(
@@ -744,7 +748,7 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
     st.markdown("**Irrigation Management**")
 
     new_data["irr_shared"] = st.text_input(
-        "Is the water supply shared with another crop?",
+        "Is the pivot all wheat? (is the reported water only for the wheat crop?)",
         key=f"irr_shared_{field_idx}",
     )
 
@@ -804,6 +808,7 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
             c1, c2, c3 = st.columns(3)
             new_data[f"irr{i}_date"] = c1.date_input(
                 "Date",
+                value=datetime.date(2026, 1, 1),
                 min_value=datetime.date(2000, 1, 1),
                 max_value=datetime.date.today(),
                 key=f"irr{i}_date_{field_idx}",
@@ -811,14 +816,14 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
             new_data[f"irr{i}_month"] = c2.selectbox(
                 "Month",
                 (
-                    "Jan","Feb","Mar","Apr","May","Jun",
+                    "--","Jan","Feb","Mar","Apr","May","Jun",
                     "Jul","Aug","Sep","Oct","Nov","Dec"
                 ),
                 key=f"irr{i}_month_{field_idx}",
             )
             new_data[f"irr{i}_timing"] = c3.selectbox(
                 "Early or Late",
-                ("early", "late"),
+                ("--","early", "late"),
                 key=f"irr{i}_timing_{field_idx}",
             )
 
