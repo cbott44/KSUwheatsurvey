@@ -428,6 +428,7 @@ def empty_field_dict():
         "seed_treat": "",
         "tillage": "",
         "profile_h20": "",
+        "profile_h20_rank": "",
         "row_space": "",
         "seeding_rate": "",
         "seeding_rate_unit": "",
@@ -436,6 +437,7 @@ def empty_field_dict():
         "P_soil": "",
         "N_soil": "",
         "N_soildepth": "",
+        "manure": "",
         "manure_rate": "",
         "manure_freq": "",
         "fung": "",
@@ -466,7 +468,7 @@ def empty_field_dict():
     # nutrient products
     for i in range(1, 7):
         for f in [
-            "product","rate","time","date","month","plus",
+            "product","rate","rate_unit","time","date","month","plus", "vr",
             "nutrient_a","nutrient_a_amnt",
             "nutrient_b","nutrient_b_amnt",
             "nutrient_c","nutrient_c_amnt"
@@ -542,6 +544,7 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
         new_data["crop_purpose"] = cp
 
     new_data["irr"] = st.radio("Field Irrigated?", options = ("yes","no"), horizontal = True, key=f"irr_{field_idx}")
+    new_data["field_size"] = st.text_input("field size (ac)", key=f"field_size_{field_idx})
 
     # =========================
     # PREVIOUS CROP
@@ -560,8 +563,15 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
         key=f"pci_{field_idx}"
     )
 
-
-
+    # PLANTING / HARVEST
+    left, right = st.columns(2)
+    new_data["planting_date"] = left.date_input(
+        "Planting Date", key=f"pd_{field_idx}"
+    )
+    new_data["harvest_date"] = right.date_input(
+        "Harvest Date", key=f"hd_{field_idx}"
+    )
+    
     # =========================
     # YIELD
     left, right = st.columns(2)
@@ -593,8 +603,9 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
     )
 
     new_data["profile_h20"] = st.text_input(
-        "Profile water at planting", key=f"profile_h20_{field_idx}"
+        "Profile water at planting details", key=f"profile_h20_{field_idx}"
     )
+    new_data["profile_h20_rank"] = st.radio("Rank Profile Water at Planting", options = ("A","B","C"), key=f"profile_h20_rank_{field_idx})
 
     left, middle, right = st.columns(3)
     new_data["row_space"] = left.text_input(
@@ -621,22 +632,15 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
         new_data["N_soildepth"] = right.text_input("Depth", key=f"nd_{field_idx}")
 
     # =========================
-    # PLANTING / HARVEST
-    left, right = st.columns(2)
-    new_data["planting_date"] = left.date_input(
-        "Planting Date", key=f"pd_{field_idx}"
-    )
-    new_data["harvest_date"] = right.date_input(
-        "Harvest Date", key=f"hd_{field_idx}"
-    )
-    
+
 
     st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown("### Inputs")
     
-    st.markdown("<p style='font-size:16px; margin-bottom:4px;'>Manure Use? (if yes...)</p>",
+    st.markdown("<p style='font-size:16px; margin-bottom:4px;'>Manure Details</p>",
         unsafe_allow_html=True
     )
+    new_data["manure"] = st.radio ("Manure Use?", options = ("yes","no"), key=f"manure_{field_idx} )
     left, right = st.columns(2)
     new_data["manure_rate"] = left.text_input(
         "Rate (ex: 30 t/ac)", key=f"manure_rate_{field_idx}"
@@ -651,12 +655,15 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
 
     for i in range(1, 7):
         with st.expander(f"Product {i}"):
-            left, right = st.columns(2)
+            left, middle, right = st.columns(3)
             new_data[f"{i}_product"] = left.text_input(
                 "Product Name", key=f"{i}_product_{field_idx}"
             )
-            new_data[f"{i}_rate"] = right.text_input(
-                "Rate of application (lb/ac)", key=f"{i}_rate_{field_idx}"
+            new_data[f"{i}_rate"] = middle.text_input(
+                "Rate of application", key=f"{i}_rate_{field_idx}"
+            )
+            new_data[f"{i}_rate_unit"] = right.selectbox(
+                "Unit", options = ("lb/ac","gal/ac","oz/ac"), key=f"{i}_rate_unit_{field_idx}"
             )
 
             left, mid, right = st.columns(3)
@@ -665,7 +672,7 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
                 (
                     "pre-plant/at-drilling",
                     "Fall",
-                    "Green-up",
+                    "Green-up/top-dress",
                     "Late season",
                     "Post Harvest",
                 ),
@@ -680,22 +687,30 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
                 "Month of application", key=f"{i}_month_{field_idx}"
             )
 
-            new_data[f"{i}_plus"] = st.radio(
+            left, right = st.columns(2)
+            new_data[f"{i}_plus"] = left.radio(
                 "Nutrient applied with?",
                 ("None", "Herbicide", "Fertigation", "Fungicide"),
                 horizontal=True,
                 key=f"{i}_plus_{field_idx}",
             )
+            new_data[f"{i}_vr"] = right.radio(
+                "Variabel Rated?",
+                ("No", "Yes"),
+                horizontal=True,
+                key=f"{i}_vr_{field_idx}",
+            )
+            
 
-            for n in ["a", "b", "c"]:
+            for n in ["a", "b", "c","d","e","f"]:
                 left, right = st.columns(2)
                 new_data[f"{i}_nutrient_{n}"] = left.selectbox(
                     "Specific Nutrient",
-                    ("none","N", "P", "K", "S", "Lime", "Micro"),
+                    ("none","N", "P2O5", "K2O", "S", "Lime", "Micro", "Zinc"),
                     key=f"{i}_nutrient_{n}_{field_idx}",
                 )
                 new_data[f"{i}_nutrient_{n}_amnt"] = right.text_input(
-                    "Amount (with unit)",
+                    "Amount (lb/ac)",
                     key=f"{i}_nutrient_{n}_amnt_{field_idx}",
                 )
 
@@ -850,6 +865,27 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
     finish = st.form_submit_button("Finish", type="secondary")
 
 # ---------------------------------------------------------------------
+
+st.markdown("""
+<style>
+/* Style ONLY st.success() messages */
+div.stAlert:has(svg[data-testid="stSuccessIcon"]) {
+    background-color: #f9f9f9 !important;
+    padding: 15px !important;
+    border-radius: 8px !important;
+    border: 1px solid #ddd !important;
+    margin-bottom: 20px !important;
+    color: #333 !important;  /* normal text color */
+}
+
+/* Make the success icon green to match your <strong style='color: green;'> */
+div.stAlert:has(svg[data-testid="stSuccessIcon"]) svg {
+    fill: green !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
+
 # SAVE LOGIC
 if add_field or finish:
 
