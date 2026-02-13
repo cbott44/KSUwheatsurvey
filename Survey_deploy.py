@@ -544,7 +544,7 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
         new_data["crop_purpose"] = cp
 
     new_data["irr"] = st.radio("Field Irrigated?", options = ("yes","no"), horizontal = True, key=f"irr_{field_idx}")
-    new_data["field_size"] = st.text_input("field size (ac)", key=f"field_size_{field_idx})
+    new_data["field_size"] = st.text_input("field size (ac)", key=f"field_size_{field_idx}")
 
     # =========================
     # PREVIOUS CROP
