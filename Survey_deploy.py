@@ -191,7 +191,7 @@ new_data = {
     'kn_other': False,
 
     'irr_wheat_ac': "",
-    'farm_size':"",
+    'farm_':"",
     'farm_purpose': "",
     'rotation_dry':"",
     'rotaion_irr':"",
@@ -272,7 +272,7 @@ with options_form:
     options_form.markdown("**Farm information**")
 
     left, right = st.columns(2, vertical_alignment = "bottom")
-    new_data['farm_size'] = left.text_input("Total Farm Acreage")
+    new_data['farm_'] = left.text_input("Total Farm Acreage")
     new_data['irr_wheat_ac'] = right.text_input("Average Irrigated Wheat Acreage")
     
     farm_purpose = options_form.empty()
@@ -289,7 +289,7 @@ with options_form:
     options_form.markdown(
         """
         <div style='margin-bottom: -1000px;'>
-            <span style='color:#444; font-size:0.95rem'>e.g. government 5 year flex plan, seasonally dry wells, etc.
+            <span style='color:#444; font-:0.95rem'>e.g. government 5 year flex plan, seasonally dry wells, etc.
         </div>
         """, 
         unsafe_allow_html=True
@@ -412,8 +412,8 @@ def empty_field_dict():
         "section": "",
         "township": "",
         "range": "",
-        "field_size": "",
-        "field_size_unit": "",
+        "field_": "",
+        "field__unit": "",
         "crop_purpose": "",
         "irr":"",
         "prev_crop": "",
@@ -544,7 +544,7 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
         new_data["crop_purpose"] = cp
 
     new_data["irr"] = st.radio("Field Irrigated?", options = ("yes","no"), horizontal = True, key=f"irr_{field_idx}")
-    new_data["field_size"] = st.text_input("field size (ac)", key=f"field_size_{field_idx}")
+    new_data["field_size"] = st.text_input("Field Size (*acres*)", key=f"field_size_{field_idx}")
 
     # =========================
     # PREVIOUS CROP
@@ -605,7 +605,7 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
     new_data["profile_h20"] = st.text_input(
         "Profile water at planting details", key=f"profile_h20_{field_idx}"
     )
-    new_data["profile_h20_rank"] = st.radio("Rank Profile Water at Planting", options = ("A","B","C"), key=f"profile_h20_rank_{field_idx}")
+    new_data["profile_h20_rank"] = st.radio("Rank Profile Water at Planting", options = ("A","B","C"), horizontal = True, key=f"profile_h20_rank_{field_idx}")
 
     left, middle, right = st.columns(3)
     new_data["row_space"] = left.text_input(
@@ -640,7 +640,7 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
     st.markdown("<p style='font-size:16px; margin-bottom:4px;'>Manure Details</p>",
         unsafe_allow_html=True
     )
-    new_data["manure"] = st.radio ("Manure Use?", options = ("yes","no"), key=f"manure_{field_idx}" )
+    new_data["manure"] = st.radio ("Manure Use?", options = ("yes","no"), horizontal = True, key=f"manure_{field_idx}" )
     left, right = st.columns(2)
     new_data["manure_rate"] = left.text_input(
         "Rate (ex: 30 t/ac)", key=f"manure_rate_{field_idx}"
@@ -687,14 +687,14 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
                 "Month of application", key=f"{i}_month_{field_idx}"
             )
 
-            left, right = st.columns(2)
-            new_data[f"{i}_plus"] = left.radio(
+            
+            new_data[f"{i}_plus"] = st.radio(
                 "Nutrient applied with?",
                 ("None", "Herbicide", "Fertigation", "Fungicide"),
                 horizontal=True,
                 key=f"{i}_plus_{field_idx}",
             )
-            new_data[f"{i}_vr"] = right.radio(
+            new_data[f"{i}_vr"] = st.radio(
                 "Variabel Rated?",
                 ("No", "Yes"),
                 horizontal=True,
