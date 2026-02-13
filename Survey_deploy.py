@@ -605,7 +605,7 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
     new_data["profile_h20"] = st.text_input(
         "Profile water at planting details", key=f"profile_h20_{field_idx}"
     )
-    new_data["profile_h20_rank"] = st.radio("Rank Profile Water at Planting", options = ("A","B","C"), key=f"profile_h20_rank_{field_idx})
+    new_data["profile_h20_rank"] = st.radio("Rank Profile Water at Planting", options = ("A","B","C"), key=f"profile_h20_rank_{field_idx}")
 
     left, middle, right = st.columns(3)
     new_data["row_space"] = left.text_input(
