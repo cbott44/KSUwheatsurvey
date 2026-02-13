@@ -640,7 +640,7 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
     st.markdown("<p style='font-size:16px; margin-bottom:4px;'>Manure Details</p>",
         unsafe_allow_html=True
     )
-    new_data["manure"] = st.radio ("Manure Use?", options = ("yes","no"), key=f"manure_{field_idx} )
+    new_data["manure"] = st.radio ("Manure Use?", options = ("yes","no"), key=f"manure_{field_idx}" )
     left, right = st.columns(2)
     new_data["manure_rate"] = left.text_input(
         "Rate (ex: 30 t/ac)", key=f"manure_rate_{field_idx}"
