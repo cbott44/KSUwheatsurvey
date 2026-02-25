@@ -599,7 +599,7 @@ with st.form(f"field_form_{field_idx}", clear_on_submit=True):
         "Seed Source",("--","Saved","Cerified","Registered") ,key=f"seed_source_{field_idx}"
     )
     new_data["seed_treat"] = right.selectbox(
-        "Seed Treatment",("--","both","funicide","herbicide") ,key=f"seed_treat_{field_idx}"
+        "Seed Treatment",("--","none", "both","funicide","herbicide") ,key=f"seed_treat_{field_idx}"
     )
 
     new_data["profile_h20"] = st.text_input(
